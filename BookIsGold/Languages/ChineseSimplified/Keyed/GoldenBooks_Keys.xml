@@ -38,6 +38,23 @@
 	<GoldenBooks_ZhixiaThreshold>知夏乱入阈值（拆书/书蠹次数）</GoldenBooks_ZhixiaThreshold>
 	<GoldenBooks_ZhixiaFallbackDays>知夏兜底天数（颜执中入驻后）</GoldenBooks_ZhixiaFallbackDays>
 
+	<GoldenBooks_WspToggle>书语（每日殖民地记录）</GoldenBooks_WspToggle>
+	<GoldenBooks_WspToggleTip>关闭后不再生成每日书语。配置了 API Key 则用 AI 生成，否则用离线模板。</GoldenBooks_WspToggleTip>
+	<GoldenBooks_WspPersonaInject>RimTalk 人格自动注入</GoldenBooks_WspPersonaInject>
+	<GoldenBooks_WspPersonaInjectTip>检测到 RimTalk 时，自动为颜执中/颜知夏/真·颜如玉/凡人·颜如玉挂载专属人格（已有人格的不会覆盖）。</GoldenBooks_WspPersonaInjectTip>
+	<GoldenBooks_WspApiUrl>书语 API 地址（OpenAI 兼容）</GoldenBooks_WspApiUrl>
+	<GoldenBooks_WspApiKey>书语 API Key（留空则用离线模板）</GoldenBooks_WspApiKey>
+	<GoldenBooks_WspModel>书语 模型名</GoldenBooks_WspModel>
+
+	<GoldenBooks_WspTitle>书语</GoldenBooks_WspTitle>
+	<GoldenBooks_WspSubtitle>爷爷题的名。妹妹嫌土，但每天都抢着写。</GoldenBooks_WspSubtitle>
+	<GoldenBooks_WspEmpty>书语尚无记录。等到日落，自有人执笔。</GoldenBooks_WspEmpty>
+	<GoldenBooks_WspEntryHeader>第{0}日</GoldenBooks_WspEntryHeader>
+	<GoldenBooks_WspByYan>执笔：颜执中</GoldenBooks_WspByYan>
+	<GoldenBooks_WspByMo>执笔：颜知夏</GoldenBooks_WspByMo>
+	<GoldenBooks_WspLetterLabel_Yan>书语·第{0}日（颜执中 执笔）</GoldenBooks_WspLetterLabel_Yan>
+	<GoldenBooks_WspLetterLabel_Mo>书语·第{0}日（颜知夏 执笔）</GoldenBooks_WspLetterLabel_Mo>
+
 	<GoldenBooks_MessageGodSpeed>{0} 使用了神行符，顿觉身轻如燕，脚下生风！</GoldenBooks_MessageGodSpeed>
 	<GoldenBooks_MessageInspirationSuccess>{0} 研读五经后茅塞顿开，获得了灵感：{1}！</GoldenBooks_MessageInspirationSuccess>
 	<GoldenBooks_MessageInspirationFail>{0} 研读了五经，但心浮气躁，未能领悟其中真意。</GoldenBooks_MessageInspirationFail>

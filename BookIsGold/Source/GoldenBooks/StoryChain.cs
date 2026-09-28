@@ -115,6 +115,7 @@ namespace GoldenBooksMod
         // 知夏入场：主通道（阈值）+ 兜底（天数）
         public void RegisterDismantle()
         {
+            GameComponent_BookWhispers.Get?.RecordDismantle();
             if (!GoldenBooksMod.settings.storyChainEnabled || zhixiaArrived || !executorArrived) return;
             dismantleCount++;
             if (dismantleCount >= GoldenBooksMod.settings.zhixiaThreshold) ArriveZhixia(false);
@@ -123,6 +124,7 @@ namespace GoldenBooksMod
         public void RegisterWorm()
         {
             RegisterDismantle();
+            GameComponent_BookWhispers.Get?.RecordWorm();
         }
 
         private void ArriveZhixia(bool fallback)

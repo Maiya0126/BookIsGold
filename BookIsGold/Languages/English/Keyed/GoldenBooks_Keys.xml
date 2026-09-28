@@ -35,6 +35,23 @@
 	<GoldenBooks_StoryChainTip>When disabled: story letters and spirit events will not trigger (pure gameplay mode).</GoldenBooks_StoryChainTip>
 	<GoldenBooks_ZhixiaThreshold>Moji arrival threshold (dismantles/worms)</GoldenBooks_ZhixiaThreshold>
 	<GoldenBooks_ZhixiaFallbackDays>Moji fallback days (after Yan Zhizhong arrives)</GoldenBooks_ZhixiaFallbackDays>
+
+	<GoldenBooks_WspToggle>Book Whispers (daily colony chronicle)</GoldenBooks_WspToggle>
+	<GoldenBooks_WspToggleTip>When disabled no daily entries are generated. With an API key configured the text is AI-generated; otherwise offline templates are used.</GoldenBooks_WspToggleTip>
+	<GoldenBooks_WspPersonaInject>RimTalk persona auto-injection</GoldenBooks_WspPersonaInject>
+	<GoldenBooks_WspPersonaInjectTip>When RimTalk is detected, automatically attach dedicated personas to Yan Zhizhong / Yan Zhixia / the true Yan Ru Yu / mortal Yan Ru Yu (existing personas are never overwritten).</GoldenBooks_WspPersonaInjectTip>
+	<GoldenBooks_WspApiUrl>Whispers API URL (OpenAI compatible)</GoldenBooks_WspApiUrl>
+	<GoldenBooks_WspApiKey>Whispers API Key (leave empty for offline templates)</GoldenBooks_WspApiKey>
+	<GoldenBooks_WspModel>Whispers model name</GoldenBooks_WspModel>
+
+	<GoldenBooks_WspTitle>Book Whispers</GoldenBooks_WspTitle>
+	<GoldenBooks_WspSubtitle>A name the grandfather chose. The granddaughter calls it old-fashioned — and fights her over the pen every day.</GoldenBooks_WspSubtitle>
+	<GoldenBooks_WspEmpty>No entries yet. Someone will take up the pen at sundown.</GoldenBooks_WspEmpty>
+	<GoldenBooks_WspEntryHeader>Day {0}</GoldenBooks_WspEntryHeader>
+	<GoldenBooks_WspByYan>by Yan Zhizhong</GoldenBooks_WspByYan>
+	<GoldenBooks_WspByMo>by Yan Zhixia</GoldenBooks_WspByMo>
+	<GoldenBooks_WspLetterLabel_Yan>Book Whispers · Day {0} (by Yan Zhizhong)</GoldenBooks_WspLetterLabel_Yan>
+	<GoldenBooks_WspLetterLabel_Mo>Book Whispers · Day {0} (by Yan Zhixia)</GoldenBooks_WspLetterLabel_Mo>
 	<GoldenBooks_MessageGodSpeed>{0} used the God Speed Talisman and feels light as a feather!</GoldenBooks_MessageGodSpeed>
 	<GoldenBooks_MessageInspirationSuccess>{0} read the Five Classics and gained an inspiration: {1}!</GoldenBooks_MessageInspirationSuccess>
 	<GoldenBooks_MessageInspirationFail>{0} read the Five Classics but felt too restless to gain any inspiration.</GoldenBooks_MessageInspirationFail>

@@ -67,6 +67,7 @@
     <Compile Include="Source\GoldenBooks\HarmonyPatches.cs" />
     <Compile Include="Source\GoldenBooks\StoryChain.cs" />
     <Compile Include="Source\GoldenBooks\BookSpirit.cs" />
+    <Compile Include="Source\GoldenBooks\BookWhispers.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="About\Preview.png" />

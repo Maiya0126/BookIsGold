@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<!-- 书灵纪：主界面「书语」按钮 -->
+	<MainButtonDef>
+		<defName>GoldenBooks_BookWhispers</defName>
+		<label>书语</label>
+		<description>书灵颜执中与颜知夏每日执笔的《殖民地书语》，记录殖民地的大小事。</description>
+		<workerClass>MainButtonWorker_ToggleTab</workerClass>
+		<tabWindowClass>GoldenBooksMod.MainTabWindow_BookWhispers</tabWindowClass>
+		<order>60</order>
+		<buttonVisible>true</buttonVisible>
+		<validWithoutMap>false</validWithoutMap>
+	</MainButtonDef>
+</Defs>
