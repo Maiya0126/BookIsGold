@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Golden Books v2.0「书灵纪」开发计划</title>
+<style>
+body{background:#1a1a2e;color:#e0e0e0;font-family:"Segoe UI","Noto Sans SC",sans-serif;line-height:1.7;max-width:1000px;margin:0 auto;padding:20px}
+h1{color:#c9a96e;border-bottom:2px solid #c9a96e40;padding-bottom:8px;font-size:1.7em}
+h2{color:#b8926a;margin-top:2em;font-size:1.3em}
+h3{color:#a08060;margin-top:1.2em}
+.card{background:#16213e;border:1px solid #2a3a5e;border-radius:10px;padding:16px 20px;margin:14px 0}
+.stage{border-left:4px solid #c9a96e}
+.done{border-left:4px solid #2d6a4f}
+.pending{border-left:4px solid #6b4c7a}
+table{width:100%;border-collapse:collapse;margin:10px 0}
+th{background:#2a3a5e;padding:6px 12px;text-align:left}
+td{padding:6px 12px;border-bottom:1px solid #2a3a5e}
+.badge{display:inline-block;border-radius:5px;padding:0 8px;font-size:0.75em;color:#fff;margin-left:6px}
+.badge.core{background:#2d6a4f}
+.badge.opt{background:#6b4c7a}
+code{background:#111827;padding:1px 5px;border-radius:3px;font-size:0.9em}
+ul{padding-left:1.2em}
+.footer{text-align:center;color:#666;font-size:0.85em;margin-top:3em}
+</style>
+</head>
+<body>
+
+<h1>Golden Books v2.0「书灵纪」开发计划</h1>
+<p style="color:#aaa">模组：书中自有黄金屋 · RimWorld 1.6 · 计划制定：2026-09-28</p>
+
+<div class="card">
+<p><strong>一句话概述</strong>：在不改动现有玩法（开局掉落《劝学诗》、劝学台、真·颜如玉召唤与死亡化书、普通书研读）的前提下，叠加一层完整的叙事：小说 + 剧情事件链 + 书灵角色 + AI 叙事者「书语」。</p>
+</div>
+
+<h2>核心设定（唯一来源文档：<code>Story/人物设定.md</code>）</h2>
+<div class="card">
+<table>
+<tr><th>角色</th><th>身份</th><th>要点</th></tr>
+<tr><td><strong>颜执中</strong>（号砚翁）</td><td>书灵爷爷 · 游戏内标签「书灵·颜执中」</td><td>前朝书院山长，固执守旧、半文半白、用典老派；"旧"是千年孤独里唯一抓住的锚；女儿病逝后与孙女以秘术相救未果，召唤出相像的书灵"真·颜如玉"，终自化为书灵</td></tr>
+<tr><td><strong>颜知夏</strong>（乳名墨叽）</td><td>书灵孙女 · 游戏内标签「书灵·颜知夏」</td><td>偷学秘术的天才少女，痴迷新事物、玩梗+颜文字、永远年轻——母亲走后她不肯让任何东西停在昨天；调皮乱来但天赋极高</td></tr>
+<tr><td><strong>真·颜如玉</strong></td><td>现有模组角色</td><td>与亡母相像的化身；<strong>种族与外形绝不描写</strong>（兼容玩家自定义种族）；造物如亲 + 血缘羁绊交织的情感核心</td></tr>
+</table>
+<p>· 命名原则：显示名用<strong>颜执中/颜知夏</strong>，与"真·颜如玉"同姓呼应，玩家见三个"颜"姓产生好奇→驱动读小说<br>
+· 历史锚点：宋真宗御制《劝学诗》流入颜氏书院成为秘术载体，写入小说<br>
+· 颜氏一族设定：自洽"凡人·颜如玉"=颜氏秘术的延续演绎<br>
+· RimTalk 人格各 ≤300 字（砚翁：半文言沉稳；墨叽：网感+梗+颜文字）</p>
+</div>
+
+<h2>阶段一 · 小说（进行中）</h2>
+<div class="card">
+<p><strong>《劝学诗里的千年灵——环世界·颜氏书灵物语》</strong>，章节体中篇约 2~2.5 万字（按"回"编号，可拆小黑盒连载）。</p>
+<ul>
+<li><code>Story/人物设定.md</code> —— 人物设定书（每人约 2000 字实际创作底本）</li>
+<li><code>Story/00_楔子.md</code> ~ <code>Story/21_尾声.md</code> —— 正文各回</li>
+<li><code>Story/html/build_html.ps1</code> —— 一键生成阅读版 HTML（复用变形记构建模式）</li>
+<li>现有物品全部入文：劝学诗、劝学台、黄金粟、神行符、古籍残卷、五经、书蠹、颜如玉、黄金屋配方</li>
+</ul>
+<p><strong>内置阅读</strong>：物品「颜氏手札」（知夏乱入事件后赠予）→ Gizmo 打开阅读窗（复用变形记 <code>Dialog_StoryReader</code> 模式），章节文本从模组目录 <code>Story/</code> 读取。</p>
+</div>
+
+<h2>阶段二 · 事件链 + 补给机制（现有玩法零改动）</h2>
+<div class="card">
+<h3>供给侧（让玩家有书可拆、知夏必能入场）</h3>
+<ul>
+<li>随机事件「落难书箱」：3~8 本普通书 + 概率残卷掉落殖民地附近</li>
+<li>普通书贸易权重提升</li>
+<li>独立事件「书蠹出没」：书蠹小群自发袭击，击败掉书/残卷——惩罚变补给</li>
+</ul>
+<h3>剧情链（全部挂在现有玩法触发点上）</h3>
+<table>
+<tr><th>#</th><th>触发</th><th>事件</th><th>内容</th></tr>
+<tr><td>1</td><td>开局掉落</td><td>开局信件重写</td><td>砚翁字条，落款"故人"</td></tr>
+<tr><td>2</td><td>劝学台首建</td><td>「书页微光」</td><td>纯叙事信件，书灵苏醒前兆</td></tr>
+<tr><td>3</td><td>首次诵读</td><td>颜执中现身</td><td>爷爷早来 + 真·颜如玉降临信件重写</td></tr>
+<tr><td>4</td><td>真·颜如玉死亡化书</td><td>「颜执中的手书」</td><td>哀而不伤 + 书蠹开始出没（征兆）</td></tr>
+<tr><td>5</td><td>三通道任一</td><td>「颜知夏乱入」</td><td>主：拆书/书蠹阈值；兜底：执中入驻后默认 6 天必到（可调）；彩蛋：兜底入场附赠一小箱"顺来的书"</td></tr>
+<tr><td>6</td><td>双灵入驻</td><td>解锁「书语」</td><td>每日信件 + Tab；阈值/天数可调，事件链可整体关闭</td></tr>
+</table>
+</div>
+
+<h2>阶段三 · 书灵角色</h2>
+<div class="card">
+<ul>
+<li>书页精灵造型：颜执中=半卷鎏金厚重古书；颜知夏=轻巧册页小书（AI 辅助生成贴图 + 手工调整）</li>
+<li>数值：低血量、高闪避、高移速、脱战再生 Hediff；高易燃怕火、淋湿负面 Hediff 怕水</li>
+<li>双光环（半径 9.9 格）：<strong>讲学</strong>（研究速度+15%/学习经验+20%/心情+3）｜<strong>闹书房</strong>（心情+8/娱乐+25%/灵感概率）</li>
+<li>驯养互动：可逗弄/训练；殖民者在其身边阅读获得额外学习经验</li>
+<li>RimTalk 人格两套 + 声连（复用变形记 VocalLinkImplant 方案）</li>
+<li><code>spawnable=false</code>，不入野外/势力池，仅事件生成</li>
+</ul>
+</div>
+
+<h2>阶段四 · AI 叙事者「书语」</h2>
+<div class="card">
+<ul>
+<li>三级接入：检测 RimTalk → 复用其连接；无则读模组设置自填 API（OpenAI 兼容）；都不可用则离线模板文案库（双风格预写）</li>
+<li>双人格 Prompt 锚定 <code>Story/人物设定.md</code>：颜执中半文言沉稳如官修史书；颜知夏网感+梗+颜文字</li>
+<li>数据采集：当日袭击/死亡/婚恋/诞生/丰收/心情极值/天气等 → 摘要喂 LLM</li>
+<li>呈现：每日信件推送 + 主界面 Tab「书语」（Book Whispers）存档全部记录，随存档保存</li>
+</ul>
+</div>
+
+<h2>阶段五 · 发布配套</h2>
+<div class="card">
+<ul>
+<li>About/版本历史更新、<code>mod_features.html</code> 重写</li>
+<li>创意工坊简介（steam-workshop BBCode 规范）</li>
+<li>小黑盒连载素材（各回独立 + 视频字幕模板可选）</li>
+</ul>
+</div>
+
+<div class="footer">
+<p>Golden Books「书中自有黄金屋」v2.0 · by Maiya0126</p>
+</div>
+</body>
+</html>
