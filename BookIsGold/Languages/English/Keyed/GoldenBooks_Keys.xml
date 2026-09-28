@@ -6,7 +6,35 @@
 	<GoldenBooks_LetterLabel>Book Spirit Arrives</GoldenBooks_LetterLabel>
 	<GoldenBooks_LetterText>As you turn the final page, a golden light bursts forth. A figure in ancient attire steps out from the book.\n\nShe is {0} (Race: {1}), a companion born of words and wisdom.\n\n"I pledge my eternal loyalty to you, my reader."</GoldenBooks_LetterText>
 	<GoldenBooks_GiftLabel>Gift of Knowledge</GoldenBooks_GiftLabel>
-	<GoldenBooks_GiftText>A mysterious oriental power blesses this land. A glowing book and resources have appeared nearby.\n\nThis is the "Quan Xue Shi". Use it to build an Arcane Lectern and begin your journey.</GoldenBooks_GiftText>
+	<GoldenBooks_GiftText>A mysterious oriental power blesses this land. A glowing book and resources have appeared nearby.\n\nThis is the "Quan Xue Shi". Use it to build an Arcane Lectern and begin your journey.\n\nTucked inside the cover is a note, written in a stern, engraved hand:\n\n"To a kindred spirit. May you dwell in peace. — An old friend"</GoldenBooks_GiftText>
+
+	<GoldenBooks_TrueSpiritLabel>Yan Ru Yu Emerges</GoldenBooks_TrueSpiritLabel>
+	<GoldenBooks_TrueSpiritText>Golden light bursts forth as the four verses glow in unison. A figure steps out from the poem.\n\nShe is {0} (Race: {1}) — a book spirit forged a thousand years ago by an unfinished art and the verse "In books there are beauties as jade".\n\nThere seems to be a faint echo of someone old in her eyes, though she herself does not know it.\n\nMeanwhile, you notice the Quan Xue Shi on the lectern trembling — someone else still lives within its pages.</GoldenBooks_TrueSpiritText>
+
+	<GoldenBooks_PageGlowLabel>Glow of Pages</GoldenBooks_PageGlowLabel>
+	<GoldenBooks_PageGlowText>The moment the lectern stood complete, the Quan Xue Shi resting upon it gave a soft tremble.\n\nA faint glow seeps from between the pages, like candlelight beneath paper. Someone leaning close swears they heard the faint rustle of pages deep within —\n\nAs if something inside has begun to wake.</GoldenBooks_PageGlowText>
+
+	<GoldenBooks_ExecutorLabel>The Old Friend Appears</GoldenBooks_ExecutorLabel>
+	<GoldenBooks_ExecutorText>From deep within the pages, ink swirls and gathers into brow and robe. An elder bearing a scroll steps out of the Quan Xue Shi and stands upon the lectern.\n\n"I am Yan Zhizhong, headmaster of an academy of old. A thousand years I mailed this book, seeking one worthy — and here there are books, a lectern, and those willing to read. Even at the edge of the world, this is a hall of learning."\n\n"From this day forth, we shall dwell here."\n\n(Book spirit Yan Zhizhong has joined: research and learning are enhanced near him.)</GoldenBooks_ExecutorText>
+	<GoldenBooks_ExecutorNoDefText>From deep within the pages, ink swirls. A steady voice drifts from the paper: "I am Yan Zhizhong, headmaster of an academy of old. A thousand years I mailed this book, seeking one worthy — and here there are books, a lectern, and those willing to read."\n\n"From this day forth, we shall dwell here."\n\n(His form still rests within the book; for now he accompanies this place as living ink.)</GoldenBooks_ExecutorNoDefText>
+
+	<GoldenBooks_HandNoteLabel>A Note from Yan Zhizhong</GoldenBooks_HandNoteLabel>
+	<GoldenBooks_HandNoteText>In the aftermath, Yan Ru Yu's form fades, sinking back into the pages of the Quan Xue Shi — a book spirit is fed by devotion, and the cries and blood of battle drain it most.\n\nA note appears at the corner of the lectern, its strokes heavier than usual:\n\n"To the master of this place: Ru Yu rests within the book. She is not gone. Worry not.\n\nI have walked a thousand years and grown well acquainted with the words 'too late'. So let me leave you this —\n\nWhile the people of this place yet live, look upon them once more. When they are gone, no heap of golden millet can read them back.\n\n— Yan Zhizhong"\n\n(From now on, bookworms will follow the scent of books. Watch the wilderness.)</GoldenBooks_HandNoteText>
+
+	<GoldenBooks_ZhixiaLabel>Moji Barges In</GoldenBooks_ZhixiaLabel>
+	<GoldenBooks_ZhixiaText>A rustle of pages draws near — golden light bursts as a small book with curled corners and paper scraps tucked inside pops out of a book pile!\n\n"Grandpa! I'm out! A THOUSAND years! Do you know how long a thousand years is?!"\n\nBook spirit Yan Zhixia, nickname Moji, granddaughter of Yan Zhizhong and a genius who stole the family art. She declares this colony "hers to look after" and immediately nicknames everyone present.\n\n(Yan Zhixia has joined: mood and recreation are enhanced near her. She also gifts the "Yan Clan Handbook", in which the thousand-year tale of the Yan clan may be read at any time.)</GoldenBooks_ZhixiaText>
+	<GoldenBooks_ZhixiaFallbackText>Following her grandfather's scent, a rustle of pages draws near — golden light bursts as a small book with curled corners lands right in the middle of the colony!\n\n"Found you at last! You ran THIS far and didn't even tell me, you old fossil!!"\n\nBook spirit Yan Zhixia, nickname Moji, granddaughter of Yan Zhizhong. She 'bookmarked' this treasure of a colony a thousand years ago, and has finally followed the trail here. From "along the way" she procured a small crate of books — a gift, she says, "for the bosses who still have nothing to dismantle".\n\n(Yan Zhixia has joined: mood and recreation are enhanced near her. She also gifts the "Yan Clan Handbook", in which the thousand-year tale of the Yan clan may be read at any time.)</GoldenBooks_ZhixiaFallbackText>
+
+	<GoldenBooks_BookBoxLabel>Lost Crate of Books</GoldenBooks_BookBoxLabel>
+	<GoldenBooks_BookBoxText>A speck of golden light falls near the colony — a crate of scattered books.\n\nNo one knows where they came from. Some say a caravan lost them; others say they are pages scattered by a thousand years of the Yan clan's art, gathered anew.\n\nWhatever the origin — books are books. And books can be read.</GoldenBooks_BookBoxText>
+
+	<GoldenBooks_WormSwarmLabel>Bookworms on the Move</GoldenBooks_WormSwarmLabel>
+	<GoldenBooks_WormSwarmText>A swarm of glossy bookworms drags a creaking crate of books toward the colony!\n\nOld retainers of the academy, they have followed books for a thousand years — and their bellies hold a millennium's worth of devoured pages, along with a "gift" they drag behind them.\n\nDefeat them and reclaim the books. Careful — the worms are maddened.</GoldenBooks_WormSwarmText>
+
+	<GoldenBooks_StoryChainToggle>Book Spirit Chronicle (story chain)</GoldenBooks_StoryChainToggle>
+	<GoldenBooks_StoryChainTip>When disabled: story letters and spirit events will not trigger (pure gameplay mode).</GoldenBooks_StoryChainTip>
+	<GoldenBooks_ZhixiaThreshold>Moji arrival threshold (dismantles/worms)</GoldenBooks_ZhixiaThreshold>
+	<GoldenBooks_ZhixiaFallbackDays>Moji fallback days (after Yan Zhizhong arrives)</GoldenBooks_ZhixiaFallbackDays>
 	<GoldenBooks_MessageGodSpeed>{0} used the God Speed Talisman and feels light as a feather!</GoldenBooks_MessageGodSpeed>
 	<GoldenBooks_MessageInspirationSuccess>{0} read the Five Classics and gained an inspiration: {1}!</GoldenBooks_MessageInspirationSuccess>
 	<GoldenBooks_MessageInspirationFail>{0} read the Five Classics but felt too restless to gain any inspiration.</GoldenBooks_MessageInspirationFail>

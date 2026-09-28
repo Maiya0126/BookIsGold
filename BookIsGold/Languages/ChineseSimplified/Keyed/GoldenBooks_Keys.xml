@@ -8,7 +8,35 @@
 	<GoldenBooks_LetterText>当你翻过古籍的最后一页，金光乍现。一位身着古装的女子从书中缓缓走出。\n\n她是{0}（种族：{1}），自书中诞生的伴侣。\n\n“三千弱水，只取一瓢饮。君若不弃，妾愿生死相随。”</GoldenBooks_LetterText>
 
 	<GoldenBooks_GiftLabel>天赐书香</GoldenBooks_GiftLabel>
-	<GoldenBooks_GiftText>你感觉到一股神秘的东方力量眷顾了此地。一本闪烁着金光的古籍和一些基础建材凭空出现在了附近。\n\n这是《劝学诗》，利用它建造【劝学台】，开启你的求知之旅吧。</GoldenBooks_GiftText>
+	<GoldenBooks_GiftText>你感觉到一股神秘的东方力量眷顾了此地。一本闪烁着金光的古籍和一些基础建材凭空出现在了附近。\n\n这是《劝学诗》，利用它建造【劝学台】，开启你的求知之旅吧。\n\n书的封皮里还夹着一张字条，字迹端方严整，像刻出来的：\n\n“书赠有缘。谨祝安居。——故人”</GoldenBooks_GiftText>
+
+	<GoldenBooks_TrueSpiritLabel>书中自有颜如玉</GoldenBooks_TrueSpiritLabel>
+	<GoldenBooks_TrueSpiritText>金光乍现，四句“书中自有”齐齐亮起。一位身影从诗中缓缓走出。\n\n她是{0}（种族：{1}）——千年前一场未竟的秘术，与一句“书中自有颜如玉”共同铸就的书灵。\n\n她眉眼间似乎有些旧年的影子，但她自己并不知道。\n\n同时，你注意到劝学台上的《劝学诗》书页轻颤——书里，还有别的人。</GoldenBooks_TrueSpiritText>
+
+	<GoldenBooks_PageGlowLabel>书页微光</GoldenBooks_PageGlowLabel>
+	<GoldenBooks_PageGlowText>劝学台立起来的那一刻，放在台上的《劝学诗》忽然轻轻震了一下。\n\n书页间透出一丝微光，似有似无，像烛火落在纸底。有谁凑近细看，隐约听见纸页深处传来极轻的、册页翻动的响动——\n\n像是有什么东西，在里面苏醒了。</GoldenBooks_PageGlowText>
+
+	<GoldenBooks_ExecutorLabel>故人现身</GoldenBooks_ExecutorLabel>
+	<GoldenBooks_ExecutorText>书页深处，墨迹翻涌，凝成眉眼衣冠。一位执着书卷的老者从《劝学诗》中走出，立于劝学台前。\n\n“老朽颜执中，前朝书院山长。寄书千年，只为择一有缘——今观此地，有书，有台，有人肯读。纵是边地，亦是杏坛。”\n\n“自今日始，老朽便在此间长住了。”\n\n（书灵·颜执中已入驻：他附近的研究与学习将获得加成。）</GoldenBooks_ExecutorText>
+	<GoldenBooks_ExecutorNoDefText>书页深处，墨迹翻涌。一个沉稳的声音自纸间传来：“老朽颜执中，前朝书院山长。寄书千年，只为择一有缘——今观此地，有书，有台，有人肯读。”\n\n“自今日始，老朽便在此间长住了。”\n\n（书灵本体尚在书中将养，他暂时以墨迹形态陪伴此地。）</GoldenBooks_ExecutorNoDefText>
+
+	<GoldenBooks_HandNoteLabel>颜执中的手书</GoldenBooks_HandNoteLabel>
+	<GoldenBooks_HandNoteText>战后清点，颜如玉的身影淡去，沉回《劝学诗》的纸页深处——书灵之躯心念所养，哭声与血气最耗心念。\n\n台角多了一张字条，落笔比平日重些：\n\n“东家钧鉴：如玉归书将养，非亡故，勿念。\n\n老朽行走千年，看惯了‘来不及’三个字。故有一言，赠与诸位——\n\n此地之人，活着的时候，多看两眼。死了，再多的金粟，也读不回来了。\n\n——颜执中 白”\n\n（自此刻起，书蠹将循书而来。留意旷野的动静。）</GoldenBooks_HandNoteText>
+
+	<GoldenBooks_ZhixiaLabel>墨叽乱入</GoldenBooks_ZhixiaLabel>
+	<GoldenBooks_ZhixiaText>一阵哗啦哗啦的翻页声由远及近——金光乍现，一册页角翘起、夹满小纸片的小书从书堆里炸了出来！\n\n“爷爷！我出门啦！一千年！你们知道一千年是多久吗！！”\n\n书灵·颜知夏，乳名墨叽，颜执中之孙女，偷学秘术的天才。她声称这个殖民地“归她罩了”，并当场给在场所有人起了外号。\n\n（颜知夏已入驻：她附近的心情与娱乐将获得加成。同时，她赠出一部【颜氏手札】，可随时翻阅颜氏一族千年的故事。）</GoldenBooks_ZhixiaText>
+	<GoldenBooks_ZhixiaFallbackText>循着爷爷的气息，一阵哗啦哗啦的翻页声由远及近——金光乍现，一册页角翘起、夹满小纸片的小书落在了殖民地中央！\n\n“可算找到了！老古董你跑这么远也不说一声！！”\n\n书灵·颜知夏，乳名墨叽，颜执中之孙女。她千年前就 mark 了这个“宝藏号”，如今终于循迹而来。她随手从“路上”顺来了一小箱书——说是给“还没书拆的老板们”的见面礼。\n\n（颜知夏已入驻：她附近的心情与娱乐将获得加成。同时，她赠出一部【颜氏手札】，可随时翻阅颜氏一族千年的故事。）</GoldenBooks_ZhixiaFallbackText>
+
+	<GoldenBooks_BookBoxLabel>落难书箱</GoldenBooks_BookBoxLabel>
+	<GoldenBooks_BookBoxText>夜色里，一点金光坠落在殖民地附近——是一箱散落的书本。\n\n书的来历无人知晓：有人说是过往商队遗落的，有人说是颜氏秘术千年间散落的书页聚成的。\n\n不论来历——有书，就能读。</GoldenBooks_BookBoxText>
+
+	<GoldenBooks_WormSwarmLabel>书蠹出没</GoldenBooks_WormSwarmLabel>
+	<GoldenBooks_WormSwarmText>一群油壳书蠹拖着一只吱呀作响的书箱，浩浩荡荡逼近了殖民地！\n\n它们是书院的旧部，循书千年——如今它们腹中养着吃了一千年的字纸，也拖来了“见面礼”。\n\n击败它们，夺回书籍。小心，书蠹已被血气激怒。</GoldenBooks_WormSwarmText>
+
+	<GoldenBooks_StoryChainToggle>书灵纪剧情事件链</GoldenBooks_StoryChainToggle>
+	<GoldenBooks_StoryChainTip>关闭后：剧情信件与书灵事件不再触发，纯玩法模式。</GoldenBooks_StoryChainTip>
+	<GoldenBooks_ZhixiaThreshold>知夏乱入阈值（拆书/书蠹次数）</GoldenBooks_ZhixiaThreshold>
+	<GoldenBooks_ZhixiaFallbackDays>知夏兜底天数（颜执中入驻后）</GoldenBooks_ZhixiaFallbackDays>
 
 	<GoldenBooks_MessageGodSpeed>{0} 使用了神行符，顿觉身轻如燕，脚下生风！</GoldenBooks_MessageGodSpeed>
 	<GoldenBooks_MessageInspirationSuccess>{0} 研读五经后茅塞顿开，获得了灵感：{1}！</GoldenBooks_MessageInspirationSuccess>
