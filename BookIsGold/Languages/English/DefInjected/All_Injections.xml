@@ -1,5 +1,27 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
+	<!-- 书灵纪：种族 / 状态 / 事件 -->
+	<GoldenBooks_BookSpirit_Yanzhongzhong.label>Book Spirit · Yan Zhizhong</GoldenBooks_BookSpirit_Yanzhongzhong.label>
+	<GoldenBooks_BookSpirit_Yanzhongzhong.description>A half-unrolled gilded tome, worn at the cover, its spine mended a dozen times with golden thread. Yan Zhizhong, courtesy-name Yanweng — headmaster of an academy of old, a book spirit for nearly a thousand years, faithful to the old creed "books never lie".\n\n[Aura · Lecture] Colonists within 9.9 tiles: Research Speed +15%, Learning +20%, Mood +3\n[Spirit Body] Low HP but very high dodge; slowly regenerates out of combat. Highly flammable — keep away from fire and rain!\n\nArrives only through story events; never appears in the wild.</GoldenBooks_BookSpirit_Yanzhongzhong.description>
+
+	<GoldenBooks_BookSpirit_Zhixia.label>Book Spirit · Yan Zhixia</GoldenBooks_BookSpirit_Zhixia.label>
+	<GoldenBooks_BookSpirit_Zhixia.description>A light little booklet with curled page corners, stuffed with candy wrappers, ticket stubs and scraps of paper from who-knows-when. Yan Zhixia, nickname Moji, granddaughter of Yan Zhizhong — a genius who stole the family art, forever twelve and a half.\n\n[Aura · Rowdy Study] Colonists within 9.9 tiles: Mood +8, Learning +10%, Mental Break Threshold -5%\n[Spirit Body] Low HP but very high dodge; slowly regenerates out of combat. Highly flammable — keep away from fire and rain!\n\nArrives only through story events; never appears in the wild.</GoldenBooks_BookSpirit_Zhixia.description>
+
+	<GoldenBooks_LectureAura.label>In the Master's Presence</GoldenBooks_LectureAura.label>
+	<GoldenBooks_LectureAura.description>Book spirit Yan Zhizhong lectures nearby; insight flows freely and scholarship deepens.</GoldenBooks_LectureAura.description>
+
+	<GoldenBooks_NoiseStudyAura.label>Rowdy Study Hall</GoldenBooks_NoiseStudyAura.label>
+	<GoldenBooks_NoiseStudyAura.description>Book spirit Yan Zhixia frolics nearby; gloom melts away and spirits lift.</GoldenBooks_NoiseStudyAura.description>
+
+	<GoldenBooks_SoakedBook.label>Soaked Pages</GoldenBooks_SoakedBook.label>
+	<GoldenBooks_SoakedBook.description>The book spirit is drenched, every page heavy with water. Find shelter from the rain!</GoldenBooks_SoakedBook.description>
+
+	<GoldenBooks_LostBookBox.label>Lost Crate of Books</GoldenBooks_LostBookBox.label>
+	<GoldenBooks_LostBookBox.description>A crate of scattered books delivered by a mysterious force.</GoldenBooks_LostBookBox.description>
+
+	<GoldenBooks_WormSwarm.label>Bookworms on the Move</GoldenBooks_WormSwarm.label>
+	<GoldenBooks_WormSwarm.description>A swarm of bookworms drags a crate of books toward the colony.</GoldenBooks_WormSwarm.description>
+
 	<GoldenBooks_ArcaneLectern.label>Arcane Lectern</GoldenBooks_ArcaneLectern.label>
 	<GoldenBooks_ArcaneLectern.description>A mysterious lectern used for studying and dismantling books.\n\n[Mechanics]\n1. High-value books (&gt;400) have a high chance to yield treasures.\n2. Cheap books (&lt;400) often fail but yield [Book Fragments].\n3. Dismantling old books has a small chance to disturb a [Bookworm] (Hostile).\n\n"In books, one finds houses of gold and faces as fair as jade."</GoldenBooks_ArcaneLectern.description>
 

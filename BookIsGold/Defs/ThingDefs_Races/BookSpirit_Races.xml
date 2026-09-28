@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<!-- 书灵纪：书灵种族（颜执中 / 颜知夏） -->
+	<!-- 仅由剧情事件生成：不入野外、不入势力、不进贸易 -->
+
+	<ThingDef Name="GoldenBooks_BookSpiritBase" Abstract="True">
+		<category>Pawn</category>
+		<thingClass>Pawn</thingClass>
+		<altitudeLayer>Pawn</altitudeLayer>
+		<selectable>true</selectable>
+		<hasTooltip>true</hasTooltip>
+		<drawGUIOverlay>true</drawGUIOverlay>
+		<drawHighlight>true</drawHighlight>
+		<useHitPoints>false</useHitPoints>
+		<tickerType>Normal</tickerType>
+		<soundImpactDefault>BulletImpact_Flesh</soundImpactDefault>
+		<comps>
+			<li>
+				<compClass>CompAttachBase</compClass>
+			</li>
+		</comps>
+		<inspectorTabs>
+			<li>ITab_Pawn_Health</li>
+			<li>ITab_Pawn_Needs</li>
+			<li>ITab_Pawn_Character</li>
+			<li>ITab_Pawn_Training</li>
+			<li>ITab_Pawn_Social</li>
+			<li>ITab_Pawn_Gear</li>
+			<li>ITab_Pawn_Log</li>
+		</inspectorTabs>
+		<race>
+			<renderTree>Animal</renderTree>
+			<thinkTreeMain>Animal</thinkTreeMain>
+			<thinkTreeConstant>AnimalConstant</thinkTreeConstant>
+			<hasGenders>false</hasGenders>
+			<trainability>Advanced</trainability>
+			<wildness>0</wildness>
+			<petness>1.0</petness>
+			<herdAnimal>false</herdAnimal>
+			<predator>false</predator>
+			<canBePredatorPrey>false</canBePredatorPrey>
+			<hediffGiverSets>
+				<li>OrganicStandard</li>
+			</hediffGiverSets>
+			<body>QuadrupedAnimalWithPawsAndTail</body>
+			<baseBodySize>0.45</baseBodySize>
+			<baseHungerRate>0.08</baseHungerRate>
+			<baseHealthScale>0.35</baseHealthScale>
+			<foodType>VegetarianRoughAnimal</foodType>
+			<lifeExpectancy>9000</lifeExpectancy>
+			<lifeStageAges>
+				<li>
+					<def>AnimalAdult</def>
+					<minAge>0</minAge>
+				</li>
+			</lifeStageAges>
+			<soundMeleeHitPawn>Pawn_Melee_SmallScratch_HitPawn</soundMeleeHitPawn>
+			<soundMeleeHitBuilding>Pawn_Melee_SmallScratch_HitBuilding</soundMeleeHitBuilding>
+			<soundMeleeMiss>Pawn_Melee_SmallScratch_Miss</soundMeleeMiss>
+			<headPosPerRotation>
+				<li>(0.0, 0, 0.07)</li>
+				<li>(0.19, 0, 0)</li>
+				<li>(0.0, 0, -0.07)</li>
+				<li>(-0.19, 0, 0)</li>
+			</headPosPerRotation>
+		</race>
+		<recipes>
+			<li>Euthanize</li>
+			<li>Anesthetize</li>
+			<li>CureScaria</li>
+			<li>Sterilize</li>
+		</recipes>
+		<statBases>
+			<Mass>0.8</Mass>
+			<Flammability>2.0</Flammability>
+			<ToxicResistance>1.0</ToxicResistance>
+			<MoveSpeed>6.5</MoveSpeed>
+			<MarketValue>8000</MarketValue>
+			<ComfyTemperatureMin>-60</ComfyTemperatureMin>
+			<ComfyTemperatureMax>45</ComfyTemperatureMax>
+			<ArmorRating_Sharp>0.30</ArmorRating_Sharp>
+			<ArmorRating_Blunt>0.30</ArmorRating_Blunt>
+			<ArmorRating_Heat>-0.20</ArmorRating_Heat>
+			<PainShockThreshold>0.9</PainShockThreshold>
+			<MeleeDodgeChance>0.45</MeleeDodgeChance>
+			<Wildness>0</Wildness>
+		</statBases>
+		<uiIconScale>1.5</uiIconScale>
+	</ThingDef>
+
+	<!-- 书灵·颜执中：鎏金古卷，讲学光环 -->
+	<ThingDef ParentName="GoldenBooks_BookSpiritBase">
+		<defName>GoldenBooks_BookSpirit_Yanzhongzhong</defName>
+		<label>书灵·颜执中</label>
+		<description>半卷厚重的鎏金古书，封皮磨旧，书脊以金线修补过十几次。前朝书院山长颜执中，号砚翁——化灵近千年，恪守“书不曾欺人”的旧训。\n\n【光环·讲学】周围9.9格内殖民者：研究速度+15%、学习+20%、心情+3\n【书灵之躯】血量低但闪避极高，脱战缓慢再生；极易燃——务必远离火源与雨水！\n\n他只由剧情事件降临，不会出现在野外。</description>
+		<graphicData>
+			<texPath>Things/Pawn/Animal/GoldenBooks_BookSpirit_Yanzhongzhong</texPath>
+			<graphicClass>Graphic_Multi</graphicClass>
+			<drawSize>(1.3, 1.3)</drawSize>
+			<color>(255, 235, 180)</color>
+		</graphicData>
+		<comps>
+			<li Class="GoldenBooksMod.CompProperties_BookSpirit">
+				<auraHediff>GoldenBooks_LectureAura</auraHediff>
+				<waterHediff>GoldenBooks_SoakedBook</waterHediff>
+			</li>
+		</comps>
+		<tools>
+			<li>
+				<label>卷击</label>
+				<capacities>
+					<li>Blunt</li>
+				</capacities>
+				<power>3.5</power>
+				<cooldownTime>2</cooldownTime>
+				<linkedBodyPartsGroup>HeadAttackTool</linkedBodyPartsGroup>
+				<ensureLinkedBodyPartsGroupAlwaysUsable>true</ensureLinkedBodyPartsGroupAlwaysUsable>
+			</li>
+		</tools>
+	</ThingDef>
+
+	<!-- 书灵·颜知夏：轻巧册页，闹书房光环 -->
+	<ThingDef ParentName="GoldenBooks_BookSpiritBase">
+		<defName>GoldenBooks_BookSpirit_Zhixia</defName>
+		<label>书灵·颜知夏</label>
+		<description>一册轻巧的册页小书，页角翘起，夹着糖纸、票根和不知哪个时代的小纸片。颜执中的孙女颜知夏，乳名墨叽——偷学秘术的天才，永远十二岁半。\n\n【光环·闹书房】周围9.9格内殖民者：心情+8、学习+10%、精神崩溃阈值-5%\n【书灵之躯】血量低但闪避极高，脱战缓慢再生；极易燃——务必远离火源与雨水！\n\n她只由剧情事件降临，不会出现在野外。</description>
+		<graphicData>
+			<texPath>Things/Pawn/Animal/GoldenBooks_BookSpirit_Zhixia</texPath>
+			<graphicClass>Graphic_Multi</graphicClass>
+			<drawSize>(1.1, 1.1)</drawSize>
+			<color>(210, 230, 255)</color>
+		</graphicData>
+		<comps>
+			<li Class="GoldenBooksMod.CompProperties_BookSpirit">
+				<auraHediff>GoldenBooks_NoiseStudyAura</auraHediff>
+				<waterHediff>GoldenBooks_SoakedBook</waterHediff>
+			</li>
+		</comps>
+		<tools>
+			<li>
+				<label>页击</label>
+				<capacities>
+					<li>Blunt</li>
+				</capacities>
+				<power>3.5</power>
+				<cooldownTime>2</cooldownTime>
+				<linkedBodyPartsGroup>HeadAttackTool</linkedBodyPartsGroup>
+				<ensureLinkedBodyPartsGroupAlwaysUsable>true</ensureLinkedBodyPartsGroupAlwaysUsable>
+			</li>
+		</tools>
+	</ThingDef>
+</Defs>

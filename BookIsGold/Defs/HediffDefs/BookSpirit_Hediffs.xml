@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<!-- 书灵纪：书灵光环与状态 -->
+
+	<!-- 砚翁光环：讲学 -->
+	<HediffDef>
+		<defName>GoldenBooks_LectureAura</defName>
+		<label>如坐春风</label>
+		<description>书灵·颜执中在身旁讲学，思如泉涌，学术精进。</description>
+		<hediffClass>HediffWithComps</hediffClass>
+		<defaultLabelColor>(1, 0.85, 0.4)</defaultLabelColor>
+		<isBad>false</isBad>
+		<stages>
+			<li>
+				<becomeVisible>true</becomeVisible>
+				<baseMoodEffect>3</baseMoodEffect>
+				<statOffsets>
+					<ResearchSpeed>0.15</ResearchSpeed>
+					<GlobalLearningFactor>0.20</GlobalLearningFactor>
+				</statOffsets>
+			</li>
+		</stages>
+		<comps>
+			<li Class="HediffCompProperties_Disappears">
+				<disappearsAfterTicks>
+					<min>300</min>
+					<max>300</max>
+				</disappearsAfterTicks>
+				<showRemainingTime>false</showRemainingTime>
+			</li>
+		</comps>
+	</HediffDef>
+
+	<!-- 墨叽光环：闹书房 -->
+	<HediffDef>
+		<defName>GoldenBooks_NoiseStudyAura</defName>
+		<label>闹书房</label>
+		<description>书灵·颜知夏在身旁闹腾，苦闷尽消，气氛正好。</description>
+		<hediffClass>HediffWithComps</hediffClass>
+		<defaultLabelColor>(0.7, 0.85, 1)</defaultLabelColor>
+		<isBad>false</isBad>
+		<stages>
+			<li>
+				<becomeVisible>true</becomeVisible>
+				<baseMoodEffect>8</baseMoodEffect>
+				<statOffsets>
+					<GlobalLearningFactor>0.10</GlobalLearningFactor>
+					<MentalBreakThreshold>-0.05</MentalBreakThreshold>
+				</statOffsets>
+			</li>
+		</stages>
+		<comps>
+			<li Class="HediffCompProperties_Disappears">
+				<disappearsAfterTicks>
+					<min>300</min>
+					<max>300</max>
+				</disappearsAfterTicks>
+				<showRemainingTime>false</showRemainingTime>
+			</li>
+		</comps>
+	</HediffDef>
+
+	<!-- 怕水：淋湿的纸页 -->
+	<HediffDef>
+		<defName>GoldenBooks_SoakedBook</defName>
+		<label>淋湿的纸页</label>
+		<description>书灵淋了雨，浑身纸页湿透，步履沉重。快找地方避雨！</description>
+		<hediffClass>HediffWithComps</hediffClass>
+		<defaultLabelColor>(0.4, 0.6, 0.9)</defaultLabelColor>
+		<isBad>true</isBad>
+		<stages>
+			<li>
+				<becomeVisible>true</becomeVisible>
+				<statOffsets>
+					<MoveSpeed>-1.5</MoveSpeed>
+				</statOffsets>
+				<capMods>
+					<li>
+						<capacity>Consciousness</capacity>
+						<offset>-0.10</offset>
+					</li>
+				</capMods>
+			</li>
+		</stages>
+		<comps>
+			<li Class="HediffCompProperties_Disappears">
+				<disappearsAfterTicks>
+					<min>1500</min>
+					<max>1500</max>
+				</disappearsAfterTicks>
+				<showRemainingTime>true</showRemainingTime>
+			</li>
+		</comps>
+	</HediffDef>
+</Defs>

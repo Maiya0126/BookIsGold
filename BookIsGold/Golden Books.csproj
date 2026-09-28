@@ -66,6 +66,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Source\GoldenBooks\HarmonyPatches.cs" />
     <Compile Include="Source\GoldenBooks\StoryChain.cs" />
+    <Compile Include="Source\GoldenBooks\BookSpirit.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="About\Preview.png" />
