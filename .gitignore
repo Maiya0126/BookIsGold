@@ -12,3 +12,4 @@ BookIsGold/1.6/Assemblies/*.pdb
 ## 临时文件
 *.tmp
 Thumbs.db
+BookIsGold/obj/
