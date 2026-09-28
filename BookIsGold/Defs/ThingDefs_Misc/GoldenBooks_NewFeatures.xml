@@ -1,0 +1,373 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+	<ThoughtDef>
+		<defName>GoldenBooks_KnowledgeSatiated</defName>
+		<durationDays>0.8</durationDays>
+		<stackLimit>1</stackLimit>
+		<stages>
+			<li>
+				<label>腹有诗书</label>
+				<description>吃下的每一粒粟米都仿佛化作了知识流淌在血液里。这种来自精神层面的饱腹感让人感到无比充实。</description>
+				<baseMoodEffect>5</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
+
+	<ThingDef ParentName="ResourceBase">
+		<defName>GoldenBooks_GoldenMillet</defName>
+		<label>黄金粟</label>
+		<description>“富家不用买良田，书中自有千钟粟。”\n\n通过书籍提炼出的神秘谷物，颗颗饱满如金珠。它美味可口，且永远不会腐烂。</description>
+		<graphicData>
+			<texPath>Things/Item/Resource/Gold</texPath>
+			<graphicClass>Graphic_StackCount</graphicClass>
+			<color>(255, 215, 0)</color>
+			<drawSize>0.7</drawSize>
+		</graphicData>
+		<statBases>
+			<MarketValue>2</MarketValue>
+			<Mass>0.03</Mass>
+			<Nutrition>0.05</Nutrition>
+		</statBases>
+		<tickerType>Normal</tickerType>
+		<ingestible>
+			<preferability>RawTasty</preferability>
+			<tasteThought>AteFineMeal</tasteThought>
+			<foodType>Processed</foodType>
+			<joy>0.1</joy>
+			<joyKind>Gluttonous</joyKind>
+			<ingestEffect>EatVegetarian</ingestEffect>
+			<ingestSound>Meal_Eat</ingestSound>
+			<tasteThought>GoldenBooks_KnowledgeSatiated</tasteThought>
+		</ingestible>
+		<socialPropernessMatters>true</socialPropernessMatters>
+		<thingCategories>
+			<li>Foods</li>
+		</thingCategories>
+	</ThingDef>
+
+	<ThingDef ParentName="ResourceBase">
+		<defName>GoldenBooks_GodSpeedTalisman</defName>
+		<label>神行符</label>
+		<description>“出门莫恨无人随，书中车马多如簇。”\n\n一枚朱红色的玉质符牌，蕴含着缩地成寸的力量。\n\n【用法】\n选中一名殖民者，右键点击此符使用。使用后移动速度大幅提升（持续3天）。</description>
+		<graphicData>
+			<texPath>Things/Item/Resource/Jade</texPath>
+			<graphicClass>Graphic_StackCount</graphicClass>
+			<color>(210, 50, 50)</color>
+			<drawSize>0.75</drawSize>
+		</graphicData>
+		<statBases>
+			<MarketValue>200</MarketValue>
+			<Mass>0.1</Mass>
+		</statBases>
+		<useHitPoints>true</useHitPoints>
+		<thingCategories>
+			<li>Items</li>
+		</thingCategories>
+		<tradeTags>
+			<li>ExoticMisc</li>
+		</tradeTags>
+		<comps>
+			<li Class="CompProperties_Usable">
+				<useJob>UseItem</useJob>
+				<useLabel>使用神行符</useLabel>
+				<useDuration>60</useDuration>
+			</li>
+			<li Class="CompProperties_UseEffect">
+				<compClass>GoldenBooksMod.CompUseEffect_GodSpeed</compClass>
+			</li>
+		</comps>
+	</ThingDef>
+
+	<HediffDef>
+		<defName>GoldenBooks_GodSpeedBuff</defName>
+		<label>车马如簇</label>
+		<description>神行符的力量加持，脚下生风，如车马相随。</description>
+		<hediffClass>HediffWithComps</hediffClass>
+		<defaultLabelColor>(0.8, 0.2, 0.2)</defaultLabelColor>
+		<isBad>false</isBad>
+		<comps>
+			<li Class="HediffCompProperties_Disappears">
+				<disappearsAfterTicks>
+					<min>180000</min>
+					<max>180000</max>
+				</disappearsAfterTicks>
+				<showRemainingTime>true</showRemainingTime>
+			</li>
+		</comps>
+		<stages>
+			<li>
+				<statOffsets>
+					<MoveSpeed>2.0</MoveSpeed>
+				</statOffsets>
+				<capMods>
+					<li>
+						<capacity>Moving</capacity>
+						<offset>0.5</offset>
+					</li>
+				</capMods>
+			</li>
+		</stages>
+	</HediffDef>
+
+	<ThingDef ParentName="ResourceBase">
+		<defName>GoldenBooks_BookFragment</defName>
+		<label>古籍残卷</label>
+		<description>研读古籍时偶然所得的圣贤篇章（通常源自于拆解廉价书籍失败，或从书蠹口中抢救下来）。\n\n集齐 5 份残卷可编纂成一部《五经》。</description>
+		<graphicData>
+			<texPath>Things/Item/Resource/Cloth</texPath>
+			<graphicClass>Graphic_StackCount</graphicClass>
+			<color>(220, 210, 180)</color>
+			<drawSize>0.8</drawSize>
+		</graphicData>
+		<statBases>
+			<MarketValue>50</MarketValue>
+			<Mass>0.05</Mass>
+		</statBases>
+		<thingCategories>
+			<li>Items</li>
+		</thingCategories>
+		<stackLimit>75</stackLimit>
+	</ThingDef>
+
+	<ThingDef ParentName="ResourceBase">
+		<defName>GoldenBooks_FiveClassics</defName>
+		<label>五经</label>
+		<description>“男儿欲遂平生志，五经勤向窗前读。”\n\n一卷记载着圣贤智慧的青玉书卷。阅读它能让人茅塞顿开，明确平生之志。\n\n【获取】通过“编纂”配方，消耗 5 份【古籍残卷】制作。\n\n【用法】\n选中一名殖民者使用。使用后将立即获得一种随机的【灵感】。</description>
+		<graphicData>
+			<texPath>Things/Item/Resource/Chocolate</texPath>
+			<graphicClass>Graphic_StackCount</graphicClass>
+			<color>(80, 140, 160)</color>
+			<drawSize>0.8</drawSize>
+		</graphicData>
+		<statBases>
+			<MarketValue>500</MarketValue>
+			<Mass>0.5</Mass>
+		</statBases>
+		<useHitPoints>true</useHitPoints>
+		<thingCategories>
+			<li>Items</li>
+		</thingCategories>
+		<tradeTags>
+			<li>ExoticMisc</li>
+		</tradeTags>
+		<comps>
+			<li Class="CompProperties_Usable">
+				<useJob>UseItem</useJob>
+				<useLabel>研读五经</useLabel>
+				<useDuration>300</useDuration>
+			</li>
+			<li Class="CompProperties_UseEffect">
+				<compClass>GoldenBooksMod.CompUseEffect_GainInspiration</compClass>
+			</li>
+		</comps>
+	</ThingDef>
+
+	<HediffDef>
+		<defName>GoldenBooks_BookSpiritEssence</defName>
+		<label>书灵本源</label>
+		<description>这个生物是由《劝学诗》化身而成的书灵。她已超脱凡胎。\n\n【特性】\n- 不需要进食、睡眠或娱乐\n- 心情永远保持最佳\n- 社交影响力极强\n- 绝世美貌</description>
+		<hediffClass>HediffWithComps</hediffClass>
+		<defaultLabelColor>(1, 0.8, 0)</defaultLabelColor>
+		<isBad>false</isBad>
+		<stages>
+			<li>
+				<becomeVisible>true</becomeVisible>
+			</li>
+		</stages>
+		<comps>
+			<li Class="GoldenBooksMod.HediffCompProperties_RedSleevesAura">
+				<radius>9.9</radius>
+			</li>
+		</comps>
+	</HediffDef>
+
+	<HediffDef>
+		<defName>GoldenBooks_RedSleevesBuff</defName>
+		<label>红袖添香</label>
+		<description>真·颜如玉在身旁侍读（范围 9.9 格），令人思如泉涌，心旷神怡。</description>
+		<hediffClass>HediffWithComps</hediffClass>
+		<defaultLabelColor>(1, 0.5, 0.5)</defaultLabelColor>
+		<isBad>false</isBad>
+		<stages>
+			<li>
+				<becomeVisible>true</becomeVisible>
+				<statOffsets>
+					<ResearchSpeed>0.20</ResearchSpeed>
+					<GeneralLaborSpeed>0.10</GeneralLaborSpeed>
+				</statOffsets>
+				<capMods>
+					<li>
+						<capacity>Consciousness</capacity>
+						<offset>0.05</offset>
+					</li>
+				</capMods>
+			</li>
+		</stages>
+		<comps>
+			<li Class="HediffCompProperties_Disappears">
+				<disappearsAfterTicks>
+					<min>120</min>
+					<max>120</max>
+				</disappearsAfterTicks>
+				<showRemainingTime>false</showRemainingTime>
+			</li>
+		</comps>
+	</HediffDef>
+
+	<RecipeDef>
+		<defName>GoldenBooks_Summon_YanRuYu</defName>
+		<label>诵读：劝学诗</label>
+		<description>“书中自有颜如玉。”\n\n专用于研读神圣古籍《劝学诗》。\n\n这不仅仅是拆解，而是一场神圣的召唤仪式。完成后，【真·颜如玉】将100%降临。</description>
+		<jobString>正在诵读劝学诗</jobString>
+		<workSpeedStat>ResearchSpeed</workSpeedStat>
+		<effectWorking>Research</effectWorking>
+		<soundWorking>Recipe_Machining</soundWorking>
+		<workAmount>500</workAmount>
+		<recipeUsers>
+			<li>GoldenBooks_ArcaneLectern</li>
+		</recipeUsers>
+		<ingredients>
+			<li>
+				<filter>
+					<thingDefs>
+						<li>GoldenBooks_QuanXueShi</li>
+					</thingDefs>
+				</filter>
+				<count>1</count>
+			</li>
+		</ingredients>
+		<fixedIngredientFilter>
+			<thingDefs>
+				<li>GoldenBooks_QuanXueShi</li>
+			</thingDefs>
+		</fixedIngredientFilter>
+	</RecipeDef>
+
+	<RecipeDef>
+		<defName>Extract_Knowledge_To_Wealth</defName>
+		<label>研读：书中自有黄金屋</label>
+		<description>“安居不用架高堂，书中自有黄金屋。”\n\n尝试从书籍中提炼财富（黄金与翡翠）。\n\n【机制】\n1. 书籍价值越高(&gt;400)，成功率越高。\n2. 若失败，则获得【古籍残卷】（并可能惊动书虫）。\n3. 若成功，除获得金玉外，还有微小概率吸引【凡人·颜如玉】前来投奔。</description>
+		<jobString>正在研读：书中自有黄金屋</jobString>
+		<workSpeedStat>ResearchSpeed</workSpeedStat>
+		<effectWorking>Research</effectWorking>
+		<soundWorking>Recipe_Machining</soundWorking>
+		<workAmount>1500</workAmount>
+		<recipeUsers>
+			<li>GoldenBooks_ArcaneLectern</li>
+			<li>ElectricSmelter</li>
+		</recipeUsers>
+		<ingredients>
+			<li>
+				<filter>
+					<categories>
+						<li>Books</li>
+					</categories>
+				</filter>
+				<count>1</count>
+			</li>
+		</ingredients>
+		<fixedIngredientFilter>
+			<categories>
+				<li>Books</li>
+			</categories>
+			<disallowedThingDefs>
+				<li>GoldenBooks_QuanXueShi</li>
+			</disallowedThingDefs>
+		</fixedIngredientFilter>
+	</RecipeDef>
+
+	<RecipeDef>
+		<defName>GoldenBooks_Extract_Food</defName>
+		<label>研读：书中自有千钟粟</label>
+		<description>“富家不用买良田，书中自有千钟粟。”\n\n尝试从书籍中提炼黄金粟。\n\n【机制】书籍价值越高(&gt;400)，成功率越高。若失败，则获得【古籍残卷】（并可能惊动书虫）。</description>
+		<jobString>正在研读：书中自有千钟粟</jobString>
+		<workSpeedStat>ResearchSpeed</workSpeedStat>
+		<effectWorking>Research</effectWorking>
+		<soundWorking>Recipe_Machining</soundWorking>
+		<workAmount>1000</workAmount>
+		<recipeUsers>
+			<li>GoldenBooks_ArcaneLectern</li>
+		</recipeUsers>
+		<ingredients>
+			<li>
+				<filter>
+					<categories>
+						<li>Books</li>
+					</categories>
+				</filter>
+				<count>1</count>
+			</li>
+		</ingredients>
+		<fixedIngredientFilter>
+			<categories>
+				<li>Books</li>
+			</categories>
+			<disallowedThingDefs>
+				<li>GoldenBooks_QuanXueShi</li>
+			</disallowedThingDefs>
+		</fixedIngredientFilter>
+	</RecipeDef>
+
+	<RecipeDef>
+		<defName>GoldenBooks_Extract_Speed</defName>
+		<label>研读：书中车马多如簇</label>
+		<description>“出门莫恨无人随，书中车马多如簇。”\n\n尝试从书籍中提炼神行符。\n\n【机制】书籍价值越高(&gt;400)，成功率越高。若失败，则获得【古籍残卷】（并可能惊动书虫）。</description>
+		<jobString>正在研读：书中车马多如簇</jobString>
+		<workSpeedStat>ResearchSpeed</workSpeedStat>
+		<effectWorking>Research</effectWorking>
+		<soundWorking>Recipe_Machining</soundWorking>
+		<workAmount>2000</workAmount>
+		<recipeUsers>
+			<li>GoldenBooks_ArcaneLectern</li>
+		</recipeUsers>
+		<ingredients>
+			<li>
+				<filter>
+					<categories>
+						<li>Books</li>
+					</categories>
+				</filter>
+				<count>1</count>
+			</li>
+		</ingredients>
+		<fixedIngredientFilter>
+			<categories>
+				<li>Books</li>
+			</categories>
+			<disallowedThingDefs>
+				<li>GoldenBooks_QuanXueShi</li>
+			</disallowedThingDefs>
+		</fixedIngredientFilter>
+	</RecipeDef>
+
+	<RecipeDef>
+		<defName>GoldenBooks_Bind_FiveClassics</defName>
+		<label>编纂：五经</label>
+		<description>“男儿欲遂平生志，五经勤向窗前读。”\n\n将 5 份【古籍残卷】装订成册，编纂为一部完整的《五经》。\n\n【提示】古籍残卷通常源自于研读廉价书籍时的副产物。</description>
+		<jobString>正在编纂：五经</jobString>
+		<workSpeedStat>ResearchSpeed</workSpeedStat>
+		<effectWorking>Research</effectWorking>
+		<soundWorking>Recipe_Machining</soundWorking>
+		<workAmount>500</workAmount>
+		<recipeUsers>
+			<li>GoldenBooks_ArcaneLectern</li>
+		</recipeUsers>
+		<ingredients>
+			<li>
+				<filter>
+					<thingDefs>
+						<li>GoldenBooks_BookFragment</li>
+					</thingDefs>
+				</filter>
+				<count>5</count>
+			</li>
+		</ingredients>
+		<fixedIngredientFilter>
+			<thingDefs>
+				<li>GoldenBooks_BookFragment</li>
+			</thingDefs>
+		</fixedIngredientFilter>
+	</RecipeDef>
+
+</Defs>

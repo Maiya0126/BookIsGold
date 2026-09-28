@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<ThingDef ParentName="BookBase">
+		<defName>GoldenBooks_QuanXueShi</defName>
+		<label>劝学诗</label>
+		<description>“富家不用买良田，书中自有千钟粟。\n安居不用架高堂，书中自有黄金屋。\n出门莫恨无人随，书中车马多如簇。\n娶妻莫恨无良媒，书中自有颜如玉。\n男儿欲遂平生志，五经勤向窗前读。”\n\n—— 宋真宗《劝学诗》\n\n【神圣遗物】\n这不仅仅是一本书，它是通往财富与伴侣的钥匙...</description>
+		<thingClass>ThingWithComps</thingClass>
+
+		<graphicData>
+			<texPath>Things/Item/Book/TextBook</texPath>
+			<graphicClass>Graphic_Random</graphicClass>
+			<color>(255, 215, 0)</color>
+			<drawSize>1.0</drawSize>
+		</graphicData>
+
+		<statBases>
+			<MaxHitPoints>80</MaxHitPoints>
+			<MarketValue>5000</MarketValue>
+			<Mass>1.0</Mass>
+			<Flammability>1.0</Flammability>
+			<DeteriorationRate>0.5</DeteriorationRate>
+			<Beauty>2</Beauty>
+		</statBases>
+
+		<tradeTags>
+			<li>ExoticMisc</li>
+		</tradeTags>
+		<techLevel>Medieval</techLevel>
+
+		<comps Inherit="false">
+			<li Class="CompProperties_Forbiddable"/>
+			<li Class="CompProperties_Usable">
+				<useJob>UseItem</useJob>
+				<useLabel>诵读《劝学诗》</useLabel>
+				<useDuration>300</useDuration>
+			</li>
+			<li Class="CompProperties_UseEffect">
+				<compClass>GoldenBooksMod.CompUseEffect_ReadQuanXueShi</compClass>
+			</li>
+			<li Class="CompProperties_UseEffectDestroySelf"/>
+		</comps>
+	</ThingDef>
+</Defs>

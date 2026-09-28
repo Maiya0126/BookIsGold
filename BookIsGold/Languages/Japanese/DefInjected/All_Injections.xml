@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+	<GoldenBooks_ArcaneLectern.label>勧学台</GoldenBooks_ArcaneLectern.label>
+	<GoldenBooks_ArcaneLectern.description>書物を研読・解体するために作られた、神秘的な講義台。\n\n【研読の仕組み】\n1. 書物の価値が高い（&gt;400）ほど、宝物の精製成功率が上がります。\n2. 安価な書物（&lt;400）は失敗しやすいですが、【古籍の断片】を産出します。\n3. 古い本を解体すると、稀に【書蠹】（敵対的な虫）を刺激することがあります。\n\n「書中に黄金屋あり、書中に顔如玉あり」</GoldenBooks_ArcaneLectern.description>
+
+	<GoldenBooks_QuanXueShi.label>勧学詩</GoldenBooks_QuanXueShi.label>
+	<GoldenBooks_QuanXueShi.description>「富家は良田を買うを用いず、書中に千鍾の粟あり。\n安居に高堂を架するを用いず、書中に黄金屋あり...」\n\n黄金の光を放つ神秘的な古書。すべての奇跡の源。\n\n【用途】\n勧学台でこの書を「朗読」することで、【真・顔如玉】を召喚できます。</GoldenBooks_QuanXueShi.description>
+
+	<GoldenBooks_GoldenMillet.label>黄金粟</GoldenBooks_GoldenMillet.label>
+	<GoldenBooks_GoldenMillet.description>「書中に千鍾の粟あり」\n\n書物から精製された神秘的な穀物。美味にして、永遠に腐ることがない。</GoldenBooks_GoldenMillet.description>
+
+	<GoldenBooks_GodSpeedTalisman.label>神行符</GoldenBooks_GodSpeedTalisman.label>
+	<GoldenBooks_GodSpeedTalisman.description>「書中に車馬簇のごとし」\n\n縮地成寸の力を秘めた、朱色の玉符。\n\n【用法】\n入植者を選択して右クリックで使用。3日間、移動速度が大幅に上昇します。</GoldenBooks_GodSpeedTalisman.description>
+
+	<GoldenBooks_BookFragment.label>古籍の断片</GoldenBooks_BookFragment.label>
+	<GoldenBooks_BookFragment.description>古書を研読した際に偶然得られた聖賢の断章（通常は安価な本の解体失敗、または書蠹から回収されたもの）。\n\n5つ集めると『五経』を編纂できます。</GoldenBooks_BookFragment.description>
+
+	<GoldenBooks_FiveClassics.label>五経</GoldenBooks_FiveClassics.label>
+	<GoldenBooks_FiveClassics.description>「男児平生の志を遂げんと欲せば、五経窓前に向かいて勤め読むべし」\n\n聖賢の知恵が記された青玉の書巻。\n\n【入手】「編纂」レシピで【古籍の断片】を5つ消費して作成。\n\n【用法】\n入植者を選択して右クリックで使用。即座にランダムな【意欲】を獲得します。</GoldenBooks_FiveClassics.description>
+
+	<GoldenBooks_Summon_YanRuYu.label>朗読：勧学詩</GoldenBooks_Summon_YanRuYu.label>
+	<GoldenBooks_Summon_YanRuYu.description>「書中に顔如玉あり」\n\n神聖な古書『勧学詩』を朗読する。これは単なる解体ではなく、召喚の儀式である。完了後、【真・顔如玉】が100%降臨する。</GoldenBooks_Summon_YanRuYu.description>
+	<GoldenBooks_Summon_YanRuYu.jobString>勧学詩を朗読中</GoldenBooks_Summon_YanRuYu.jobString>
+
+	<Extract_Knowledge_To_Wealth.label>研読：書中に黄金屋あり</Extract_Knowledge_To_Wealth.label>
+	<Extract_Knowledge_To_Wealth.description>書物から黄金と翡翠の精製を試みる。\n\n【仕組み】価値が高い本（&gt;400）ほど成功率が高い。失敗時は【古籍の断片】になる（書蠹が出る可能性あり）。\n\n【幸運】成功時、極稀に【凡人・顔如玉】が惹かれてやってくることがある。</Extract_Knowledge_To_Wealth.description>
+	<Extract_Knowledge_To_Wealth.jobString>黄金屋を研読中</Extract_Knowledge_To_Wealth.jobString>
+
+	<GoldenBooks_Extract_Food.label>研読：書中に千鍾の粟あり</GoldenBooks_Extract_Food.label>
+	<GoldenBooks_Extract_Food.description>書物から黄金粟の精製を試みる。\n\n【仕組み】価値が高い本（&gt;400）ほど成功率が高い。失敗時は【古籍の断片】になる（書蠹が出る可能性あり）。</GoldenBooks_Extract_Food.description>
+	<GoldenBooks_Extract_Food.jobString>千鍾の粟を研読中</GoldenBooks_Extract_Food.jobString>
+
+	<GoldenBooks_Extract_Speed.label>研読：書中に車馬簇のごとし</GoldenBooks_Extract_Speed.label>
+	<GoldenBooks_Extract_Speed.description>書物から神行符の精製を試みる。\n\n【仕組み】価値が高い本（&gt;400）ほど成功率が高い。失敗時は【古籍の断片】になる（書蠹が出る可能性あり）。</GoldenBooks_Extract_Speed.description>
+	<GoldenBooks_Extract_Speed.jobString>車馬簇を研読中</GoldenBooks_Extract_Speed.jobString>
+
+	<GoldenBooks_Bind_FiveClassics.label>編纂：五経</GoldenBooks_Bind_FiveClassics.label>
+	<GoldenBooks_Bind_FiveClassics.description>5つの【古籍の断片】を綴じ合わせ、完全な『五経』を編纂する。</GoldenBooks_Bind_FiveClassics.description>
+	<GoldenBooks_Bind_FiveClassics.jobString>五経を編纂中</GoldenBooks_Bind_FiveClassics.jobString>
+
+	<GoldenBooks_BookSpiritEssence.label>書霊の根源</GoldenBooks_BookSpiritEssence.label>
+	<GoldenBooks_BookSpiritEssence.description>この生物は書から生まれた精霊であり、定命の理を超越している。\n\n- 食事、睡眠、娯楽を必要としない\n- 心情は常に最高\n- 社交影響力と美しさが極めて高い</GoldenBooks_BookSpiritEssence.description>
+
+	<GoldenBooks_RedSleevesBuff.label>紅袖添香</GoldenBooks_RedSleevesBuff.label>
+	<GoldenBooks_RedSleevesBuff.description>顔如玉が傍らで学問を助けている（範囲9.9格）。思考が冴え渡り、心が安らぐ。</GoldenBooks_RedSleevesBuff.description>
+
+	<GoldenBooks_GodSpeedBuff.label>車馬簇のごとし</GoldenBooks_GodSpeedBuff.label>
+	<GoldenBooks_GodSpeedBuff.description>神行符の加護。足元に風が生じ、車馬が付き従うかの如く進む。</GoldenBooks_GodSpeedBuff.description>
+
+	<GoldenBooks_KnowledgeSatiated.stages.0.label>知識による満腹</GoldenBooks_KnowledgeSatiated.stages.0.label>
+	<GoldenBooks_KnowledgeSatiated.stages.0.description>食べた粟の一粒一粒が、知識となって血管を流れるようだ。この精神的な充実は、比類なき満足感を与えてくれる。</GoldenBooks_KnowledgeSatiated.stages.0.description>
+</LanguageData>

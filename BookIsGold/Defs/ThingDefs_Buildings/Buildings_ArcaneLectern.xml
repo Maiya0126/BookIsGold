@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<ThingDef ParentName="BenchBase">
+		<defName>GoldenBooks_ArcaneLectern</defName>
+		<label>劝学台</label>
+		<description>一个专门用于研读和拆解书籍的小型讲台。表面经过镀金处理，散发着知识的光辉。\n\n功能：\n1. 拆解：科学家可在此通过“研究”工作提炼书籍中的黄金与颜如玉。\n2. 辅助：放置在【研究台】旁可提供研究灵感（研究速度 +5%）。\n3. 装饰：提供美观度，改善实验室环境。</description>
+		<thingClass>Building_WorkTable</thingClass>
+
+		<graphicData>
+			<texPath>Things/Building/Furniture/EndTable</texPath>
+			<graphicClass>Graphic_Multi</graphicClass>
+
+			<drawSize>(1.3,1.3)</drawSize>
+
+			<color>(255, 215, 0)</color>
+
+			<damageData>
+				<cornerTL>Damage/Corner</cornerTL>
+				<cornerTR>Damage/Corner</cornerTR>
+				<cornerBL>Damage/Corner</cornerBL>
+				<cornerBR>Damage/Corner</cornerBR>
+			</damageData>
+		</graphicData>
+
+		<castEdgeShadows>true</castEdgeShadows>
+		<staticSunShadowHeight>0.20</staticSunShadowHeight>
+
+		<costList>
+			<Gold>1</Gold>
+			<WoodLog>20</WoodLog>
+		</costList>
+
+		<altitudeLayer>Building</altitudeLayer>
+		<fillPercent>0.5</fillPercent>
+		<useHitPoints>True</useHitPoints>
+
+		<statBases>
+			<WorkToBuild>800</WorkToBuild>
+			<MaxHitPoints>100</MaxHitPoints>
+			<Flammability>1.0</Flammability>
+			<Beauty>10</Beauty>
+		</statBases>
+
+		<size>(1,1)</size>
+		<designationCategory>Production</designationCategory>
+		<passability>PassThroughOnly</passability>
+		<pathCost>50</pathCost>
+		<hasInteractionCell>True</hasInteractionCell>
+		<interactionCellOffset>(0,0,-1)</interactionCellOffset>
+		<surfaceType>Item</surfaceType>
+
+		<inspectorTabs>
+			<li>ITab_Bills</li>
+		</inspectorTabs>
+
+		<building>
+			<spawnedConceptLearnOpportunity>BillsTab</spawnedConceptLearnOpportunity>
+		</building>
+
+		<comps>
+			<li Class="CompProperties_Facility">
+				<statOffsets>
+					<ResearchSpeedFactor>0.05</ResearchSpeedFactor>
+				</statOffsets>
+				<maxSimultaneous>1</maxSimultaneous>
+				<maxDistance>6</maxDistance>
+			</li>
+		</comps>
+
+		<placeWorkers>
+			<li>PlaceWorker_ShowFacilitiesConnections</li>
+		</placeWorkers>
+	</ThingDef>
+</Defs>

@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+	<GoldenBooks_ArcaneLectern.label>Arcane Lectern</GoldenBooks_ArcaneLectern.label>
+	<GoldenBooks_ArcaneLectern.description>A mysterious lectern used for studying and dismantling books.\n\n[Mechanics]\n1. High-value books (&gt;400) have a high chance to yield treasures.\n2. Cheap books (&lt;400) often fail but yield [Book Fragments].\n3. Dismantling old books has a small chance to disturb a [Bookworm] (Hostile).\n\n"In books, one finds houses of gold and faces as fair as jade."</GoldenBooks_ArcaneLectern.description>
+
+	<GoldenBooks_QuanXueShi.label>Quan Xue Shi</GoldenBooks_QuanXueShi.label>
+	<GoldenBooks_QuanXueShi.description>"In books, one finds houses of gold and thousands of bushels of millet..."\n\nA mysterious ancient book glowing with golden light. It is the source of all miracles.\n\n[Usage]\n"Recite" this book at the Arcane Lectern to summon the True Spirit "Yan Ru Yu".</GoldenBooks_QuanXueShi.description>
+
+	<GoldenBooks_GoldenMillet.label>Golden Millet</GoldenBooks_GoldenMillet.label>
+	<GoldenBooks_GoldenMillet.description>Mysterious grains extracted from books. They are delicious and never rot.</GoldenBooks_GoldenMillet.description>
+
+	<GoldenBooks_GodSpeedTalisman.label>God Speed Talisman</GoldenBooks_GodSpeedTalisman.label>
+	<GoldenBooks_GodSpeedTalisman.description>A red jade talisman containing the power of speed.\n\n[Usage]\nSelect a colonist and right-click to use. Greatly increases movement speed for 3 days.</GoldenBooks_GodSpeedTalisman.description>
+
+	<GoldenBooks_BookFragment.label>Book Fragment</GoldenBooks_BookFragment.label>
+	<GoldenBooks_BookFragment.description>Scattered pages of ancient wisdom, usually obtained from dismantling cheap books or failed attempts.\n\nCollect 5 to compile the "Five Classics".</GoldenBooks_BookFragment.description>
+
+	<GoldenBooks_FiveClassics.label>Five Classics</GoldenBooks_FiveClassics.label>
+	<GoldenBooks_FiveClassics.description>A scroll of jade recording sage wisdom.\n\n[Acquire] Compile 5 [Book Fragments].\n\n[Usage]\nSelect a colonist and right-click to use. Grants an immediate random Inspiration.</GoldenBooks_FiveClassics.description>
+
+	<GoldenBooks_Summon_YanRuYu.label>Recite: Quan Xue Shi</GoldenBooks_Summon_YanRuYu.label>
+	<GoldenBooks_Summon_YanRuYu.description>Recite the holy book to summon the True Spirit "Yan Ru Yu".</GoldenBooks_Summon_YanRuYu.description>
+	<GoldenBooks_Summon_YanRuYu.jobString>Reciting Quan Xue Shi</GoldenBooks_Summon_YanRuYu.jobString>
+
+	<Extract_Knowledge_To_Wealth.label>Study: House of Gold</Extract_Knowledge_To_Wealth.label>
+	<Extract_Knowledge_To_Wealth.description>Attempt to extract Gold and Jade from books.\n\n[Mechanics] Higher book value (&gt;400) increases success rate. Failure yields [Book Fragments] (and may disturb Bookworms).\n\n[Bonus] Tiny chance to attract a mortal Yan Ru Yu upon success.</Extract_Knowledge_To_Wealth.description>
+	<Extract_Knowledge_To_Wealth.jobString>Studying: House of Gold</Extract_Knowledge_To_Wealth.jobString>
+
+	<GoldenBooks_Extract_Food.label>Study: Thousands of Millet</GoldenBooks_Extract_Food.label>
+	<GoldenBooks_Extract_Food.description>Attempt to extract Golden Millet from books.\n\n[Mechanics] Higher book value (&gt;400) increases success rate. Failure yields [Book Fragments] (and may disturb Bookworms).</GoldenBooks_Extract_Food.description>
+	<GoldenBooks_Extract_Food.jobString>Studying: Thousands of Millet</GoldenBooks_Extract_Food.jobString>
+
+	<GoldenBooks_Extract_Speed.label>Study: Carriages and Horses</GoldenBooks_Extract_Speed.label>
+	<GoldenBooks_Extract_Speed.description>Attempt to extract God Speed Talismans from books.\n\n[Mechanics] Higher book value (&gt;400) increases success rate. Failure yields [Book Fragments] (and may disturb Bookworms).</GoldenBooks_Extract_Speed.description>
+	<GoldenBooks_Extract_Speed.jobString>Studying: Carriages and Horses</GoldenBooks_Extract_Speed.jobString>
+
+	<GoldenBooks_Bind_FiveClassics.label>Compile: Five Classics</GoldenBooks_Bind_FiveClassics.label>
+	<GoldenBooks_Bind_FiveClassics.description>Bind 5 Book Fragments into a complete set of "Five Classics".</GoldenBooks_Bind_FiveClassics.description>
+	<GoldenBooks_Bind_FiveClassics.jobString>Compiling: Five Classics</GoldenBooks_Bind_FiveClassics.jobString>
+
+	<GoldenBooks_BookSpiritEssence.label>Spirit Essence</GoldenBooks_BookSpiritEssence.label>
+	<GoldenBooks_BookSpiritEssence.description>This creature is a spirit born from the book.\n\n- No need for food, rest, or recreation.\n- Mood always maxed.\n- High social impact and beauty.</GoldenBooks_BookSpiritEssence.description>
+
+	<GoldenBooks_RedSleevesBuff.label>Red Sleeves Aura</GoldenBooks_RedSleevesBuff.label>
+	<GoldenBooks_RedSleevesBuff.description>Yan Ru Yu is studying nearby, inspiring thought and calming the mind.</GoldenBooks_RedSleevesBuff.description>
+
+	<GoldenBooks_GodSpeedBuff.label>God Speed</GoldenBooks_GodSpeedBuff.label>
+	<GoldenBooks_GodSpeedBuff.description>Blessed by the speed of a thousand chariots.</GoldenBooks_GodSpeedBuff.description>
+
+	<GoldenBooks_KnowledgeSatiated.stages.0.label>Satiated by Knowledge</GoldenBooks_KnowledgeSatiated.stages.0.label>
+	<GoldenBooks_KnowledgeSatiated.stages.0.description>Every grain of millet I ate seemed to turn into knowledge flowing through my veins. This spiritual fullness is incredibly satisfying.</GoldenBooks_KnowledgeSatiated.stages.0.description>
+</LanguageData>

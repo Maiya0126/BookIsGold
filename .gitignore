@@ -1,0 +1,14 @@
+## Visual Studio
+.vs/
+BookIsGold/Source/bin/
+BookIsGold/Source/obj/
+*.user
+*.suo
+
+## 构建输出
+BookIsGold/1.6/Assemblies/*.dll
+BookIsGold/1.6/Assemblies/*.pdb
+
+## 临时文件
+*.tmp
+Thumbs.db

@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+	<name>Golden Books 书中自有黄金屋</name>
+	<author>Maiya0126</author>
+	<packageId>maiya.GoldenBooks</packageId>
+	<supportedVersions>
+		<li>1.6</li>
+	</supportedVersions>
+	<description>
+		[h1]Golden Books 书中自有黄金屋[/h1]
+
+		[quote]
+		“富家不用买良田，书中自有千钟粟。
+		安房不用架高梁，书中自有黄金屋。
+		娶妻莫恨无良媒，书中有女颜如玉。
+		出门莫恨无人随，书中车马多如簇。
+		男儿欲遂平生志，五经勤向窗前读。”
+		—— 赵恒 (宋真宗)《劝学诗》
+		[/quote]
+
+		[hr]
+
+		[h1]📖 Mod 介绍 (Introduction)[/h1]
+		古人诚不欺我！这个 Mod 将这首千古名诗在环世界中变为现实。
+		传说中的神圣古籍《劝学诗》现已降临边缘世界。现在，书籍不再只是娱乐品，你可以将它们提炼为**黄金、美食、神速符咒**，甚至是**灵感**与**伴侣**。
+
+		The ancients did not deceive me! This mod brings the famous Chinese poem "Encouraging Learning" to life in RimWorld.
+		The legendary holy book "Quan Xue Shi" has arrived. Books are no longer just for recreation—you can now extract **Gold, Food, Speed Talismans**, and even **Inspiration** and **Companions** from them.
+
+		[hr]
+
+		[h1]✨ 核心机制 (Core Mechanics)[/h1]
+
+		[b]⚖️ 价值决定命运 (Value Matters)[/b]
+		并非所有的书都蕴含宝藏。在新的【劝学台】上研读书籍时：
+		[list]
+		[*]**高价值书籍 (大于400银币)**：拥有极高的成功率，必定提炼出对应的宝物（黄金/食物/符咒）。
+		[*]**廉价书籍 (小于400银币)**：研读容易失败。但不要扔掉它们！失败会产出[b=""]【古籍残卷="" (Book="" Fragments="")】=""[/b]。
+		[*]**小心书虫！**：拆解陈旧的廉价书籍时，有概率惊动书中的[b]【书蠹 (Bookworm)】[/b]，请做好战斗准备！
+		[/list]
+
+		[b]⚖️ Value Determines Fate[/b]
+		Not all books hold treasures. When studying at the new [Scholar's Lectern]:
+		[list]
+		[*]**High-Value Books (more than 400 silver)**: High success rate. Guaranteed to yield treasures (Gold/Food/Talismans).
+		[*]**Cheap Books (less than 400 silver="")**:="" Likely="" to="" fail.="" But="" don=""
+[*]**Beware of Bookworms!**: Dismantling old cheap books has a chance to disturb a hostile [b][Bookworm][/b]. Be prepared!
+[/list]
+
+[hr]
+
+[h1]🎁 新增宝物 (New Treasures)[/h1]
+
+[b]💰 书中自有黄金屋 (House of Gold)[/b]
+直接从书中提炼黄金与翡翠。这是获取财富的最快途径。
+[b]💰 House of Gold[/b]: Extract Gold and Jade directly from books.
+
+[b]🍚 书中自有千钟粟 (Golden Millet)[/b]
+提炼出的神秘谷物。美味、永不腐烂，食用后获得“腹有诗书”的心情加成。
+[b]🍚 Golden Millet[/b]: Delicious, non-rotting grain. Eating it gives a "Satiated by Knowledge" mood buff.
+
+[b]🐎 书中车马多如簇 (God Speed Talisman)[/b]
+蕴含缩地成寸之力的红玉符牌。使用后移动速度大幅提升，持续3天。
+[b]🐎 God Speed Talisman[/b]: A red jade talisman. Use it to greatly boost movement speed for 3 days.
+
+[b]📜 五经勤向窗前读 (Five Classics)[/b]
+收集 5 份【古籍残卷】即可编纂成一部《五经》。阅读它能立即获得随机[b]灵感[/b]。
+[b]📜 Five Classics[/b]: Compile 5 [Book Fragments] to create this. Read it to gain an immediate random [b]Inspiration[/b].
+
+[hr]
+
+[h1]👸 书中自有颜如玉 (Beauty in Books)[/h1]
+
+[b]✨ 真·颜如玉 (书灵) / True Spirit (Book Spirit)[/b]
+利用开局赠送（或事件获得）的神器《劝学诗》进行诵读，[b]100%[/b] 召唤一位完美的“真·颜如玉”。
+* [b]书灵本源[/b]：她不需要吃喝睡，心情永远最高。
+* [b]红袖添香[/b]：她自带特殊光环，能让周围的殖民者获得“红袖添香”状态（提升研究速度）。
+* [b]不死之身[/b]：如果她不幸死亡，会重新化作《劝学诗》掉落在地，你可以再次诵读召唤她！
+
+[b]✨ 凡人·颜如玉 (Mortal Beauty)[/b]
+在进行“书中自有黄金屋”配方时，有极小概率吸引一位凡人颜如玉加入。
+* 她依然拥有倾国倾城的容貌和大师级衣物，但她是血肉之躯。
+
+[b]✨ True Spirit vs Mortal Beauty[/b]
+* **True Spirit**: Summoned 100% via the relic "Quan Xue Shi". Needs no food/sleep.
+* **Aura**: She provides the "Red Sleeves" buff (Research Speed boost) to nearby colonists.
+* **Immortality**: Upon death, she reverts back into the book "Quan Xue Shi", allowing her to be summoned again!
+* **Mortal Beauty**: Rare chance to join when extracting Gold/Jade. She is a normal (but beautiful) human.
+
+[hr]
+
+[h1]⚙️ 强大的兼容性 (Compatibility)[/h1]
+
+[list]
+[*]**种族支持**：颜如玉的种族会从你安装的所有 Mod 中随机抽取（支持 Biotech 异种和 HAR 外星人）。
+[*]**书籍支持**：Mod 会自动扫描并识别其他 Mod 中的书籍。
+[*]**高度自定义**：你可以在 Mod 设置中调整产出倍率、颜如玉概率，并配置[b]“种族白名单”[/b]和[b]“书籍原料白名单”[/b]。
+[/list]
+
+[list]
+					 s='' race='' is='' chosen='' from='' all='' your='' installed='' mods='' (Biotech=''/HAR compatible).
+		[*]**Book Support**: Automatically detects books from other mods.
+		[*]**Customizable**: Adjust yields, spawn chances, and configure [b]Race Whitelists[/b]  [b]Book Whitelists[/b] in settings.
+		[/list]
+
+		[hr]
+
+		[h1]📢 语言 (Languages)[/h1]
+		* 简体中文
+		* English
+		* 日本語
+		* 한국어
+
+		[hr]
+		[i]劝君莫惜金缕衣，劝君惜取少年时。[/i]
+		Enjoy your wealth and waifus!
+
+		If you enjoy what I do, consider supporting me on Ko-fi! Every little bit means the world!
+		[url=https://ko-fi.com/maiya0126]☕ Buy Maiya a Coffee[/url]
+	</description>
+	<modDependencies>
+		<li>
+			<packageId>brrainz.harmony</packageId>
+			<displayName>Harmony</displayName>
+			<steamWorkshopUrl>steam://url/CommunityFilePage/2009463077</steamWorkshopUrl>
+			<downloadUrl>https://github.com/pardeike/HarmonyRimWorld/releases</downloadUrl>
+		</li>
+	</modDependencies>
+</ModMetaData>

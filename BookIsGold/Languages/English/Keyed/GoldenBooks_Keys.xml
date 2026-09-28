@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+	<GoldenBooks_YieldRate>Resource Yield Multiplier</GoldenBooks_YieldRate>
+	<GoldenBooks_SpawnChance>Yan Ru Yu Spawn Chance</GoldenBooks_SpawnChance>
+	<GoldenBooks_YanRuYuName>Yan Ru Yu</GoldenBooks_YanRuYuName>
+	<GoldenBooks_LetterLabel>Book Spirit Arrives</GoldenBooks_LetterLabel>
+	<GoldenBooks_LetterText>As you turn the final page, a golden light bursts forth. A figure in ancient attire steps out from the book.\n\nShe is {0} (Race: {1}), a companion born of words and wisdom.\n\n"I pledge my eternal loyalty to you, my reader."</GoldenBooks_LetterText>
+	<GoldenBooks_GiftLabel>Gift of Knowledge</GoldenBooks_GiftLabel>
+	<GoldenBooks_GiftText>A mysterious oriental power blesses this land. A glowing book and resources have appeared nearby.\n\nThis is the "Quan Xue Shi". Use it to build an Arcane Lectern and begin your journey.</GoldenBooks_GiftText>
+	<GoldenBooks_MessageGodSpeed>{0} used the God Speed Talisman and feels light as a feather!</GoldenBooks_MessageGodSpeed>
+	<GoldenBooks_MessageInspirationSuccess>{0} read the Five Classics and gained an inspiration: {1}!</GoldenBooks_MessageInspirationSuccess>
+	<GoldenBooks_MessageInspirationFail>{0} read the Five Classics but felt too restless to gain any inspiration.</GoldenBooks_MessageInspirationFail>
+	<GoldenBooks_MessageBookworm>A Bookworm was disturbed while dismantling old books! Watch out!</GoldenBooks_MessageBookworm>
+
+	<GoldenBooks_BtnAll>All</GoldenBooks_BtnAll>
+	<GoldenBooks_BtnNone>None</GoldenBooks_BtnNone>
+	<GoldenBooks_BtnReset>Reset</GoldenBooks_BtnReset>
+</LanguageData>

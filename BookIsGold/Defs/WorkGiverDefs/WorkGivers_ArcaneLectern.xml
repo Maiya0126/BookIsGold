@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<WorkGiverDef>
+		<defName>GoldenBooks_DoBillsLectern</defName>
+		<label>研读古籍</label>
+		<giverClass>WorkGiver_DoBill</giverClass>
+
+		<workType>Research</workType>
+		<priorityInType>110</priorityInType>
+		<fixedBillGiverDefs>
+			<li>GoldenBooks_ArcaneLectern</li>
+		</fixedBillGiverDefs>
+
+		<verb>研读</verb>
+		<gerund>正在研读</gerund>
+		<requiredCapacities>
+			<li>Manipulation</li>
+		</requiredCapacities>
+		<prioritizeSustains>true</prioritizeSustains>
+	</WorkGiverDef>
+</Defs>

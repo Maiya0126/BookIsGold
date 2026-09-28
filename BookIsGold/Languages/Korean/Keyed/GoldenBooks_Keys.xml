@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+	<GoldenBooks_YieldRate>자원 산출 배율</GoldenBooks_YieldRate>
+	<GoldenBooks_SpawnChance>안여옥(颜如玉) 출현 확률</GoldenBooks_SpawnChance>
+	<GoldenBooks_YanRuYuName>안여옥</GoldenBooks_YanRuYuName>
+	<GoldenBooks_LetterLabel>책 속의 정령</GoldenBooks_LetterLabel>
+	<GoldenBooks_LetterText>고서의 마지막 페이지를 넘기자 황금빛이 터져 나옵니다. 고대 복식을 한 여인이 책 속에서 걸어 나옵니다.\n\n그녀는 {0} (종족: {1}), 글과 지혜로 빚어진 반려자입니다.\n\n"삼천 약수 중 오직 한 표주박만 취하겠습니다. 그대만 허락한다면, 생사를 함께하겠나이다."</GoldenBooks_LetterText>
+	<GoldenBooks_GiftLabel>하늘이 내린 서향</GoldenBooks_GiftLabel>
+	<GoldenBooks_GiftText>신비로운 동방의 힘이 이곳을 축복합니다. 빛나는 고서와 건축 자재가 근처에 나타났습니다.\n\n이것은 《권학시》입니다. 【권학대】를 건설하고 배움의 여정을 시작하십시오.</GoldenBooks_GiftText>
+	<GoldenBooks_MessageGodSpeed>{0}에게 신행부의 힘이 깃들어, 몸이 깃털처럼 가벼워졌습니다!</GoldenBooks_MessageGodSpeed>
+	<GoldenBooks_MessageInspirationSuccess>{0}은(는) 오경을 읽고 깨달음을 얻어 영감({1})을 얻었습니다!</GoldenBooks_MessageInspirationSuccess>
+	<GoldenBooks_MessageInspirationFail>{0}은(는) 오경을 읽었으나, 마음이 어지러워 깨달음을 얻지 못했습니다.</GoldenBooks_MessageInspirationFail>
+	<GoldenBooks_MessageBookworm>낡은 책을 해체하던 중 서두(책벌레)를 건드렸습니다! 조심하십시오!</GoldenBooks_MessageBookworm>
+
+	<GoldenBooks_BtnAll>전체</GoldenBooks_BtnAll>
+	<GoldenBooks_BtnNone>해제</GoldenBooks_BtnNone>
+	<GoldenBooks_BtnReset>초기화</GoldenBooks_BtnReset>
+</LanguageData>

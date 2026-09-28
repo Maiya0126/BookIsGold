@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+	<GoldenBooks_YieldRate>资源产出倍率</GoldenBooks_YieldRate>
+	<GoldenBooks_SpawnChance>颜如玉出现概率</GoldenBooks_SpawnChance>
+	<GoldenBooks_YanRuYuName>颜如玉</GoldenBooks_YanRuYuName>
+
+	<GoldenBooks_LetterLabel>书中自有颜如玉</GoldenBooks_LetterLabel>
+	<GoldenBooks_LetterText>当你翻过古籍的最后一页，金光乍现。一位身着古装的女子从书中缓缓走出。\n\n她是{0}（种族：{1}），自书中诞生的伴侣。\n\n“三千弱水，只取一瓢饮。君若不弃，妾愿生死相随。”</GoldenBooks_LetterText>
+
+	<GoldenBooks_GiftLabel>天赐书香</GoldenBooks_GiftLabel>
+	<GoldenBooks_GiftText>你感觉到一股神秘的东方力量眷顾了此地。一本闪烁着金光的古籍和一些基础建材凭空出现在了附近。\n\n这是《劝学诗》，利用它建造【劝学台】，开启你的求知之旅吧。</GoldenBooks_GiftText>
+
+	<GoldenBooks_MessageGodSpeed>{0} 使用了神行符，顿觉身轻如燕，脚下生风！</GoldenBooks_MessageGodSpeed>
+	<GoldenBooks_MessageInspirationSuccess>{0} 研读五经后茅塞顿开，获得了灵感：{1}！</GoldenBooks_MessageInspirationSuccess>
+	<GoldenBooks_MessageInspirationFail>{0} 研读了五经，但心浮气躁，未能领悟其中真意。</GoldenBooks_MessageInspirationFail>
+	<GoldenBooks_MessageBookworm>拆解旧书时惊动了一只书蠹！小心！</GoldenBooks_MessageBookworm>
+
+	<GoldenBooks_BtnAll>全选</GoldenBooks_BtnAll>
+	<GoldenBooks_BtnNone>清空</GoldenBooks_BtnNone>
+	<GoldenBooks_BtnReset>重置</GoldenBooks_BtnReset>
+</LanguageData>

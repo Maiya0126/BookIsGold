@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+	<GoldenBooks_ArcaneLectern.label>劝学台</GoldenBooks_ArcaneLectern.label>
+	<GoldenBooks_ArcaneLectern.description>一个散发着神秘气息的讲台，用于研读和拆解书籍。\n\n【研读机制】\n1. 书籍价值越高(&gt;400)，成功提炼宝物的概率越高。\n2. 廉价书籍(&lt;400)容易提炼失败，但会产出【古籍残卷】。\n3. 极低概率下，拆解旧书会惊动书中的【书蠹】（敌对虫子）。\n\n“书中自有黄金屋，书中自有颜如玉。”</GoldenBooks_ArcaneLectern.description>
+
+	<GoldenBooks_QuanXueShi.label>劝学诗</GoldenBooks_QuanXueShi.label>
+	<GoldenBooks_QuanXueShi.description>“富家不用买良田，书中自有千钟粟。\n安居不用架高堂，书中自有黄金屋。\n出门莫恨无人随，书中车马多如簇。\n男儿欲遂平生志，五经勤向窗前读。”\n\n一本泛着金光的神秘古籍。它是所有奇迹的源头。\n\n【用途】\n在劝学台上“诵读”此书，可召唤【真·颜如玉】。</GoldenBooks_QuanXueShi.description>
+
+	<GoldenBooks_GoldenMillet.label>黄金粟</GoldenBooks_GoldenMillet.label>
+	<GoldenBooks_GoldenMillet.description>“富家不用买良田，书中自有千钟粟。”\n\n通过书籍提炼出的神秘谷物，颗颗饱满如金珠。它美味可口，且永远不会腐烂。</GoldenBooks_GoldenMillet.description>
+
+	<GoldenBooks_GodSpeedTalisman.label>神行符</GoldenBooks_GodSpeedTalisman.label>
+	<GoldenBooks_GodSpeedTalisman.description>“出门莫恨无人随，书中车马多如簇。”\n\n一枚朱红色的玉质符牌，蕴含着缩地成寸的力量。\n\n【用法】\n选中一名殖民者，右键点击此符使用。使用后移动速度大幅提升（持续3天）。</GoldenBooks_GodSpeedTalisman.description>
+
+	<GoldenBooks_BookFragment.label>古籍残卷</GoldenBooks_BookFragment.label>
+	<GoldenBooks_BookFragment.description>研读古籍时偶然所得的圣贤篇章（通常源自于拆解廉价书籍失败，或从书蠹口中抢救下来）。\n\n集齐 5 份残卷可编纂成一部《五经》。</GoldenBooks_BookFragment.description>
+
+	<GoldenBooks_FiveClassics.label>五经</GoldenBooks_FiveClassics.label>
+	<GoldenBooks_FiveClassics.description>“男儿欲遂平生志，五经勤向窗前读。”\n\n一卷记载着圣贤智慧的青玉书卷。阅读它能让人茅塞顿开，明确平生之志。\n\n【获取】通过“编纂”配方，消耗 5 份【古籍残卷】制作。\n\n【用法】\n选中一名殖民者使用。使用后将立即获得一种随机的【灵感】。</GoldenBooks_FiveClassics.description>
+
+	<GoldenBooks_Summon_YanRuYu.label>诵读：劝学诗</GoldenBooks_Summon_YanRuYu.label>
+	<GoldenBooks_Summon_YanRuYu.description>“书中自有颜如玉。”\n\n专用于研读神圣古籍《劝学诗》。\n\n这不仅仅是拆解，而是一场神圣的召唤仪式。完成后，【真·颜如玉】将100%降临。</GoldenBooks_Summon_YanRuYu.description>
+	<GoldenBooks_Summon_YanRuYu.jobString>正在诵读劝学诗</GoldenBooks_Summon_YanRuYu.jobString>
+
+	<Extract_Knowledge_To_Wealth.label>研读：书中自有黄金屋</Extract_Knowledge_To_Wealth.label>
+	<Extract_Knowledge_To_Wealth.description>“安居不用架高堂，书中自有黄金屋。”\n\n尝试从书籍中提炼黄金与翡翠。\n\n【机制】书籍价值越高(&gt;400)，成功率越高。若失败，则获得【古籍残卷】（并可能惊动书虫）。\n\n【彩蛋】若成功，有极小概率吸引【凡人·颜如玉】前来投奔。</Extract_Knowledge_To_Wealth.description>
+	<Extract_Knowledge_To_Wealth.jobString>正在研读：书中自有黄金屋</Extract_Knowledge_To_Wealth.jobString>
+
+	<GoldenBooks_Extract_Food.label>研读：书中自有千钟粟</GoldenBooks_Extract_Food.label>
+	<GoldenBooks_Extract_Food.description>“富家不用买良田，书中自有千钟粟。”\n\n尝试从书籍中提炼黄金粟。\n\n【机制】书籍价值越高(&gt;400)，成功率越高。若失败，则获得【古籍残卷】（并可能惊动书虫）。</GoldenBooks_Extract_Food.description>
+	<GoldenBooks_Extract_Food.jobString>正在研读：书中自有千钟粟</GoldenBooks_Extract_Food.jobString>
+
+	<GoldenBooks_Extract_Speed.label>研读：书中车马多如簇</GoldenBooks_Extract_Speed.label>
+	<GoldenBooks_Extract_Speed.description>“出门莫恨无人随，书中车马多如簇。”\n\n尝试从书籍中提炼神行符。\n\n【机制】书籍价值越高(&gt;400)，成功率越高。若失败，则获得【古籍残卷】（并可能惊动书虫）。</GoldenBooks_Extract_Speed.description>
+	<GoldenBooks_Extract_Speed.jobString>正在研读：书中车马多如簇</GoldenBooks_Extract_Speed.jobString>
+
+	<GoldenBooks_Bind_FiveClassics.label>编纂：五经</GoldenBooks_Bind_FiveClassics.label>
+	<GoldenBooks_Bind_FiveClassics.description>“男儿欲遂平生志，五经勤向窗前读。”\n\n将 5 份【古籍残卷】装订成册，编纂为一部完整的《五经》。\n\n【提示】古籍残卷通常源自于研读廉价书籍时的副产物。</GoldenBooks_Bind_FiveClassics.description>
+	<GoldenBooks_Bind_FiveClassics.jobString>正在编纂：五经</GoldenBooks_Bind_FiveClassics.jobString>
+
+	<GoldenBooks_BookSpiritEssence.label>书灵本源</GoldenBooks_BookSpiritEssence.label>
+	<GoldenBooks_BookSpiritEssence.description>这个生物是由《劝学诗》化身而成的书灵。她已超脱凡胎。\n\n【特性】\n- 不需要进食、睡眠或娱乐\n- 心情永远保持最佳\n- 社交影响力极强\n- 绝世美貌</GoldenBooks_BookSpiritEssence.description>
+
+	<GoldenBooks_RedSleevesBuff.label>红袖添香</GoldenBooks_RedSleevesBuff.label>
+	<GoldenBooks_RedSleevesBuff.description>真·颜如玉在身旁侍读（范围 9.9 格），令人思如泉涌，心旷神怡。</GoldenBooks_RedSleevesBuff.description>
+
+	<GoldenBooks_GodSpeedBuff.label>车马如簇</GoldenBooks_GodSpeedBuff.label>
+	<GoldenBooks_GodSpeedBuff.description>神行符的力量加持，脚下生风，如车马相随。</GoldenBooks_GodSpeedBuff.description>
+
+	<GoldenBooks_KnowledgeSatiated.stages.0.label>腹有诗书</GoldenBooks_KnowledgeSatiated.stages.0.label>
+	<GoldenBooks_KnowledgeSatiated.stages.0.description>吃下的每一粒粟米都仿佛化作了知识流淌在血液里。这种来自精神层面的饱腹感让人感到无比充实。</GoldenBooks_KnowledgeSatiated.stages.0.description>
+</LanguageData>

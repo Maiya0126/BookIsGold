@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+	<GoldenBooks_ArcaneLectern.label>권학대</GoldenBooks_ArcaneLectern.label>
+	<GoldenBooks_ArcaneLectern.description>책을 연구하고 해체하기 위해 만들어진 신비로운 강연대입니다.\n\n【연구 메커니즘】\n1. 책의 가치가 높을수록(&gt;400) 보물 정제 성공률이 높습니다.\n2. 값싼 책(&lt;400)은 실패하기 쉽지만, 【고서 잔권】을 얻을 수 있습니다.\n3. 낡은 책을 해체할 때 드물게 【서두(책벌레)】가 튀어나올 수 있습니다.\n\n"서중자유황금옥, 서중자유안여옥 (책 속에 황금으로 지은 집이 있고, 책 속에 옥과 같은 미인이 있다)."</GoldenBooks_ArcaneLectern.description>
+
+	<GoldenBooks_QuanXueShi.label>권학시</GoldenBooks_QuanXueShi.label>
+	<GoldenBooks_QuanXueShi.description>"부자는 좋은 밭을 사려 하지 말라, 책 속에 천 종의 곡식이 있다네...\n남아로서 평생의 뜻을 이루려거든, 창 앞에 앉아 오경을 부지런히 읽으라."\n\n황금빛을 발하는 신비로운 고서입니다. 모든 기적의 원천입니다.\n\n【용도】\n권학대에서 이 책을 "낭독"하여 【진(眞)·안여옥】을 소환할 수 있습니다.</GoldenBooks_QuanXueShi.description>
+
+	<GoldenBooks_GoldenMillet.label>황금 좁쌀</GoldenBooks_GoldenMillet.label>
+	<GoldenBooks_GoldenMillet.description>"책 속에 천 종의 곡식이 있다네."\n\n책에서 정제된 신비로운 곡물입니다. 맛이 좋고 영원히 썩지 않습니다.</GoldenBooks_GoldenMillet.description>
+
+	<GoldenBooks_GodSpeedTalisman.label>신행부</GoldenBooks_GodSpeedTalisman.label>
+	<GoldenBooks_GodSpeedTalisman.description>"책 속에 수많은 수레와 말이 있다네."\n\n축지법의 힘이 담긴 붉은 옥 부적입니다.\n\n【사용법】\n정착민을 선택하고 우클릭하여 사용. 3일 동안 이동 속도가 대폭 상승합니다.</GoldenBooks_GodSpeedTalisman.description>
+
+	<GoldenBooks_BookFragment.label>고서 잔권</GoldenBooks_BookFragment.label>
+	<GoldenBooks_BookFragment.description>고서를 연구할 때 우연히 얻은 성현의 문장이 담긴 조각입니다 (주로 값싼 책의 해체 실패나, 서두의 입에서 회수한 것입니다).\n\n5장을 모아 『오경』 한 권으로 엮을 수 있습니다.</GoldenBooks_BookFragment.description>
+
+	<GoldenBooks_FiveClassics.label>오경</GoldenBooks_FiveClassics.label>
+	<GoldenBooks_FiveClassics.description>"남아로서 평생의 뜻을 이루려거든, 창 앞에 앉아 오경을 부지런히 읽으라."\n\n성현의 지혜가 기록된 청옥 죽간입니다. 읽는 이의 막힌 곳을 뚫어주고 뜻을 명확히 해줍니다.\n\n【획득】 "편찬" 레시피를 통해 【고서 잔권】 5장을 소모하여 제작.\n\n【사용법】\n정착민을 선택하고 우클릭하여 사용. 즉시 무작위 【영감】을 획득합니다.</GoldenBooks_FiveClassics.description>
+
+	<GoldenBooks_Summon_YanRuYu.label>낭독: 권학시</GoldenBooks_Summon_YanRuYu.label>
+	<GoldenBooks_Summon_YanRuYu.description>"책 속에 안여옥이 있다네."\n\n성스러운 고서 『권학시』를 낭독합니다. 이것은 단순한 해체가 아닌 소환 의식입니다. 완료 시, 【진·안여옥】이 100% 강림합니다.</GoldenBooks_Summon_YanRuYu.description>
+	<GoldenBooks_Summon_YanRuYu.jobString>권학시 낭독 중</GoldenBooks_Summon_YanRuYu.jobString>
+
+	<Extract_Knowledge_To_Wealth.label>연구: 서중자유황금옥</Extract_Knowledge_To_Wealth.label>
+	<Extract_Knowledge_To_Wealth.description>책에서 황금과 비취를 정제합니다.\n\n【메커니즘】 책 가치가 높을수록(&gt;400) 성공률 상승. 실패 시 【고서 잔권】 획득 (서두 출현 가능).\n\n【행운】 성공 시, 극히 낮은 확률로 【범인·안여옥】이 이끌려 올 수 있습니다.</Extract_Knowledge_To_Wealth.description>
+	<Extract_Knowledge_To_Wealth.jobString>황금옥 연구 중</Extract_Knowledge_To_Wealth.jobString>
+
+	<GoldenBooks_Extract_Food.label>연구: 서중자유천종속</GoldenBooks_Extract_Food.label>
+	<GoldenBooks_Extract_Food.description>책에서 황금 좁쌀을 정제합니다.\n\n【메커니즘】 책 가치가 높을수록(&gt;400) 성공률 상승. 실패 시 【고서 잔권】 획득 (서두 출현 가능).</GoldenBooks_Extract_Food.description>
+	<GoldenBooks_Extract_Food.jobString>천종속 연구 중</GoldenBooks_Extract_Food.jobString>
+
+	<GoldenBooks_Extract_Speed.label>연구: 서중거마다여족</GoldenBooks_Extract_Speed.label>
+	<GoldenBooks_Extract_Speed.description>책에서 신행부를 정제합니다.\n\n【메커니즘】 책 가치가 높을수록(&gt;400) 성공률 상승. 실패 시 【고서 잔권】 획득 (서두 출현 가능).</GoldenBooks_Extract_Speed.description>
+	<GoldenBooks_Extract_Speed.jobString>거마 연구 중</GoldenBooks_Extract_Speed.jobString>
+
+	<GoldenBooks_Bind_FiveClassics.label>편찬: 오경</GoldenBooks_Bind_FiveClassics.label>
+	<GoldenBooks_Bind_FiveClassics.description>【고서 잔권】 5장을 엮어 완전한 『오경』으로 편찬합니다.</GoldenBooks_Bind_FiveClassics.description>
+	<GoldenBooks_Bind_FiveClassics.jobString>오경 편찬 중</GoldenBooks_Bind_FiveClassics.jobString>
+
+	<GoldenBooks_BookSpiritEssence.label>서령의 근원</GoldenBooks_BookSpiritEssence.label>
+	<GoldenBooks_BookSpiritEssence.description>이 생명체는 책에서 태어난 정령으로, 필멸의 굴레를 벗어났습니다.\n\n- 식사, 수면, 재미 욕구 불필요\n- 기분(무드) 항상 최대치\n- 사교 영향력 및 아름다움 극대화</GoldenBooks_BookSpiritEssence.description>
+
+	<GoldenBooks_RedSleevesBuff.label>홍소첨향(紅袖添香)</GoldenBooks_RedSleevesBuff.label>
+	<GoldenBooks_RedSleevesBuff.description>안여옥이 곁에서 학문을 돕고 있습니다(범위 9.9칸). 생각이 맑아지고 마음이 편안해집니다.</GoldenBooks_RedSleevesBuff.description>
+
+	<GoldenBooks_GodSpeedBuff.label>거마다여족</GoldenBooks_GodSpeedBuff.label>
+	<GoldenBooks_GodSpeedBuff.description>신행부의 가호입니다. 발밑에 바람이 일어 수레와 말이 따르는 듯 빠릅니다.</GoldenBooks_GodSpeedBuff.description>
+
+	<GoldenBooks_KnowledgeSatiated.stages.0.label>지식의 포만감</GoldenBooks_KnowledgeSatiated.stages.0.label>
+	<GoldenBooks_KnowledgeSatiated.stages.0.description>먹은 좁쌀 한 알 한 알이 지식이 되어 혈관을 타고 흐르는 듯하다. 이 정신적인 충만함은 비할 데 없는 만족감을 준다.</GoldenBooks_KnowledgeSatiated.stages.0.description>
+</LanguageData>

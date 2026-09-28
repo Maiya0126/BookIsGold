@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+
+	<Operation Class="PatchOperationConditional">
+		<xpath>Defs/ThingDef[defName="SimpleResearchBench"]/comps/li[@Class="CompProperties_AffectedByFacilities"]/linkableFacilities</xpath>
+
+		<match Class="PatchOperationAdd">
+			<xpath>Defs/ThingDef[defName="SimpleResearchBench"]/comps/li[@Class="CompProperties_AffectedByFacilities"]/linkableFacilities</xpath>
+			<value>
+				<li>GoldenBooks_ArcaneLectern</li>
+			</value>
+		</match>
+
+		<nomatch Class="PatchOperationConditional">
+			<xpath>Defs/ThingDef[defName="SimpleResearchBench"]/comps/li[@Class="CompProperties_AffectedByFacilities"]</xpath>
+			<match Class="PatchOperationAdd">
+				<xpath>Defs/ThingDef[defName="SimpleResearchBench"]/comps/li[@Class="CompProperties_AffectedByFacilities"]</xpath>
+				<value>
+					<linkableFacilities>
+						<li>GoldenBooks_ArcaneLectern</li>
+					</linkableFacilities>
+				</value>
+			</match>
+		</nomatch>
+	</Operation>
+
+	<Operation Class="PatchOperationConditional">
+		<xpath>Defs/ThingDef[defName="HiTechResearchBench"]/comps/li[@Class="CompProperties_AffectedByFacilities"]/linkableFacilities</xpath>
+
+		<match Class="PatchOperationAdd">
+			<xpath>Defs/ThingDef[defName="HiTechResearchBench"]/comps/li[@Class="CompProperties_AffectedByFacilities"]/linkableFacilities</xpath>
+			<value>
+				<li>GoldenBooks_ArcaneLectern</li>
+			</value>
+		</match>
+
+		<nomatch Class="PatchOperationConditional">
+			<xpath>Defs/ThingDef[defName="HiTechResearchBench"]/comps/li[@Class="CompProperties_AffectedByFacilities"]</xpath>
+			<match Class="PatchOperationAdd">
+				<xpath>Defs/ThingDef[defName="HiTechResearchBench"]/comps/li[@Class="CompProperties_AffectedByFacilities"]</xpath>
+				<value>
+					<linkableFacilities>
+						<li>GoldenBooks_ArcaneLectern</li>
+					</linkableFacilities>
+				</value>
+			</match>
+		</nomatch>
+	</Operation>
+
+</Patch>

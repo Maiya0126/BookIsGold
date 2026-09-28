@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+	<GoldenBooks_YieldRate>資源産出倍率</GoldenBooks_YieldRate>
+	<GoldenBooks_SpawnChance>顔如玉の出現確率</GoldenBooks_SpawnChance>
+	<GoldenBooks_YanRuYuName>顔如玉</GoldenBooks_YanRuYuName>
+	<GoldenBooks_LetterLabel>書中の精霊</GoldenBooks_LetterLabel>
+	<GoldenBooks_LetterText>古書の最後のページをめくると、黄金の光が溢れ出した。古代の衣装を纏った女性が、書の中から静かに歩み出る。\n\n彼女は{0}（種族：{1}）、書と言葉から生まれた伴侶である。\n\n「三千の弱水、ただ一瓢を飲むのみ。君棄てずんば、妾は生死を共にせん」</GoldenBooks_LetterText>
+	<GoldenBooks_GiftLabel>天与の書香</GoldenBooks_GiftLabel>
+	<GoldenBooks_GiftText>神秘的な東洋の力がこの地を祝福しています。輝く古書と建築資材が近くに現れました。\n\nこれは『勧学詩』です。【勧学台】を建設し、探求の旅を始めましょう。</GoldenBooks_GiftText>
+	<GoldenBooks_MessageGodSpeed>{0}は神行符を使用した。体が羽のように軽く、風に乗って走るようだ！</GoldenBooks_MessageGodSpeed>
+	<GoldenBooks_MessageInspirationSuccess>{0}は五経を読み、悟りを開いた！ 意欲：{1} を獲得！</GoldenBooks_MessageInspirationSuccess>
+	<GoldenBooks_MessageInspirationFail>{0}は五経を読んだが、心が乱れており、真意を悟ることができなかった。</GoldenBooks_MessageInspirationFail>
+	<GoldenBooks_MessageBookworm>古書を解体中に書蠹（ブックワーム）を刺激してしまった！ 注意せよ！</GoldenBooks_MessageBookworm>
+
+	<GoldenBooks_BtnAll>全選択</GoldenBooks_BtnAll>
+	<GoldenBooks_BtnNone>解除</GoldenBooks_BtnNone>
+	<GoldenBooks_BtnReset>リセット</GoldenBooks_BtnReset>
+</LanguageData>
