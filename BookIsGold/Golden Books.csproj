@@ -68,6 +68,7 @@
     <Compile Include="Source\GoldenBooks\StoryChain.cs" />
     <Compile Include="Source\GoldenBooks\BookSpirit.cs" />
     <Compile Include="Source\GoldenBooks\BookWhispers.cs" />
+    <Compile Include="Source\GoldenBooks\DebugActions_BookIsGold.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="About\Preview.png" />
