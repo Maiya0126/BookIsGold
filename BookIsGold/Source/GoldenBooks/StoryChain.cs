@@ -68,6 +68,7 @@ namespace GoldenBooksMod
             if (!GoldenBooksMod.settings.storyChainEnabled || executorArrived) return;
             executorArrived = true;
             executorArrivalTick = Find.TickManager.TicksGame;
+            GameComponent_Kewei.Get?.Begin();
 
             Thing executor = TrySpawnExecutor(trueSpirit);
             if (executor != null)

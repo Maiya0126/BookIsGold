@@ -194,7 +194,7 @@ namespace GoldenBooksMod
         }
 
         // --- 离线模板 ---
-        private static bool IsChinese => LanguageDatabase.activeLanguage != null && LanguageDatabase.activeLanguage.LegacyFolderName == "ChineseSimplified";
+        public static bool IsChinese => LanguageDatabase.activeLanguage != null && LanguageDatabase.activeLanguage.LegacyFolderName == "ChineseSimplified";
 
         private string GenerateOffline(bool isYan)
         {
@@ -466,7 +466,38 @@ namespace GoldenBooksMod
                 totalH += h + rowGap;
             }
 
-            Rect outRect = new Rect(0f, 72f, inRect.width, inRect.height - 72f);
+            // 课业区块
+            GameComponent_Kewei kw = GameComponent_Kewei.Get;
+            float keweiH = 0f;
+            if (kw != null && kw.started)
+            {
+                keweiH = kw.mainStage >= 6 ? 54f : 92f;
+                Rect kwRect = new Rect(0f, 72f, inRect.width, keweiH);
+                Widgets.DrawMenuSection(kwRect);
+                Rect inner = kwRect.ContractedBy(8f);
+                GUI.color = new Color(0.85f, 0.72f, 0.42f);
+                Widgets.Label(new Rect(inner.x, inner.y, inner.width, 22f),
+                    "GoldenBooks_KwUiTitle".Translate() + "  ·  " + GameComponent_Kewei.StageNameCurrent(kw.mainStage));
+                GUI.color = Color.white;
+                if (kw.mainStage < 6)
+                {
+                    Vector2Int prog = kw.MainProgressNow();
+                    Widgets.Label(new Rect(inner.x, inner.y + 24f, 120f, 22f), prog.x + " / " + prog.y);
+                    Widgets.FillableBar(new Rect(inner.x + 126f, inner.y + 26f, inner.width - 126f, 16f), prog.y > 0 ? (float)prog.x / prog.y : 0f);
+                    string side = (kw.sideGrains ? "[✓]" : "[ ]") + "GoldenBooks_KwUiSide1".Translate() + "  "
+                                + (kw.sideBedrooms ? "[✓]" : "[ ]") + "GoldenBooks_KwUiSide2".Translate() + "  "
+                                + (kw.sideCaravans ? "[✓]" : "[ ]") + "GoldenBooks_KwUiSide3".Translate() + "  "
+                                + (kw.sideWeddings ? "[✓]" : "[ ]") + "GoldenBooks_KwUiSide4".Translate();
+                    Widgets.Label(new Rect(inner.x, inner.y + 50f, inner.width, 22f), side);
+                }
+                else
+                {
+                    Widgets.Label(new Rect(inner.x, inner.y + 26f, inner.width, 22f),
+                        kw.allDone ? "GoldenBooks_KwUiAllDone".Translate() : "GoldenBooks_KwUiMainDone".Translate());
+                }
+            }
+
+            Rect outRect = new Rect(0f, 72f + keweiH + 8f, inRect.width, inRect.height - 72f - keweiH - 8f);
             Rect viewRect = new Rect(0f, 0f, outRect.width - 16f, totalH);
             Widgets.BeginScrollView(outRect, ref scroll, viewRect);
 
@@ -497,7 +528,10 @@ namespace GoldenBooksMod
             try
             {
                 if (__instance is IncidentWorker_RaidEnemy)
+                {
                     GameComponent_BookWhispers.Get?.RecordRaid(parms.points);
+                    GameComponent_Kewei.Get?.RecordRaid();
+                }
             }
             catch { }
         }

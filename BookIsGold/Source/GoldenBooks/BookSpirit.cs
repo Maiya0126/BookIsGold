@@ -54,6 +54,11 @@ namespace GoldenBooksMod
                 if (existing == null)
                 {
                     existing = target.health.AddHediff(hediffDef);
+                    existing.Severity = GameComponent_Kewei.AuraSeverity();
+                }
+                else if (GameComponent_Kewei.AuraSeverity() > 1f && existing.Severity <= 1f)
+                {
+                    existing.Severity = 1.01f;
                 }
                 HediffComp_Disappears dis = existing.TryGetComp<HediffComp_Disappears>();
                 if (dis != null) dis.ticksToDisappear = Props.tickInterval * 2;

@@ -52,6 +52,36 @@
 	<GoldenBooks_WspByMo>by Yan Zhixia</GoldenBooks_WspByMo>
 	<GoldenBooks_WspLetterLabel_Yan>Book Whispers · Day {0} (by Yan Zhizhong)</GoldenBooks_WspLetterLabel_Yan>
 	<GoldenBooks_WspLetterLabel_Mo>Book Whispers · Day {0} (by Yan Zhixia)</GoldenBooks_WspLetterLabel_Mo>
+
+	<GoldenBooks_KwUiTitle>Yan Clan Lessons</GoldenBooks_KwUiTitle>
+	<GoldenBooks_KwUiSide1>Wealth Without Fields</GoldenBooks_KwUiSide1>
+	<GoldenBooks_KwUiSide2>Dwelling Without Halls</GoldenBooks_KwUiSide2>
+	<GoldenBooks_KwUiSide3>Travel Without Loneliness</GoldenBooks_KwUiSide3>
+	<GoldenBooks_KwUiSide4>Marriage Without Matchmakers</GoldenBooks_KwUiSide4>
+	<GoldenBooks_KwUiMainDone>All six main lessons complete. Finish the four wishes for full honors.</GoldenBooks_KwUiMainDone>
+	<GoldenBooks_KwUiAllDone>"Ten Honors of the Academy" — six lessons and four wishes, all fulfilled.</GoldenBooks_KwUiAllDone>
+
+	<GoldenBooks_KwBeginLabel>The First Lesson</GoldenBooks_KwBeginLabel>
+	<GoldenBooks_KwBeginText>At dawn, a note appears at the corner of the lectern, in a stern hand:\n\n"Master. By academy custom, new pupils begin with lessons. Your people read and learn willingly — good material. So, per the old verses, I set six lessons and four wishes; the wishes are yours to take or leave.\n\nLessons bear rewards — things the book has promised. Progress is shown beside the Book Whispers.\n\n— Yan Zhizhong"\n\n(Lesson line unlocked: six main lessons in sequence, four side wishes in parallel. See the top of the Book Whispers tab.)</GoldenBooks_KwBeginText>
+
+	<GoldenBooks_KwDoneLabel>Lesson Complete · {0}</GoldenBooks_KwDoneLabel>
+	<GoldenBooks_KwDoneText>A new line of ink on the lectern's note:\n\n"Lesson '{0}' — done. The promised reward arrives, as things the book contains always do: {1}.\n\nLearning never ends. I await your next lesson. — Zhizhong"</GoldenBooks_KwDoneText>
+	<GoldenBooks_KwSideDoneText>Side lesson '{0}' is also done. The grandfather says: wishes are freely taken, and never forgotten — the book has it all.\n\n(The reward has been delivered to the colony.)</GoldenBooks_KwSideDoneText>
+
+	<GoldenBooks_KwFinalLabel>Ten Honors of the Academy</GoldenBooks_KwFinalLabel>
+	<GoldenBooks_KwFinalText>Tonight the lamp on the lectern burns brighter than ever. The note there is new, its strokes heavier than usual:\n\n"Six lessons done, four wishes fulfilled. Master — in all my years of teaching, you are the first.\n\nMillet in the granary, gold in the store, steeds at the gate, Ru Yu at your side. Everything the poem promised now lives in this place. Books never lie — today is the proof.\n\nFrom tomorrow, the lectures deepen a tier. It is my thanks. — Yanweng"\n\nBeside it, a crooked little line:\n\n"Waaah — grandpa finally said something nice!! Writing THIS in my notebook!! (๑•̀ㅂ•́)و✧ — Moji"\n\n(Book spirit auras upgraded: Lecture and Rowdy Study values all increased.)</GoldenBooks_KwFinalText>
+
+	<GoldenBooks_KwBooks>Lesson · books read (First Steps)</GoldenBooks_KwBooks>
+	<GoldenBooks_KwMillet>Lesson · millet crafts</GoldenBooks_KwMillet>
+	<GoldenBooks_KwGrains>Wish · millet grains total</GoldenBooks_KwGrains>
+	<GoldenBooks_KwWealth>Lesson · gold/jade extracts</GoldenBooks_KwWealth>
+	<GoldenBooks_KwClassics>Lesson · classics compiled</GoldenBooks_KwClassics>
+
+	<GoldenBooks_HandbookRead>Read the Handbook</GoldenBooks_HandbookRead>
+	<GoldenBooks_HandbookReadDesc>Open the Yan clan handbook and read the full novel.</GoldenBooks_HandbookReadDesc>
+	<GoldenBooks_HandbookTitle>Yan Clan Handbook</GoldenBooks_HandbookTitle>
+	<GoldenBooks_HandbookSubtitle>Gold thread mended by grandpa, candy wrappers tucked in by the girl, and the elder sister's words.</GoldenBooks_HandbookSubtitle>
+	<GoldenBooks_HandbookEmpty>(The handbook is blank — chapter files not found. Please verify the mod's Story folder.)</GoldenBooks_HandbookEmpty>
 	<GoldenBooks_MessageGodSpeed>{0} used the God Speed Talisman and feels light as a feather!</GoldenBooks_MessageGodSpeed>
 	<GoldenBooks_MessageInspirationSuccess>{0} read the Five Classics and gained an inspiration: {1}!</GoldenBooks_MessageInspirationSuccess>
 	<GoldenBooks_MessageInspirationFail>{0} read the Five Classics but felt too restless to gain any inspiration.</GoldenBooks_MessageInspirationFail>

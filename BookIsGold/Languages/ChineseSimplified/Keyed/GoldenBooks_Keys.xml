@@ -55,6 +55,36 @@
 	<GoldenBooks_WspLetterLabel_Yan>书语·第{0}日（颜执中 执笔）</GoldenBooks_WspLetterLabel_Yan>
 	<GoldenBooks_WspLetterLabel_Mo>书语·第{0}日（颜知夏 执笔）</GoldenBooks_WspLetterLabel_Mo>
 
+	<GoldenBooks_KwUiTitle>颜氏课业</GoldenBooks_KwUiTitle>
+	<GoldenBooks_KwUiSide1>富家买良田</GoldenBooks_KwUiSide1>
+	<GoldenBooks_KwUiSide2>安居架高堂</GoldenBooks_KwUiSide2>
+	<GoldenBooks_KwUiSide3>出门无人随</GoldenBooks_KwUiSide3>
+	<GoldenBooks_KwUiSide4>娶妻无良媒</GoldenBooks_KwUiSide4>
+	<GoldenBooks_KwUiMainDone>主线六课皆成。支线满则书院十全。</GoldenBooks_KwUiMainDone>
+	<GoldenBooks_KwUiAllDone>「书院十全」——颜氏六课、诗中四愿，皆已成就。</GoldenBooks_KwUiAllDone>
+
+	<GoldenBooks_KwBeginLabel>颜执中的第一份课业</GoldenBooks_KwBeginLabel>
+	<GoldenBooks_KwBeginText>清晨，劝学台角多了一张字条，落笔端方：\n\n“东家。书院旧例，学僮入馆，先修课业。老朽观此地众人肯读肯学，是块好料子——遂依《劝学诗》旧章，布下六课，另附四愿，愿者自取。\n\n课业有奖，皆书中自有之物。_progress详见书语之侧。\n\n——颜执中 白”\n\n（课业线已开启：主线六课依次解锁，支线四愿并行可选。进度见「书语」标签页顶部。）</GoldenBooks_KwBeginText>
+
+	<GoldenBooks_KwDoneLabel>课业完成·{0}</GoldenBooks_KwDoneLabel>
+	<GoldenBooks_KwDoneText>台角字条又添新墨，落笔沉稳：\n\n“课业「{0}」，成。奖如约至，皆书中自有之物：{1}。\n\n学不可以已。下一课，老朽候你。——执中”</GoldenBooks_KwDoneText>
+	<GoldenBooks_KwSideDoneText>支线课业「{0}」亦成。爷爷说：愿者自取，取者勿忘——书中自有。\n\n（奖励已送达殖民地。）</GoldenBooks_KwSideDoneText>
+
+	<GoldenBooks_KwFinalLabel>书院十全</GoldenBooks_KwFinalLabel>
+	<GoldenBooks_KwFinalText>是夜，劝学台的灯比往常亮了许多。台前的字条换了新的一张，墨迹端方，落笔却比平日重：\n\n“六课皆成，四愿俱满。东家，自老朽开馆授徒以来，此为头一份。\n\n千钟粟在仓，黄金屋在库，车马在门，颜如玉在侧——诗中许诺的，如今都在此地了。书不曾欺人，今日为证。\n\n自明日始，讲学之课加深一档，是老朽谢你的。——砚翁 白”\n\n旁边另有一行歪歪扭扭的小字：\n\n“哇——爷爷你终于夸人了！！记小本本上了！！(๑•̀ㅂ•́)و✧——墨叽”\n\n（书灵光环已升级：如坐春风/闹书房数值全面提高。）</GoldenBooks_KwFinalText>
+
+	<GoldenBooks_KwBooks>课业·开蒙研读数</GoldenBooks_KwBooks>
+	<GoldenBooks_KwMillet>课业·千钟粟成功次数</GoldenBooks_KwMillet>
+	<GoldenBooks_KwGrains>支线·黄金粟累计粒数</GoldenBooks_KwGrains>
+	<GoldenBooks_KwWealth>课业·黄金屋成功次数</GoldenBooks_KwWealth>
+	<GoldenBooks_KwClassics>课业·编纂五经数</GoldenBooks_KwClassics>
+
+	<GoldenBooks_HandbookRead>翻阅手札</GoldenBooks_HandbookRead>
+	<GoldenBooks_HandbookReadDesc>翻开颜氏一族的手札，阅读《劝学诗里的千年灵》全书。</GoldenBooks_HandbookReadDesc>
+	<GoldenBooks_HandbookTitle>颜氏手札 · 劝学诗里的千年灵</GoldenBooks_HandbookTitle>
+	<GoldenBooks_HandbookSubtitle>爷爷补的金线，妹妹夹的糖纸，姐姐的字。</GoldenBooks_HandbookSubtitle>
+	<GoldenBooks_HandbookEmpty>（手札是空白的——未找到章节文件，请确认模组 Story 文件夹完整。）</GoldenBooks_HandbookEmpty>
+
 	<GoldenBooks_MessageGodSpeed>{0} 使用了神行符，顿觉身轻如燕，脚下生风！</GoldenBooks_MessageGodSpeed>
 	<GoldenBooks_MessageInspirationSuccess>{0} 研读五经后茅塞顿开，获得了灵感：{1}！</GoldenBooks_MessageInspirationSuccess>
 	<GoldenBooks_MessageInspirationFail>{0} 研读了五经，但心浮气躁，未能领悟其中真意。</GoldenBooks_MessageInspirationFail>
