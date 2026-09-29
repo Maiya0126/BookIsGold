@@ -84,12 +84,11 @@ namespace GoldenBooksMod
             }
         }
 
-        private Thing TrySpawnExecutor(Pawn near)
+        private Pawn TrySpawnExecutor(Pawn near)
         {
-            ThingDef def = DefDatabase<ThingDef>.GetNamedSilentFail("GoldenBooks_BookSpirit_Yanzhongzhong");
-            if (def == null || near == null || near.Map == null) return null;
-            Thing spirit = ThingMaker.MakeThing(def);
-            if (spirit is Pawn) return null;
+            PawnKindDef kind = DefDatabase<PawnKindDef>.GetNamedSilentFail("GoldenBooks_BookSpirit_Yanzhongzhong_Kind");
+            if (kind == null || near == null || near.Map == null) return null;
+            Pawn spirit = PawnGenerator.GeneratePawn(new PawnGenerationRequest(kind, Faction.OfPlayer, forceGenerateNewPawn: true));
             IntVec3 cell = CellFinder.RandomSpawnCellForPawnNear(near.Position, near.Map, 4);
             GenSpawn.Spawn(spirit, cell, near.Map);
             return spirit;
@@ -135,13 +134,13 @@ namespace GoldenBooksMod
 
             Map map = Find.AnyPlayerHomeMap;
             Thing zhixia = null;
-            ThingDef def = DefDatabase<ThingDef>.GetNamedSilentFail("GoldenBooks_BookSpirit_Zhixia");
-            if (def != null && map != null)
+            PawnKindDef kind = DefDatabase<PawnKindDef>.GetNamedSilentFail("GoldenBooks_BookSpirit_Zhixia_Kind");
+            if (kind != null && map != null)
             {
+                Pawn spirit = PawnGenerator.GeneratePawn(new PawnGenerationRequest(kind, Faction.OfPlayer, forceGenerateNewPawn: true));
                 IntVec3 cell = DropCellFinder.TradeDropSpot(map);
-                zhixia = ThingMaker.MakeThing(def);
-                if (zhixia is Pawn) zhixia = null;
-                else GenSpawn.Spawn(zhixia, cell, map);
+                GenSpawn.Spawn(spirit, cell, map);
+                zhixia = spirit;
             }
 
             string key = fallback ? "GoldenBooks_ZhixiaFallbackText" : "GoldenBooks_ZhixiaText";
@@ -151,6 +150,18 @@ namespace GoldenBooksMod
 
             // 彩蛋：兜底入场附赠一小箱"顺来的书"
             if (fallback && map != null) SpawnBonusBooks(map);
+
+            // 信件承诺的赠礼：颜氏手札（两种入场路径都给）
+            if (map != null)
+            {
+                ThingDef handbook = DefDatabase<ThingDef>.GetNamedSilentFail("GoldenBooks_Handbook");
+                if (handbook != null)
+                {
+                    Thing h = ThingMaker.MakeThing(handbook);
+                    h.stackCount = 1;
+                    DropPodUtility.DropThingsNear(DropCellFinder.TradeDropSpot(map), map, new List<Thing> { h });
+                }
+            }
         }
 
         public static void SpawnBonusBooks(Map map)

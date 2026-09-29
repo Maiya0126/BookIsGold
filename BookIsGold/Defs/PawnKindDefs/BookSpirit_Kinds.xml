@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<!-- 书灵纪：书灵 PawnKind（生成用，不入野外/势力） -->
+
+	<PawnKindDef ParentName="AnimalKindBase">
+		<defName>GoldenBooks_BookSpirit_Yanzhongzhong_Kind</defName>
+		<label>书灵·颜执中</label>
+		<race>GoldenBooks_BookSpirit_Yanzhongzhong</race>
+		<wildSpawn_spawnWildness>0</wildSpawn_spawnWildness>
+		<wildSpawn_populationDensityFactor>0</wildSpawn_populationDensityFactor>
+		<ecoSystemWeight>0</ecoSystemWeight>
+		<combatPower>80</combatPower>
+	</PawnKindDef>
+
+	<PawnKindDef ParentName="AnimalKindBase">
+		<defName>GoldenBooks_BookSpirit_Zhixia_Kind</defName>
+		<label>书灵·颜知夏</label>
+		<race>GoldenBooks_BookSpirit_Zhixia</race>
+		<wildSpawn_spawnWildness>0</wildSpawn_spawnWildness>
+		<wildSpawn_populationDensityFactor>0</wildSpawn_populationDensityFactor>
+		<ecoSystemWeight>0</ecoSystemWeight>
+		<combatPower>60</combatPower>
+	</PawnKindDef>
+</Defs>

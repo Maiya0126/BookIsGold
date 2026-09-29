@@ -14,9 +14,11 @@ namespace GoldenBooksMod
         private static void DebugSpawnExecutor()
         {
             Map map = Find.CurrentMap;
+            PawnKindDef kind = DefDatabase<PawnKindDef>.GetNamedSilentFail("GoldenBooks_BookSpirit_Yanzhongzhong_Kind");
+            if (kind == null) { Log.Error("[GoldenBooks] 缺少 PawnKindDef"); return; }
+            Pawn spirit = PawnGenerator.GeneratePawn(new PawnGenerationRequest(kind, Faction.OfPlayer, forceGenerateNewPawn: true));
             IntVec3 cell = UI.MouseCell();
             if (!cell.Standable(map)) cell = CellFinder.RandomSpawnCellForPawnNear(UI.MouseCell(), map, 5);
-            Thing spirit = ThingMaker.MakeThing(ThingDef.Named("GoldenBooks_BookSpirit_Yanzhongzhong"));
             GenSpawn.Spawn(spirit, cell, map);
             GameComponent_BookWhispers.TryInjectRimTalkPersonas();
             Log.Message("[GoldenBooks] Debug: 已在鼠标处生成 书灵·颜执中");
@@ -26,12 +28,28 @@ namespace GoldenBooksMod
         private static void DebugSpawnZhixia()
         {
             Map map = Find.CurrentMap;
+            PawnKindDef kind = DefDatabase<PawnKindDef>.GetNamedSilentFail("GoldenBooks_BookSpirit_Zhixia_Kind");
+            if (kind == null) { Log.Error("[GoldenBooks] 缺少 PawnKindDef"); return; }
+            Pawn spirit = PawnGenerator.GeneratePawn(new PawnGenerationRequest(kind, Faction.OfPlayer, forceGenerateNewPawn: true));
             IntVec3 cell = UI.MouseCell();
             if (!cell.Standable(map)) cell = CellFinder.RandomSpawnCellForPawnNear(UI.MouseCell(), map, 5);
-            Thing spirit = ThingMaker.MakeThing(ThingDef.Named("GoldenBooks_BookSpirit_Zhixia"));
             GenSpawn.Spawn(spirit, cell, map);
             GameComponent_BookWhispers.TryInjectRimTalkPersonas();
             Log.Message("[GoldenBooks] Debug: 已在鼠标处生成 书灵·颜知夏");
+        }
+
+        [DebugAction("书中自有黄金屋 (Golden Books)", "获得颜氏手札 (Get Handbook)", actionType = DebugActionType.Action, allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void DebugGetHandbook()
+        {
+            Map map = Find.CurrentMap;
+            ThingDef handbook = DefDatabase<ThingDef>.GetNamedSilentFail("GoldenBooks_Handbook");
+            if (handbook == null) { Log.Error("[GoldenBooks] 缺少 GoldenBooks_Handbook"); return; }
+            Thing h = ThingMaker.MakeThing(handbook);
+            h.stackCount = 1;
+            IntVec3 cell = UI.MouseCell();
+            if (!cell.Standable(map)) cell = DropCellFinder.TradeDropSpot(map);
+            GenSpawn.Spawn(h, cell, map);
+            Log.Message("[GoldenBooks] Debug: 手札已生成");
         }
 
         [DebugAction("书中自有黄金屋 (Golden Books)", "触发事件：落难书箱 (Lost Book Box)", actionType = DebugActionType.Action, allowedGameStates = AllowedGameStates.PlayingOnMap)]

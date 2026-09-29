@@ -96,40 +96,21 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>REM --- 1. 设置路径变量 ---
-set "MOD_DIR=D:\games\steamapps\common\Rimworld\Mods\MaiyaMod05 Golden Books 书中自有黄金屋"
+    <PostBuildEvent>set "MOD_DIR=D:\games\steamapps\common\Rimworld\Mods\MaiyaMod05 Golden Books 书中自有黄金屋"
 set "SOURCE_ROOT=$(ProjectDir)"
-
-REM --- 2. 【关键】清理目标文件夹 (新增清理 Languages) ---
 if exist "%25MOD_DIR%25\Defs" rmdir /S /Q "%25MOD_DIR%25\Defs"
 if exist "%25MOD_DIR%25\Patches" rmdir /S /Q "%25MOD_DIR%25\Patches"
-
 if exist "%25MOD_DIR%25\Languages" rmdir /S /Q "%25MOD_DIR%25\Languages"
+if exist "%25MOD_DIR%25\Story" rmdir /S /Q "%25MOD_DIR%25\Story"
 if exist "%25MOD_DIR%25\1.6\Assemblies" rmdir /S /Q "%25MOD_DIR%25\1.6\Assemblies"
-
-REM --- 3. 重建目标目录 ---
 mkdir "%25MOD_DIR%25\1.6\Assemblies"
-
 mkdir "%25MOD_DIR%25\Defs"
 mkdir "%25MOD_DIR%25\Languages"
-
-REM --- 4. 复制 DLL ---
-echo [Copying DLL] ...
 copy /Y "$(TargetDir)$(TargetName).dll" "%25MOD_DIR%25\1.6\Assemblies\"
-
-REM --- 5. 复制资源文件 (新增复制 Languages) ---
-
-if exist "%25SOURCE_ROOT%25Defs" xcopy "%25SOURCE_ROOT%25Defs" "%25MOD_DIR%25\Defs" /S /E /Y /I
-if exist "%25SOURCE_ROOT%25Patches" xcopy "%25SOURCE_ROOT%25Patches" "%25MOD_DIR%25\Patches" /S /E /Y /I
-
-REM --- 【新增】复制语言包 ---
-if exist "%25SOURCE_ROOT%25Languages" (
-    xcopy "%25SOURCE_ROOT%25Languages" "%25MOD_DIR%25\Languages" /S /E /Y /I
-) else (
-    echo [警告] 源目录中找不到 Languages 文件夹！请确认路径。
-)
-
-REM --- 6. 完成 ---
-echo [MaiyaMod] 更新完成！Languages 已同步。</PostBuildEvent>
+xcopy "%25SOURCE_ROOT%25Defs" "%25MOD_DIR%25\Defs" /S /E /Y /I
+xcopy "%25SOURCE_ROOT%25Patches" "%25MOD_DIR%25\Patches" /S /E /Y /I
+xcopy "%25SOURCE_ROOT%25Languages" "%25MOD_DIR%25\Languages" /S /E /Y /I
+xcopy "%25SOURCE_ROOT%25..\Story" "%25MOD_DIR%25\Story" /S /E /Y /I
+echo [MaiyaMod] Sync done.</PostBuildEvent>
   </PropertyGroup>
 </Project>
