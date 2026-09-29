@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<!-- 书灵纪：可选叙事者「砚翁与墨叽」 -->
+
+	<StorytellerDef ParentName="BaseStoryteller">
+		<defName>GoldenBooks_YanwengMoji</defName>
+		<label>砚翁与墨叽</label>
+		<description>一老一少两位书灵轮流执笔你的故事。\n\n砚翁持卷沉稳：威胁如课业般循序渐进，先易后难，绝不为难学生；墨叽执笔跳脱：间隙里总夹着些稀奇古怪的小事、小礼与小虫。\n\n他们会把你殖民地的每一天写进《书语》。适合喜欢被故事温柔以待、又想体验模组全剧情的玩家。</description>
+		<portraitLarge>UI/HeroArt/Storytellers/GoldenBooks_YanwengMoji</portraitLarge>
+		<portraitTiny>UI/HeroArt/Storytellers/GoldenBooks_YanwengMoji</portraitTiny>
+		<listOrder>35</listOrder>
+		<comps>
+			<li Class="StorytellerCompProperties_ClassicIntro"/>
+			<li Class="StorytellerCompProperties_OnOffCycle">
+				<category>ThreatBig</category>
+				<minDaysPassed>14</minDaysPassed>
+				<onDays>4.2</onDays>
+				<offDays>7.5</offDays>
+				<minSpacingDays>2.2</minSpacingDays>
+				<numIncidentsRange>1~1</numIncidentsRange>
+				<forceRaidEnemyBeforeDaysPassed>24</forceRaidEnemyBeforeDaysPassed>
+				<disallowedTargetTags>
+					<li>Map_RaidBeacon</li>
+				</disallowedTargetTags>
+			</li>
+			<li Class="StorytellerCompProperties_OnOffCycle">
+				<category>ThreatSmall</category>
+				<minDaysPassed>12</minDaysPassed>
+				<onDays>4.2</onDays>
+				<offDays>7.5</offDays>
+				<numIncidentsRange>0.2~1</numIncidentsRange>
+				<acceptPercentFactorPerThreatPointsCurve>
+					<points>
+						<li>(800, 1)</li>
+						<li>(2800, 0)</li>
+					</points>
+				</acceptPercentFactorPerThreatPointsCurve>
+			</li>
+			<!-- 书灵私货：书箱与书蠹 -->
+			<li Class="StorytellerCompProperties_CategoryMTB">
+				<incident>GoldenBooks_LostBookBox</incident>
+				<allowedTargetTags>
+					<li>Map_PlayerHome</li>
+				</allowedTargetTags>
+				<minDaysPassed>3</minDaysPassed>
+				<mtbDays>5</mtbDays>
+			</li>
+			<li Class="StorytellerCompProperties_CategoryMTB">
+				<incident>GoldenBooks_WormSwarm</incident>
+				<allowedTargetTags>
+					<li>Map_PlayerHome</li>
+				</allowedTargetTags>
+				<minDaysPassed>11</minDaysPassed>
+				<mtbDays>7</mtbDays>
+			</li>
+			<li Class="StorytellerCompProperties_CategoryMTB">
+				<category>Misc</category>
+				<allowedTargetTags>
+					<li>Map_PlayerHome</li>
+				</allowedTargetTags>
+				<minDaysPassed>5</minDaysPassed>
+				<mtbDays>5.2</mtbDays>
+			</li>
+			<li Class="StorytellerCompProperties_ShipChunkDrop"/>
+			<li Class="StorytellerCompProperties_Disease">
+				<category>DiseaseHuman</category>
+				<minDaysPassed>10</minDaysPassed>
+			</li>
+			<li Class="StorytellerCompProperties_FactionInteraction">
+				<incident>TraderCaravanArrival</incident>
+				<minDaysPassed>5</minDaysPassed>
+				<baseIncidentsPerYear>6</baseIncidentsPerYear>
+				<minSpacingDays>5</minSpacingDays>
+				<allowedTargetTags>
+					<li>Map_PlayerHome</li>
+				</allowedTargetTags>
+			</li>
+			<li Class="StorytellerCompProperties_FactionInteraction">
+				<incident>VisitorGroup</incident>
+				<minDaysPassed>3</minDaysPassed>
+				<baseIncidentsPerYear>5</baseIncidentsPerYear>
+				<minSpacingDays>4</minSpacingDays>
+				<allowedTargetTags>
+					<li>Map_PlayerHome</li>
+				</allowedTargetTags>
+			</li>
+			<li Class="StorytellerCompProperties_FactionInteraction">
+				<incident>TravelerGroup</incident>
+				<minDaysPassed>1</minDaysPassed>
+				<baseIncidentsPerYear>6</baseIncidentsPerYear>
+				<minSpacingDays>1</minSpacingDays>
+				<allowedTargetTags>
+					<li>Map_PlayerHome</li>
+				</allowedTargetTags>
+			</li>
+			<li Class="StorytellerCompProperties_CategoryIndividualMTBByBiome">
+				<category>Misc</category>
+				<allowedTargetTags>
+					<li>Caravan</li>
+					<li>Map_TempIncident</li>
+				</allowedTargetTags>
+			</li>
+			<li Class="StorytellerCompProperties_CategoryIndividualMTBByBiome">
+				<category>ThreatSmall</category>
+				<applyCaravanVisibility>true</applyCaravanVisibility>
+				<allowedTargetTags>
+					<li>Caravan</li>
+					<li>Map_TempIncident</li>
+				</allowedTargetTags>
+			</li>
+			<li Class="StorytellerCompProperties_CategoryIndividualMTBByBiome">
+				<category>ThreatBig</category>
+				<applyCaravanVisibility>true</applyCaravanVisibility>
+				<allowedTargetTags>
+					<li>Caravan</li>
+					<li>Map_TempIncident</li>
+				</allowedTargetTags>
+			</li>
+			<li Class="StorytellerCompProperties_RandomQuest">
+				<category>GiveQuest</category>
+				<allowedTargetTags>
+					<li>World</li>
+				</allowedTargetTags>
+				<onDays>10</onDays>
+				<numIncidentsRange>1</numIncidentsRange>
+				<acceptFractionByDaysPassedCurve>
+					<points>
+						<li>(8, 0)</li>
+						<li>(15, 1)</li>
+					</points>
+				</acceptFractionByDaysPassedCurve>
+				<minSpacingDays>3</minSpacingDays>
+			</li>
+			<li Class="StorytellerCompProperties_CategoryMTB">
+				<category>Misc</category>
+				<allowedTargetTags>
+					<li>World</li>
+				</allowedTargetTags>
+				<minDaysPassed>15</minDaysPassed>
+				<mtbDays>15</mtbDays>
+			</li>
+			<li Class="StorytellerCompProperties_OnOffCycle">
+				<incident>OrbitalTraderArrival</incident>
+				<onDays>7</onDays>
+				<offDays>8</offDays>
+				<numIncidentsRange>1</numIncidentsRange>
+			</li>
+			<li Class="StorytellerCompProperties_Triggered">
+				<incident>StrangerInBlackJoin</incident>
+				<delayTicks>180</delayTicks>
+			</li>
+		</comps>
+	</StorytellerDef>
+</Defs>
