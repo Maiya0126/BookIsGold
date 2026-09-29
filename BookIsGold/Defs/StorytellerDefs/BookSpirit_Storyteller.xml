@@ -5,7 +5,7 @@
 	<StorytellerDef ParentName="BaseStoryteller">
 		<defName>GoldenBooks_YanwengMoji</defName>
 		<label>颜执中与颜知夏</label>
-		<description>一老一少两位书灵（号砚翁、乳名墨叽）轮流执笔你的故事，并亲手安排你每天遇到的事件。\n\n【节奏】大威胁平均第 14 天才首次登门，此后约每 11~12 天一波——像卡珊德拉的阶梯曲线，但坡度更缓、喘息更长，符合砚翁"不为难学生"的教习作风；日常小事与奇遇的随机度接近兰迪·随机。\n\n【书灵私货】他们常"掉落"一箱书籍（约5天一次），书蠹也时不时光顾（约7天一次，剧情链解锁后）——这是他们夹带的小礼物，也是模组剧情事件的曝光口。\n\n他们会把殖民地的每一天写进《书语》。适合想要温和节奏、又能体验模组全剧情的玩家。</description>
+		<description>两位书灵——持卷的爷爷与执笔的孙女——轮流照看你的故事。\n\n砚翁不喜催逼：大威胁平均十四日才首度登门，此后十余日一波动，教习如授课，从不布置写不完的功课。墨叽却嫌清闲：总在间隙里夹些稀奇古怪的小事，偶尔"掉落"一箱书，或放书蠹出来透透气。\n\n两位还会把殖民地的每一天写进《书语》，逐日成卷，随存档可翻。\n\n"东家。课业已排，不会太重，读得完。"\n"可是老古董！我想看大场面嘛！……算了，看你面子。"\n\n适合节奏温和、想完整体验书灵剧情的玩家。</description>
 		<portraitLarge>UI/HeroArt/Storytellers/GoldenBooks_YanwengMoji</portraitLarge>
 		<portraitTiny>UI/HeroArt/Storytellers/GoldenBooks_YanwengMoji</portraitTiny>
 		<listOrder>35</listOrder>
