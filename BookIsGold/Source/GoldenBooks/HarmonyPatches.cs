@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using HarmonyLib;
@@ -610,7 +610,7 @@ namespace GoldenBooksMod
     [HarmonyPatch(typeof(Game), "InitNewGame")]
     public static class Patch_GameInitNewGame { static void Postfix() { StoryChain_GameComponent.Ensure(); GameComponent_BookWhispers.Ensure(); } }
 
-    [HarmonyPatch(typeof(Game), "LoadedGame")]
+    [HarmonyPatch(typeof(Game), "LoadGame")]
     public static class Patch_GameLoadedGame { static void Postfix() { StoryChain_GameComponent.Ensure(); GameComponent_BookWhispers.Ensure(); } }
 
     [HarmonyPatch(typeof(Thing), "SpawnSetup")]

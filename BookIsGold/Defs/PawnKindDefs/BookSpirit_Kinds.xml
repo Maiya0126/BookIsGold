@@ -6,8 +6,6 @@
 		<defName>GoldenBooks_BookSpirit_Yanzhongzhong_Kind</defName>
 		<label>书灵·颜执中</label>
 		<race>GoldenBooks_BookSpirit_Yanzhongzhong</race>
-		<wildSpawn_spawnWildness>0</wildSpawn_spawnWildness>
-		<wildSpawn_populationDensityFactor>0</wildSpawn_populationDensityFactor>
 		<ecoSystemWeight>0</ecoSystemWeight>
 		<combatPower>80</combatPower>
 	</PawnKindDef>
@@ -16,8 +14,6 @@
 		<defName>GoldenBooks_BookSpirit_Zhixia_Kind</defName>
 		<label>书灵·颜知夏</label>
 		<race>GoldenBooks_BookSpirit_Zhixia</race>
-		<wildSpawn_spawnWildness>0</wildSpawn_spawnWildness>
-		<wildSpawn_populationDensityFactor>0</wildSpawn_populationDensityFactor>
 		<ecoSystemWeight>0</ecoSystemWeight>
 		<combatPower>60</combatPower>
 	</PawnKindDef>

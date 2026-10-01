@@ -38,7 +38,7 @@
 			</li>
 			<!-- 书灵私货：书箱与书蠹 -->
 			<li Class="StorytellerCompProperties_CategoryMTB">
-				<incident>GoldenBooks_LostBookBox</incident>
+				<category>GoldenBooks_BookSupply</category>
 				<allowedTargetTags>
 					<li>Map_PlayerHome</li>
 				</allowedTargetTags>
@@ -46,7 +46,7 @@
 				<mtbDays>5</mtbDays>
 			</li>
 			<li Class="StorytellerCompProperties_CategoryMTB">
-				<incident>GoldenBooks_WormSwarm</incident>
+				<category>GoldenBooks_BookThreat</category>
 				<allowedTargetTags>
 					<li>Map_PlayerHome</li>
 				</allowedTargetTags>

@@ -2,11 +2,22 @@
 <Defs>
 	<!-- 书灵纪：剧情补给事件 -->
 
+	<!-- 书灵纪专属事件分类（供 CategoryMTB 讲书人组件按 MTB 触发） -->
+	<IncidentCategoryDef>
+		<defName>GoldenBooks_BookSupply</defName>
+		<label>书籍补给</label>
+	</IncidentCategoryDef>
+
+	<IncidentCategoryDef>
+		<defName>GoldenBooks_BookThreat</defName>
+		<label>书籍威胁</label>
+	</IncidentCategoryDef>
+
 	<IncidentDef>
 		<defName>GoldenBooks_LostBookBox</defName>
 		<label>落难书箱</label>
 		<description>一箱散落的书本被神秘力量送到殖民地附近。</description>
-		<category>Misc</category>
+		<category>GoldenBooks_BookSupply</category>
 		<targetTags>
 			<li>Map_PlayerHome</li>
 		</targetTags>
@@ -19,7 +30,7 @@
 		<defName>GoldenBooks_WormSwarm</defName>
 		<label>书蠹出没</label>
 		<description>一群书蠹拖着书箱袭击殖民地。击败它们可夺回书籍。</description>
-		<category>Misc</category>
+		<category>GoldenBooks_BookThreat</category>
 		<targetTags>
 			<li>Map_PlayerHome</li>
 		</targetTags>
