@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -540,9 +540,9 @@ namespace GoldenBooksMod
     [HarmonyPatch(typeof(ResearchManager), "FinishProject")]
     public static class Patch_ResearchFinish
     {
-        static void Postfix(ResearchProjectDef researchProjectDef)
+        static void Postfix(ResearchProjectDef proj)
         {
-            try { GameComponent_BookWhispers.Get?.RecordResearch(researchProjectDef); } catch { }
+            try { GameComponent_BookWhispers.Get?.RecordResearch(proj); } catch { }
         }
     }
 }
