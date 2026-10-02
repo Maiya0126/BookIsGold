@@ -47,6 +47,13 @@
 	<GoldenBooks_Summon_YanRuYu.description>Recite the holy book to summon the True Spirit "Yan Ru Yu".</GoldenBooks_Summon_YanRuYu.description>
 	<GoldenBooks_Summon_YanRuYu.jobString>Reciting Quan Xue Shi</GoldenBooks_Summon_YanRuYu.jobString>
 
+	<GoldenBooks_Handbook.label>Yan Clan Handbook</GoldenBooks_Handbook.label>
+	<GoldenBooks_Handbook.description>The Yan clan's thousand-year handbook, bound with candy wrappers, ticket stubs, gold thread and old years.\n\nSelect it and click "Read the Handbook" to read the full novel.\n\n[Obtain] Unlocked by the lesson "First Steps"; or gifted by Yan Zhixia upon arrival.</GoldenBooks_Handbook.description>
+
+	<GoldenBooks_Bind_Handbook.label>Bind: Yan Clan Handbook</GoldenBooks_Bind_Handbook.label>
+	<GoldenBooks_Bind_Handbook.description>Bind 5 book fragments with gold thread to restore the Yan clan's handbook, in which the thousand-year tale may be read at any time.</GoldenBooks_Bind_Handbook.description>
+	<GoldenBooks_Bind_Handbook.jobString>Binding the Yan Clan Handbook</GoldenBooks_Bind_Handbook.jobString>
+
 	<Extract_Knowledge_To_Wealth.label>Study: House of Gold</Extract_Knowledge_To_Wealth.label>
 	<Extract_Knowledge_To_Wealth.description>Attempt to extract Gold and Jade from books.\n\n[Mechanics] Higher book value (&gt;400) increases success rate. Failure yields [Book Fragments] (and may disturb Bookworms).\n\n[Bonus] Tiny chance to attract a mortal Yan Ru Yu upon success.</Extract_Knowledge_To_Wealth.description>
 	<Extract_Knowledge_To_Wealth.jobString>Studying: House of Gold</Extract_Knowledge_To_Wealth.jobString>

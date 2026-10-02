@@ -248,11 +248,10 @@ namespace GoldenBooksMod
             foreach (ThingDefCountClass r in rewards)
             {
                 if (r.thingDef == null || r.count <= 0) continue;
-                Thing t = ThingMaker.MakeThing(r.thingDef);
                 int remaining = r.count;
                 while (remaining > 0)
                 {
-                    int take = Math.Min(remaining, t.def.stackLimit > 0 ? t.def.stackLimit : 1);
+                    int take = Math.Min(remaining, r.thingDef.stackLimit > 0 ? r.thingDef.stackLimit : 1);
                     Thing piece = ThingMaker.MakeThing(r.thingDef);
                     piece.stackCount = take;
                     things.Add(piece);
