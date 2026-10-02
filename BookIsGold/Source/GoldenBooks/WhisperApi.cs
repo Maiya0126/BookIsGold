@@ -1,0 +1,343 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml;
+using RimWorld;
+using UnityEngine;
+using Verse;
+
+namespace GoldenBooksMod
+{
+    // --- 供应商注册表（参照 RimTalk AIProviderRegistry） ---
+    public class WhisperProviderDef
+    {
+        public string Label;
+        public string EndpointUrl;      // 聊天补全端点（Player2 为根地址）
+        public string ListModelsUrl;    // 可选：模型列表端点
+    }
+
+    public static class WhisperProviderRegistry
+    {
+        public const string Player2ClientId = "019e12ba-6062-79ae-8c76-de13bea9af7a";
+        public const string Player2LocalUrl = "http://localhost:4315";
+        public const string Player2RemoteUrl = "https://api.player2.game";
+
+        public static readonly WhisperProviderDef[] Defs =
+        {
+            new WhisperProviderDef { Label = "DeepSeek",        EndpointUrl = "https://api.deepseek.com/v1/chat/completions", ListModelsUrl = "https://api.deepseek.com/models" },
+            new WhisperProviderDef { Label = "OpenAI",          EndpointUrl = "https://api.openai.com/v1/chat/completions", ListModelsUrl = "https://api.openai.com/v1/models" },
+            new WhisperProviderDef { Label = "Player2",         EndpointUrl = Player2RemoteUrl },
+            new WhisperProviderDef { Label = "Google (Gemini)", EndpointUrl = "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions", ListModelsUrl = "https://generativelanguage.googleapis.com/v1beta/openai/models" },
+            new WhisperProviderDef { Label = "Grok",            EndpointUrl = "https://api.x.ai/v1/chat/completions", ListModelsUrl = "https://api.x.ai/v1/models" },
+            new WhisperProviderDef { Label = "GLM",             EndpointUrl = "https://api.z.ai/api/paas/v4/chat/completions", ListModelsUrl = "https://api.z.ai/api/paas/v4/models" },
+            new WhisperProviderDef { Label = "GLM (Coding)",    EndpointUrl = "https://api.z.ai/api/coding/paas/v4/chat/completions" },
+            new WhisperProviderDef { Label = "Alibaba (Intl)",  EndpointUrl = "https://dashscope-intl.aliyuncs.com/compatible-mode/v1/chat/completions" },
+            new WhisperProviderDef { Label = "Alibaba (CN)",    EndpointUrl = "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions" },
+            new WhisperProviderDef { Label = "OpenRouter",      EndpointUrl = "https://openrouter.ai/api/v1/chat/completions" },
+            new WhisperProviderDef { Label = "Claude",          EndpointUrl = "https://api.anthropic.com/v1/chat/completions" },
+            new WhisperProviderDef { Label = "Moonshot",        EndpointUrl = "https://api.moonshot.ai/v1/chat/completions", ListModelsUrl = "https://api.moonshot.ai/v1/models" },
+            new WhisperProviderDef { Label = "自定义 (Custom)", EndpointUrl = "" }
+        };
+
+        public static bool IsPlayer2(int index) => Defs[index].Label == "Player2";
+    }
+
+    // --- Player2 客户端（参照 RimTalk Player2Client/Player2AuthService） ---
+    public static class WhisperPlayer2
+    {
+        private const string DeviceNewEndpoint = "https://api.player2.game/v1/login/device/new";
+        private const string DeviceTokenEndpoint = "https://api.player2.game/v1/login/device/token";
+
+        public static bool IsAuthenticating { get; private set; }
+        public static string ApprovalUrl { get; private set; }
+        private static string _localKeyCache;
+        private static DateTime _lastLocalProbe = DateTime.MinValue;
+        private static System.Threading.CancellationTokenSource _authCts;
+
+        public static string GetKey() => GoldenBooksMod.settings.whisperP2Key;
+
+        // 探测本地客户端：可用则本地登录换 p2Key 并缓存
+        public static async Task<bool> TryLocalLoginAsync()
+        {
+            try
+            {
+                if ((DateTime.Now - _lastLocalProbe).TotalSeconds < 3 && _localKeyCache != null)
+                    return true;
+                _lastLocalProbe = DateTime.Now;
+
+                using (var health = new HttpRequestMessage(HttpMethod.Get, WhisperProviderRegistry.Player2LocalUrl + "/v1/health"))
+                using (var clientH = new HttpClient { Timeout = TimeSpan.FromSeconds(3) })
+                {
+                    var hr = await clientH.SendAsync(health);
+                    if (!hr.IsSuccessStatusCode) return false;
+                }
+
+                using (var login = new HttpRequestMessage(HttpMethod.Post,
+                    WhisperProviderRegistry.Player2LocalUrl + "/v1/login/web/" + WhisperProviderRegistry.Player2ClientId))
+                using (var clientL = new HttpClient { Timeout = TimeSpan.FromSeconds(4) })
+                {
+                    login.Content = new StringContent("{}", Encoding.UTF8, "application/json");
+                    var lr = await clientL.SendAsync(login);
+                    string text = await lr.Content.ReadAsStringAsync();
+                    string key = ExtractJsonField(text, "p2Key");
+                    if (!string.IsNullOrEmpty(key))
+                    {
+                        _localKeyCache = key;
+                        GoldenBooksMod.settings.whisperP2Key = key;
+                        return true;
+                    }
+                }
+            }
+            catch { }
+            return false;
+        }
+
+        // 设备码流程：浏览器授权后拿 Web p2Key（异步轮询）
+        public static void StartDeviceAuth()
+        {
+            if (IsAuthenticating)
+            {
+                if (!string.IsNullOrEmpty(ApprovalUrl)) Application.OpenURL(ApprovalUrl);
+                return;
+            }
+            _authCts = new System.Threading.CancellationTokenSource();
+            IsAuthenticating = true;
+            Task.Run(async () =>
+            {
+                try
+                {
+                    await RunDeviceAuthFlowAsync(_authCts.Token);
+                }
+                catch (Exception ex)
+                {
+                    LongEventHandler.ExecuteWhenFinished(() =>
+                        Messages.Message("Player2 授权失败：" + ex.Message, MessageTypeDefOf.RejectInput));
+                }
+                finally { IsAuthenticating = false; ApprovalUrl = null; }
+            });
+        }
+
+        public static void CancelAuth()
+        {
+            try { _authCts?.Cancel(); _authCts?.Dispose(); } catch { }
+            _authCts = null;
+            IsAuthenticating = false;
+            ApprovalUrl = null;
+        }
+
+        private static async Task RunDeviceAuthFlowAsync(System.Threading.CancellationToken ct)
+        {
+            string clientId = WhisperProviderRegistry.Player2ClientId;
+            string newBody = "{\"client_id\":\"" + clientId + "\"}";
+            string codeText = await PostAsync(DeviceNewEndpoint, newBody, 10);
+            string deviceCode = ExtractJsonField(codeText, "deviceCode");
+            string approval = ExtractJsonField(codeText, "verificationUriComplete");
+            if (string.IsNullOrEmpty(deviceCode)) throw new Exception("获取设备码失败");
+            ApprovalUrl = approval;
+            if (!string.IsNullOrEmpty(approval)) Application.OpenURL(approval);
+            LongEventHandler.ExecuteWhenFinished(() =>
+                Messages.Message("Player2：已打开浏览器，请在网页上批准授权。", MessageTypeDefOf.NeutralEvent));
+
+            int interval = 5, maxSeconds = 600, elapsed = 0;
+            string tokenBody = "{\"client_id\":\"" + clientId + "\",\"device_code\":\"" + deviceCode +
+                               "\",\"grant_type\":\"urn:ietf:params:oauth:grant-type:device_code\"}";
+            while (!ct.IsCancellationRequested && elapsed < maxSeconds)
+            {
+                await Task.Delay(interval * 1000, ct);
+                elapsed += interval;
+                string tokenText = await PostAsync(DeviceTokenEndpoint, tokenBody, 10);
+                string key = ExtractJsonField(tokenText, "p2Key");
+                if (!string.IsNullOrEmpty(key))
+                {
+                    GoldenBooksMod.settings.whisperP2Key = key;
+                    LongEventHandler.ExecuteWhenFinished(() =>
+                        Messages.Message("Player2：Web 密钥获取成功！", MessageTypeDefOf.PositiveEvent));
+                    return;
+                }
+            }
+            throw new Exception("授权超时，请重试");
+        }
+
+        private static async Task<string> PostAsync(string url, string body, int timeoutSeconds)
+        {
+            using (var client = new HttpClient { Timeout = TimeSpan.FromSeconds(timeoutSeconds) })
+            using (var req = new HttpRequestMessage(HttpMethod.Post, url))
+            {
+                req.Content = new StringContent(body, Encoding.UTF8, "application/json");
+                var resp = await client.SendAsync(req);
+                return await resp.Content.ReadAsStringAsync();
+            }
+        }
+
+        private static string ExtractJsonField(string json, string field)
+        {
+            try
+            {
+                string key = "\"" + field + "\"";
+                int i = json.IndexOf(key, StringComparison.Ordinal);
+                if (i < 0) return null;
+                i = json.IndexOf(':', i);
+                if (i < 0) return null;
+                i++;
+                while (i < json.Length && char.IsWhiteSpace(json[i])) i++;
+                if (i >= json.Length || json[i] != '"') return null;
+                i++;
+                var sb = new StringBuilder();
+                while (i < json.Length)
+                {
+                    char c = json[i];
+                    if (c == '\\' && i + 1 < json.Length)
+                    {
+                        char n = json[i + 1];
+                        if (n == 'n') sb.Append('\n');
+                        else if (n == '"') sb.Append('"');
+                        else if (n == '\\') sb.Append('\\');
+                        else sb.Append(n);
+                        i += 2;
+                        continue;
+                    }
+                    if (c == '"') break;
+                    sb.Append(c);
+                    i++;
+                }
+                return sb.ToString();
+            }
+            catch { return null; }
+        }
+
+        // 决定实际聊天 URL：本地客户端可用优先，否则远程 + 已保存的 Web 密钥
+        public static async Task<string> ResolveChatUrlAsync()
+        {
+            bool localOk = await TryLocalLoginAsync();
+            if (localOk) return WhisperProviderRegistry.Player2LocalUrl + "/v1/chat/completions";
+            if (!string.IsNullOrEmpty(GoldenBooksMod.settings.whisperP2Key))
+                return WhisperProviderRegistry.Player2RemoteUrl + "/v1/chat/completions";
+            throw new Exception("Player2 客户端未运行，且尚未获取 Web 密钥（请先点击「登录获取密钥」）");
+        }
+    }
+
+    // --- 从 RimTalk / RimTuber 的存档配置导入（读 Config 下的 Scribe XML） ---
+    public static class WhisperConfigImporter
+    {
+        public class ImportedConfig
+        {
+            public int ProviderIndex;
+            public string ApiKey;
+            public string Model;
+            public string BaseUrl;
+        }
+
+        public static ImportedConfig ImportFrom(string settingsTypeName)
+        {
+            string path = Path.Combine(GenFilePaths.ConfigFolderPath, settingsTypeName + ".xml");
+            if (!File.Exists(path)) return null;
+
+            XmlDocument doc = new XmlDocument();
+            doc.Load(path);
+
+            bool useSimple = GetText(doc, "useSimpleConfig") != "false";
+            bool useCloud = GetText(doc, "useCloudProviders") != "false";
+
+            var result = new ImportedConfig();
+
+            if (useSimple)
+            {
+                int prov = GetInt(doc, "simpleProvider", 0);
+                string key = GetText(doc, "simpleApiKey");
+                string p2Key = GetText(doc, "simplePlayer2ApiKey");
+                result.ProviderIndex = MapRimTalkProvider(prov);
+                if (prov == 9) { result.ProviderIndex = 2; result.ApiKey = p2Key; } // Player2
+                else result.ApiKey = key;
+                result.Model = "";
+                return result;
+            }
+
+            if (useCloud)
+            {
+                foreach (XmlNode li in doc.SelectNodes("//cloudConfigs/li"))
+                {
+                    string enabled = GetChild(li, "isEnabled") ?? "true";
+                    string apiKey = GetChild(li, "apiKey");
+                    if (enabled == "false" || string.IsNullOrEmpty(apiKey)) continue;
+                    int prov = ParseInt(GetChild(li, "provider"), 1);
+                    result.ProviderIndex = MapRimTalkProvider(prov);
+                    result.ApiKey = apiKey;
+                    result.BaseUrl = GetChild(li, "baseUrl");
+                    string sel = GetChild(li, "selectedModel");
+                    string custom = GetChild(li, "customModelName");
+                    result.Model = sel == "Custom" ? custom : sel;
+                    if (result.Model == "ChooseModel") result.Model = "";
+                    return result;
+                }
+            }
+            else
+            {
+                XmlNode local = doc.SelectSingleNode("//localConfig");
+                string baseUrl = local?["baseUrl"]?.InnerText;
+                if (!string.IsNullOrEmpty(baseUrl))
+                {
+                    result.ProviderIndex = ProviderIndexOf("自定义 (Custom)");
+                    result.BaseUrl = baseUrl;
+                    result.Model = local["customModelName"]?.InnerText ?? "";
+                }
+                return result;
+            }
+            return null;
+        }
+
+        public static int ProviderIndexOf(string label)
+        {
+            for (int i = 0; i < WhisperProviderRegistry.Defs.Length; i++)
+                if (WhisperProviderRegistry.Defs[i].Label == label) return i;
+            return 3;
+        }
+
+        // RimTalk AIProvider 枚举序号 → 本模组供应商序号
+        private static int MapRimTalkProvider(int rimTalkIndex)
+        {
+            switch (rimTalkIndex)
+            {
+                case 0: return ProviderIndexOf("Google (Gemini)");   // Google
+                case 1: return ProviderIndexOf("OpenAI");           // OpenAI
+                case 2: return ProviderIndexOf("DeepSeek");         // DeepSeek
+                case 3: return ProviderIndexOf("Grok");             // Grok
+                case 4: return ProviderIndexOf("GLM");              // GLM
+                case 5: return ProviderIndexOf("GLM (Coding)");     // GLMCoding
+                case 6: return ProviderIndexOf("Alibaba (Intl)");   // AlibabaIntl
+                case 7: return ProviderIndexOf("Alibaba (CN)");     // AlibabaCN
+                case 8: return ProviderIndexOf("OpenRouter");       // OpenRouter
+                case 9: return ProviderIndexOf("Player2");          // Player2
+                case 13: return ProviderIndexOf("Claude");          // Claude
+                case 14: return ProviderIndexOf("Moonshot");        // Moonshot
+                default: return 3;                                  // Local/Custom/None → 自定义
+            }
+        }
+
+        private static int ParseInt(string s, int def)
+        {
+            return int.TryParse(s, out int v) ? v : def;
+        }
+
+        private static string GetText(XmlDocument doc, string field)
+        {
+            var n = doc.SelectSingleNode("//" + field);
+            return n?.InnerText?.Trim();
+        }
+
+        private static int GetInt(XmlDocument doc, string field, int def)
+        {
+            string s = GetText(doc, field);
+            return int.TryParse(s, out int v) ? v : def;
+        }
+
+        private static string GetChild(XmlNode parent, string name)
+        {
+            return parent?.SelectNodes(name)?.Cast<XmlNode>()
+                .FirstOrDefault()?.InnerText?.Trim();
+        }
+    }
+}

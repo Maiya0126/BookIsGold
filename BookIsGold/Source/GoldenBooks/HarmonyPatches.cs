@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using HarmonyLib;
 using RimWorld;
 using RimWorld.Planet;
@@ -29,6 +30,7 @@ namespace GoldenBooksMod
         public string whisperApiUrl = "https://api.deepseek.com/v1/chat/completions";
         public string whisperApiKey = "";
         public string whisperModel = "deepseek-chat";
+        public string whisperP2Key = "";
         public int whisperProvider = 0;
 
         // 颜氏课业
@@ -57,6 +59,7 @@ namespace GoldenBooksMod
             Scribe_Values.Look(ref whisperApiUrl, "whisperApiUrl", "https://api.deepseek.com/v1/chat/completions");
             Scribe_Values.Look(ref whisperApiKey, "whisperApiKey", "");
             Scribe_Values.Look(ref whisperModel, "whisperModel", "deepseek-chat");
+            Scribe_Values.Look(ref whisperP2Key, "whisperP2Key", "");
             Scribe_Values.Look(ref whisperProvider, "whisperProvider", 0);
             Scribe_Values.Look(ref keweiBooks, "keweiBooks", 15);
             Scribe_Values.Look(ref keweiMillet, "keweiMillet", 3);
@@ -453,7 +456,7 @@ namespace GoldenBooksMod
         // 页签 2：书语（AI 叙事者）
         private void DrawWhisperTab(Rect inRect)
         {
-            Rect viewRect = new Rect(0f, 0f, inRect.width - 16f, 460f);
+            Rect viewRect = new Rect(0f, 0f, inRect.width - 16f, 520f);
             Widgets.BeginScrollView(inRect, ref whisperScrollPosition, viewRect);
             Listing_Standard listing = new Listing_Standard();
             listing.Begin(viewRect);
@@ -463,32 +466,69 @@ namespace GoldenBooksMod
             {
                 listing.CheckboxLabeled("GoldenBooks_WspPersonaInject".Translate(), ref settings.whisperPersonaInjection, "GoldenBooks_WspPersonaInjectTip".Translate());
 
-                // 供应商选择（点击循环切换）
-                string[] providers = WhisperProviders();
+                // 供应商下拉框
                 Rect provRow = listing.GetRect(34f);
+                string curProvider = WhisperProviderRegistry.Defs[settings.whisperProvider].Label;
                 if (Widgets.ButtonText(new Rect(provRow.x, provRow.y, provRow.width, 30f),
-                    "GoldenBooks_WspProvider".Translate() + ": " + providers[settings.whisperProvider] + " (" + (settings.whisperProvider + 1) + "/" + providers.Length + ")"))
+                    "供应商 (Provider): " + curProvider))
                 {
-                    settings.whisperProvider = (settings.whisperProvider + 1) % providers.Length;
-                    ApplyProviderDefaults();
+                    List<FloatMenuOption> opts = new List<FloatMenuOption>();
+                    for (int i = 0; i < WhisperProviderRegistry.Defs.Length; i++)
+                    {
+                        int idx = i;
+                        opts.Add(new FloatMenuOption(WhisperProviderRegistry.Defs[i].Label,
+                            () => { settings.whisperProvider = idx; ApplyProviderDefaults(); }));
+                    }
+                    Find.WindowStack.Add(new FloatMenu(opts));
                 }
                 listing.Gap(4f);
 
-                if (settings.whisperProvider == 2)
+                if (WhisperProviderRegistry.IsPlayer2(settings.whisperProvider))
                 {
-                    // Player2 本地服务：无需密钥，仅展示客户端 ID
-                    listing.Label("GoldenBooks_WspPlayer2Note".Translate());
-                    listing.Gap(4f);
+                    listing.Label("Player2：优先使用本机运行的 Player2 客户端；无客户端时可网页授权获取 Web 密钥。");
+                    listing.Label("密钥状态：" + (string.IsNullOrEmpty(settings.whisperP2Key) ? "尚未获取" : "已获取 ✓"));
+                    Rect row = listing.GetRect(34f);
+                    float bw = (row.width - 10f) / 2f;
+                    if (Widgets.ButtonText(new Rect(row.x, row.y, bw, 30f), "检测本地客户端 (Detect Local App)"))
+                    {
+                        Messages.Message("正在检测本机 Player2 客户端……", MessageTypeDefOf.NeutralEvent);
+                        Task.Run(async () =>
+                        {
+                            bool ok = await WhisperPlayer2.TryLocalLoginAsync();
+                            LongEventHandler.ExecuteWhenFinished(() => Messages.Message(
+                                ok ? "检测到本机 Player2 客户端，登录成功！" : "未检测到本机客户端（请确认 Player2 桌面端已运行）",
+                                ok ? MessageTypeDefOf.PositiveEvent : MessageTypeDefOf.NeutralEvent));
+                        });
+                    }
+                    if (Widgets.ButtonText(new Rect(row.x + bw + 10f, row.y, bw, 30f),
+                        WhisperPlayer2.IsAuthenticating ? "授权中… (Authorizing…)" : "登录获取密钥 (Web Login)"))
+                        WhisperPlayer2.StartDeviceAuth();
+                    if (WhisperPlayer2.IsAuthenticating && !string.IsNullOrEmpty(WhisperPlayer2.ApprovalUrl))
+                    {
+                        listing.Gap(4f);
+                        if (Widgets.ButtonText(listing.GetRect(30f), "重新打开授权网页 (Reopen Approval Page)"))
+                            Application.OpenURL(WhisperPlayer2.ApprovalUrl);
+                    }
                 }
                 else
                 {
-                    settings.whisperApiUrl = listing.TextEntryLabeled("GoldenBooks_WspApiUrl".Translate(), settings.whisperApiUrl ?? "");
-                    settings.whisperApiKey = listing.TextEntryLabeled("GoldenBooks_WspApiKey".Translate(), settings.whisperApiKey ?? "");
-                    settings.whisperModel = listing.TextEntryLabeled("GoldenBooks_WspModel".Translate(), settings.whisperModel ?? "");
+                    settings.whisperApiUrl = listing.TextEntryLabeled("API 地址", settings.whisperApiUrl ?? "");
+                    settings.whisperApiKey = listing.TextEntryLabeled("API 密钥", settings.whisperApiKey ?? "");
+                    settings.whisperModel = listing.TextEntryLabeled("模型", settings.whisperModel ?? "");
                 }
 
+                // 导入按钮行
+                listing.Gap(8f);
+                Rect impRow = listing.GetRect(34f);
+                float ibw = (impRow.width - 10f) / 2f;
+                if (Widgets.ButtonText(new Rect(impRow.x, impRow.y, ibw, 30f), "从 RimTalk 导入 (Import from RimTalk)"))
+                    DoImportWhisperConfig("RimTalk.RimTalkSettings", "RimTalk");
+                if (Widgets.ButtonText(new Rect(impRow.x + ibw + 10f, impRow.y, ibw, 30f), "从 RimTuber 导入 (Import from RimTuber)"))
+                    DoImportWhisperConfig("RimTuber.RimTuberSettings", "RimTuber");
+
+                // 测试连接
                 Rect testRow = listing.GetRect(34f);
-                if (Widgets.ButtonText(new Rect(testRow.x, testRow.y, 240f, 30f), "测试连接 (Test Connection)"))
+                if (Widgets.ButtonText(new Rect(testRow.x, testRow.y, 260f, 30f), "测试连接 (Test Connection)"))
                     TestWhisperConnection();
 
                 listing.Gap(6f);
@@ -498,48 +538,84 @@ namespace GoldenBooksMod
             Widgets.EndScrollView();
         }
 
-        public static string[] WhisperProviders() => new[] { "DeepSeek", "OpenAI", "Player2（本地服务）", "自定义 (Custom)" };
-
-        public static string ProviderDefaultUrl(int p)
+        private static void DoImportWhisperConfig(string settingsTypeName, string displayName)
         {
-            switch (p)
+            try
             {
-                case 0: return "https://api.deepseek.com/v1/chat/completions";
-                case 1: return "https://api.openai.com/v1/chat/completions";
-                case 2: return "http://localhost:4315/v1/chat/completions";
-                default: return "";
+                var cfg = WhisperConfigImporter.ImportFrom(settingsTypeName);
+                if (cfg == null)
+                {
+                    Messages.Message("未找到 " + displayName + " 的设置存档（未安装或从未配置过）。", MessageTypeDefOf.NeutralEvent);
+                    return;
+                }
+                settings.whisperProvider = cfg.ProviderIndex;
+                if (!string.IsNullOrEmpty(cfg.ApiKey)) settings.whisperApiKey = cfg.ApiKey;
+                if (!string.IsNullOrEmpty(cfg.Model)) settings.whisperModel = cfg.Model;
+                if (!string.IsNullOrEmpty(cfg.BaseUrl)) settings.whisperApiUrl = cfg.BaseUrl;
+                Messages.Message("已从 " + displayName + " 导入配置：" + WhisperProviderRegistry.Defs[cfg.ProviderIndex].Label,
+                    MessageTypeDefOf.PositiveEvent);
+            }
+            catch (Exception ex)
+            {
+                Log.Warning("[GoldenBooks] 导入 " + displayName + " 配置失败: " + ex);
+                Messages.Message("导入失败：" + ex.Message, MessageTypeDefOf.RejectInput);
             }
         }
 
         private static void ApplyProviderDefaults()
         {
-            string def = ProviderDefaultUrl(settings.whisperProvider);
-            if (settings.whisperProvider == 2)
+            if (WhisperProviderRegistry.IsPlayer2(settings.whisperProvider)) return;
+            string def = WhisperProviderRegistry.Defs[settings.whisperProvider].EndpointUrl ?? "";
+            if (string.IsNullOrEmpty(def)) return;
+            // 地址为空或仍是其他供应商默认值时，自动换成当前供应商默认
+            foreach (var d in WhisperProviderRegistry.Defs)
             {
-                settings.whisperApiKey = "";
-                if (string.IsNullOrEmpty(settings.whisperModel) || settings.whisperModel == "deepseek-chat" || settings.whisperModel == "gpt-4o-mini") settings.whisperModel = "";
+                if (!string.IsNullOrEmpty(d.EndpointUrl) && settings.whisperApiUrl == d.EndpointUrl)
+                { settings.whisperApiUrl = def; return; }
             }
-            if (!string.IsNullOrEmpty(def) && settings.whisperApiUrl != def)
+            if (string.IsNullOrEmpty(settings.whisperApiUrl)) settings.whisperApiUrl = def;
+        }
+
+        public static string WhisperRequestUrl()
+        {
+            if (!string.IsNullOrEmpty(settings.whisperApiUrl)) return settings.whisperApiUrl;
+            return WhisperProviderRegistry.Defs[settings.whisperProvider].EndpointUrl ?? "";
+        }
+
+        public static void ApplyAuth(System.Net.Http.HttpRequestMessage req)
+        {
+            if (WhisperProviderRegistry.IsPlayer2(settings.whisperProvider))
             {
-                // 地址为空或仍是其他供应商默认值时，自动换成当前供应商默认
-                string[] others = { ProviderDefaultUrl(0), ProviderDefaultUrl(1), ProviderDefaultUrl(2) };
-                if (string.IsNullOrEmpty(settings.whisperApiUrl) || others.Contains(settings.whisperApiUrl))
-                    settings.whisperApiUrl = def;
+                req.Headers.Add("Authorization", "Bearer " + (settings.whisperP2Key ?? ""));
+                req.Headers.Add("player2-game-key", WhisperProviderRegistry.Player2ClientId);
+                return;
+            }
+            if (!string.IsNullOrEmpty(settings.whisperApiKey))
+                req.Headers.Add("Authorization", "Bearer " + settings.whisperApiKey);
+            if (WhisperProviderRegistry.Defs[settings.whisperProvider].Label == "OpenRouter")
+            {
+                req.Headers.Add("HTTP-Referer", "https://github.com/Maiya0126/BookIsGold");
+                req.Headers.Add("X-Title", "BookIsGold");
             }
         }
 
         // 测试书语 API 连接（异步，完成后弹消息）
         private static async void TestWhisperConnection()
         {
-            string url = WhisperRequestUrl();
-            if (string.IsNullOrEmpty(url))
-            { Messages.Message("GoldenBooks_TestNoConfig".Translate(), MessageTypeDefOf.RejectInput); return; }
-            if (settings.whisperProvider != 2 && string.IsNullOrEmpty(settings.whisperApiKey))
-            { Messages.Message("GoldenBooks_TestNoConfig".Translate(), MessageTypeDefOf.RejectInput); return; }
-            Messages.Message("GoldenBooks_Testing".Translate(), MessageTypeDefOf.NeutralEvent);
+            Messages.Message("正在测试连接……", MessageTypeDefOf.NeutralEvent);
             try
             {
-                using (var client = new System.Net.Http.HttpClient { Timeout = TimeSpan.FromSeconds(20) })
+                string url;
+                if (WhisperProviderRegistry.IsPlayer2(settings.whisperProvider))
+                    url = await WhisperPlayer2.ResolveChatUrlAsync();
+                else
+                {
+                    url = WhisperRequestUrl();
+                    if (string.IsNullOrEmpty(url) || string.IsNullOrEmpty(settings.whisperApiKey))
+                    { Messages.Message("请先填写 API 地址与密钥。", MessageTypeDefOf.RejectInput); return; }
+                }
+
+                using (var client = new System.Net.Http.HttpClient { Timeout = TimeSpan.FromSeconds(30) })
                 using (var req = new System.Net.Http.HttpRequestMessage(System.Net.Http.HttpMethod.Post, url))
                 {
                     ApplyAuth(req);
@@ -548,29 +624,15 @@ namespace GoldenBooksMod
                     req.Content = new System.Net.Http.StringContent(body, System.Text.Encoding.UTF8, "application/json");
                     var resp = await client.SendAsync(req);
                     if (resp.IsSuccessStatusCode)
-                        LongEventHandler.ExecuteWhenFinished(() => Messages.Message("GoldenBooks_TestOk".Translate(), MessageTypeDefOf.PositiveEvent));
+                        LongEventHandler.ExecuteWhenFinished(() => Messages.Message("连接成功！书语 API 可用。", MessageTypeDefOf.PositiveEvent));
                     else
-                        LongEventHandler.ExecuteWhenFinished(() => Messages.Message("GoldenBooks_TestFail".Translate(resp.StatusCode), MessageTypeDefOf.RejectInput));
+                        LongEventHandler.ExecuteWhenFinished(() => Messages.Message("连接失败：" + resp.StatusCode, MessageTypeDefOf.RejectInput));
                 }
             }
             catch (Exception ex)
             {
-                LongEventHandler.ExecuteWhenFinished(() => Messages.Message("GoldenBooks_TestFail".Translate(ex.Message), MessageTypeDefOf.RejectInput));
+                LongEventHandler.ExecuteWhenFinished(() => Messages.Message("连接失败：" + ex.Message, MessageTypeDefOf.RejectInput));
             }
-        }
-
-        public static string WhisperRequestUrl()
-        {
-            if (!string.IsNullOrEmpty(settings.whisperApiUrl)) return settings.whisperApiUrl;
-            return ProviderDefaultUrl(settings.whisperProvider);
-        }
-
-        public static void ApplyAuth(System.Net.Http.HttpRequestMessage req)
-        {
-            if (settings.whisperProvider == 2)
-                req.Headers.Add("X-P2-Client-Id", "019e12ba-6062-79ae-8c76-de13bea9af7a");
-            else if (!string.IsNullOrEmpty(settings.whisperApiKey))
-                req.Headers.Add("Authorization", "Bearer " + settings.whisperApiKey);
         }
 public override void WriteSettings()
         {

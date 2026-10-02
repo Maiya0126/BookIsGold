@@ -71,6 +71,7 @@
     <Compile Include="Source\GoldenBooks\DebugActions_BookIsGold.cs" />
     <Compile Include="Source\GoldenBooks\Lesson.cs" />
     <Compile Include="Source\GoldenBooks\Handbook.cs" />
+    <Compile Include="Source\GoldenBooks\WhisperApi.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="About\Preview.png" />

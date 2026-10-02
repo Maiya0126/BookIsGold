@@ -275,7 +275,7 @@ namespace GoldenBooksMod
                    !string.IsNullOrEmpty(GoldenBooksMod.WhisperRequestUrl());
         }
 
-        private string[] GenerateViaApi(bool isYan, string summary)
+        private async Task<string[]> GenerateViaApi(bool isYan, string summary)
         {
             try
             {
@@ -285,7 +285,10 @@ namespace GoldenBooksMod
                     : "Write a 100~200 word daily colony chronicle in first person. Output the text only.");
                 string user = summary;
 
-                var req = new HttpRequestMessage(HttpMethod.Post, GoldenBooksMod.WhisperRequestUrl());
+                string url = WhisperProviderRegistry.IsPlayer2(GoldenBooksMod.settings.whisperProvider)
+                    ? await WhisperPlayer2.ResolveChatUrlAsync()
+                    : GoldenBooksMod.WhisperRequestUrl();
+                var req = new HttpRequestMessage(HttpMethod.Post, url);
                 GoldenBooksMod.ApplyAuth(req);
                 string body = "{\"model\":\"" + (string.IsNullOrEmpty(GoldenBooksMod.settings.whisperModel) ? "default" : GoldenBooksMod.settings.whisperModel) + "\",\"messages\":[" +
                               "{\"role\":\"system\",\"content\":" + JsonEscape(sys) + "}," +
