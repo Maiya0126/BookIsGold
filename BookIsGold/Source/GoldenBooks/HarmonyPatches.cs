@@ -46,6 +46,8 @@ namespace GoldenBooksMod
         public int keweiWeddings = 1;
         public int spiritAscendIntellect = 12;
         public int colonistSpiritLimit = 2;
+        public int spiritAscendFragments = 5;
+        public int spiritAscendClassics = 1;
 
         public override void ExposeData()
         {
@@ -75,6 +77,8 @@ namespace GoldenBooksMod
             Scribe_Values.Look(ref keweiWeddings, "keweiWeddings", 1);
             Scribe_Values.Look(ref spiritAscendIntellect, "spiritAscendIntellect", 12);
             Scribe_Values.Look(ref colonistSpiritLimit, "colonistSpiritLimit", 2);
+            Scribe_Values.Look(ref spiritAscendFragments, "spiritAscendFragments", 5);
+            Scribe_Values.Look(ref spiritAscendClassics, "spiritAscendClassics", 1);
             base.ExposeData();
         }
     }
@@ -477,6 +481,10 @@ namespace GoldenBooksMod
             settings.spiritAscendIntellect = (int)listing.Slider(settings.spiritAscendIntellect, 5f, 20f);
             listing.Label($"{"GoldenBooks_AscLimit".Translate()}: {settings.colonistSpiritLimit}");
             settings.colonistSpiritLimit = (int)listing.Slider(settings.colonistSpiritLimit, 1f, 10f);
+            listing.Label($"{"GoldenBooks_AscFragments".Translate()}: {settings.spiritAscendFragments}");
+            settings.spiritAscendFragments = (int)listing.Slider(settings.spiritAscendFragments, 1f, 20f);
+            listing.Label($"{"GoldenBooks_AscClassics".Translate()}: {settings.spiritAscendClassics}");
+            settings.spiritAscendClassics = (int)listing.Slider(settings.spiritAscendClassics, 0f, 3f);
             listing.GapLine();
 
             listing.End();

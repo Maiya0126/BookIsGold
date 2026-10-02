@@ -51,12 +51,13 @@ namespace GoldenBooksMod
                 return "智识不足（需 " + s.spiritAscendIntellect + "）";
             if (AscendedCount() >= s.colonistSpiritLimit)
                 return "殖民地书灵已达上限（" + s.colonistSpiritLimit + "）";
-            if (!HasMaterial(p.MapHeld)) return "缺少材料（古籍残卷×5、五经×1）";
+            if (!HasMaterial(p.MapHeld)) return "缺少材料（古籍残卷×" + s.spiritAscendFragments + "、五经×" + s.spiritAscendClassics + "）";
             return null;
         }
 
         private static bool HasMaterial(Map map)
         {
+            var s = GoldenBooksMod.settings;
             if (map == null) return false;
             int frag = 0, classics = 0;
             foreach (Thing t in map.listerThings.ThingsInGroup(ThingRequestGroup.HaulableAlways))
@@ -64,17 +65,19 @@ namespace GoldenBooksMod
                 if (t.def.defName == "GoldenBooks_BookFragment") frag += t.stackCount;
                 else if (t.def.defName == "GoldenBooks_FiveClassics") classics += t.stackCount;
             }
-            return frag >= 10 && classics >= 1;
+            return frag >= s.spiritAscendFragments && classics >= s.spiritAscendClassics;
         }
 
         private static void ConsumeMaterials(Map map)
         {
-            ConsumeDef(map, "GoldenBooks_BookFragment", 5);
-            ConsumeDef(map, "GoldenBooks_FiveClassics", 1);
+            var s = GoldenBooksMod.settings;
+            ConsumeDef(map, "GoldenBooks_BookFragment", s.spiritAscendFragments);
+            ConsumeDef(map, "GoldenBooks_FiveClassics", s.spiritAscendClassics);
         }
 
         private static void ConsumeDef(Map map, string defName, int need)
         {
+            var s = GoldenBooksMod.settings;
             int left = need;
             foreach (Thing t in map.listerThings.ThingsInGroup(ThingRequestGroup.HaulableAlways).ToList())
             {
@@ -172,7 +175,7 @@ namespace GoldenBooksMod
                 {
                     defaultLabel = "化灵 (Become Book Spirit)",
                     defaultDesc = string.IsNullOrEmpty(reason)
-                        ? "化灵之仪：将这名学者化为书灵——失去人形，获得书灵之躯与讲学光环。（消耗古籍残卷×5、五经×1，不可逆）"
+                        ? "化灵之仪：将这名学者化为书灵——失去人形，获得书灵之躯与讲学光环。（消耗古籍残卷×" + s.spiritAscendFragments + "、五经×" + s.spiritAscendClassics + "，不可逆）"
                         : "化灵之仪（当前不可用：" + reason + "）",
                     icon = Icon(),
                     action = delegate
