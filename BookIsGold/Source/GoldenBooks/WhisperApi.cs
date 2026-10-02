@@ -220,7 +220,8 @@ namespace GoldenBooksMod
         }
     }
 
-    // --- 从 RimTalk / RimTuber 的存档配置导入（读 Config 下的 Scribe XML） ---
+    // --- 从 RimTalk / RimTuber 的存档配置导入 ---
+    // RimWorld 将各模组设置存为 Config/Mod_<标识>_<类名>.xml，故按 ModSettings Class 特征扫描定位。
     public static class WhisperConfigImporter
     {
         public class ImportedConfig
@@ -231,60 +232,157 @@ namespace GoldenBooksMod
             public string BaseUrl;
         }
 
-        public static ImportedConfig ImportFrom(string settingsTypeName)
+        // 扫描 Config 目录，找到包含指定 ModSettings 类名的文件
+        private static string FindSettingsFile(string settingsClassName)
         {
-            string path = Path.Combine(GenFilePaths.ConfigFolderPath, settingsTypeName + ".xml");
-            if (!File.Exists(path)) return null;
+            string dir = GenFilePaths.ConfigFolderPath;
+            if (!Directory.Exists(dir)) return null;
+            foreach (FileInfo f in new DirectoryInfo(dir).GetFiles("*.xml"))
+            {
+                try
+                {
+                    using (StreamReader r = new StreamReader(f.FullName, Encoding.UTF8))
+                    {
+                        string head = r.ReadToEnd();
+                        if (head.Contains("ModSettings Class=\"" + settingsClassName + "\"")) return f.FullName;
+                    }
+                }
+                catch { }
+            }
+            return null;
+        }
 
+        // 供应商枚举名 → 本模组下拉序号
+        private static int MapProviderName(string name)
+        {
+            if (string.IsNullOrEmpty(name)) return ProviderIndexOf("自定义 (Custom)");
+            switch (name)
+            {
+                case "DeepSeek": return ProviderIndexOf("DeepSeek");
+                case "OpenAI": return ProviderIndexOf("OpenAI");
+                case "Player2": return ProviderIndexOf("Player2");
+                case "Google": return ProviderIndexOf("Google (Gemini)");
+                case "Grok": return ProviderIndexOf("Grok");
+                case "GLM": return ProviderIndexOf("GLM");
+                case "GLMCoding": return ProviderIndexOf("GLM (Coding)");
+                case "AlibabaIntl": return ProviderIndexOf("Alibaba (Intl)");
+                case "AlibabaCN": return ProviderIndexOf("Alibaba (CN)");
+                case "OpenRouter": return ProviderIndexOf("OpenRouter");
+                case "Claude": return ProviderIndexOf("Claude");
+                case "Moonshot": return ProviderIndexOf("Moonshot");
+                default: return ProviderIndexOf("自定义 (Custom)"); // Custom/Local/None
+            }
+        }
+
+        private static bool BoolText(string s, bool def)
+        {
+            if (string.IsNullOrEmpty(s)) return def;
+            return s.Equals("True", StringComparison.OrdinalIgnoreCase) || s == "1";
+        }
+
+        public static ImportedConfig ImportFrom(string settingsClassName)
+        {
+            string file = FindSettingsFile(settingsClassName);
+            if (file == null) return null;
             XmlDocument doc = new XmlDocument();
-            doc.Load(path);
+            doc.Load(file);
 
-            bool useSimple = GetText(doc, "useSimpleConfig") != "false";
-            bool useCloud = GetText(doc, "useCloudProviders") != "false";
+            if (settingsClassName.Contains("RimTalk")) return ParseRimTalk(doc);
+            if (settingsClassName.Contains("RimTuber")) return ParseRimTuber(doc);
+            return null;
+        }
 
-            var result = new ImportedConfig();
-
+        // RimTalk：useSimpleConfig 简单模式 / cloudConfigs 进阶模式
+        private static ImportedConfig ParseRimTalk(XmlDocument doc)
+        {
+            bool useSimple = BoolText(GetText(doc, "useSimpleConfig"), true);
             if (useSimple)
             {
-                int prov = GetInt(doc, "simpleProvider", 0);
-                string key = GetText(doc, "simpleApiKey");
-                string p2Key = GetText(doc, "simplePlayer2ApiKey");
-                result.ProviderIndex = MapRimTalkProvider(prov);
-                if (prov == 9) { result.ProviderIndex = 2; result.ApiKey = p2Key; } // Player2
-                else result.ApiKey = key;
-                result.Model = "";
-                return result;
+                string provName = GetText(doc, "simpleProvider");
+                int idx;
+                if (int.TryParse(provName, out int provInt)) idx = MapLegacyIndex(provInt);
+                else idx = MapProviderName(provName);
+
+                var r = new ImportedConfig { ProviderIndex = idx };
+                if (idx == ProviderIndexOf("Player2"))
+                    r.ApiKey = GetText(doc, "simplePlayer2ApiKey");
+                else
+                    r.ApiKey = GetText(doc, "simpleApiKey");
+                return r;
             }
 
-            if (useCloud)
+            // 进阶模式：取第一个启用且有密钥的云配置
+            foreach (XmlNode li in doc.SelectNodes("//cloudConfigs/li"))
             {
-                foreach (XmlNode li in doc.SelectNodes("//cloudConfigs/li"))
+                string enabled = GetChild(li, "isEnabled") ?? "True";
+                string apiKey = GetChild(li, "apiKey");
+                if (!BoolText(enabled, true) || string.IsNullOrEmpty(apiKey)) continue;
+                var r = new ImportedConfig
                 {
-                    string enabled = GetChild(li, "isEnabled") ?? "true";
-                    string apiKey = GetChild(li, "apiKey");
-                    if (enabled == "false" || string.IsNullOrEmpty(apiKey)) continue;
-                    int prov = ParseInt(GetChild(li, "provider"), 1);
-                    result.ProviderIndex = MapRimTalkProvider(prov);
-                    result.ApiKey = apiKey;
-                    result.BaseUrl = GetChild(li, "baseUrl");
-                    string sel = GetChild(li, "selectedModel");
-                    string custom = GetChild(li, "customModelName");
-                    result.Model = sel == "Custom" ? custom : sel;
-                    if (result.Model == "ChooseModel") result.Model = "";
-                    return result;
-                }
+                    ProviderIndex = MapProviderName(GetChild(li, "provider")),
+                    ApiKey = apiKey,
+                    BaseUrl = GetChild(li, "baseUrl"),
+                    Model = ""
+                };
+                string sel = GetChild(li, "selectedModel");
+                string custom = GetChild(li, "customModelName");
+                r.Model = sel == "Custom" ? custom : sel;
+                if (r.Model == "ChooseModel") r.Model = "";
+                return r;
             }
-            else
+            // 回落：本地模型配置
+            XmlNode local = doc.SelectSingleNode("//localConfig");
+            string lb = local?["baseUrl"]?.InnerText;
+            if (!string.IsNullOrEmpty(lb))
+                return new ImportedConfig { ProviderIndex = ProviderIndexOf("自定义 (Custom)"), BaseUrl = lb, Model = local["customModelName"]?.InnerText ?? "" };
+            return null;
+        }
+
+        // 旧版本数字枚举序号兜底
+        private static int MapLegacyIndex(int i)
+        {
+            switch (i)
             {
-                XmlNode local = doc.SelectSingleNode("//localConfig");
-                string baseUrl = local?["baseUrl"]?.InnerText;
-                if (!string.IsNullOrEmpty(baseUrl))
+                case 0: return ProviderIndexOf("Google (Gemini)");
+                case 1: return ProviderIndexOf("OpenAI");
+                case 2: return ProviderIndexOf("DeepSeek");
+                case 3: return ProviderIndexOf("Grok");
+                case 4: return ProviderIndexOf("GLM");
+                case 5: return ProviderIndexOf("GLM (Coding)");
+                case 6: return ProviderIndexOf("Alibaba (Intl)");
+                case 7: return ProviderIndexOf("Alibaba (CN)");
+                case 8: return ProviderIndexOf("OpenRouter");
+                case 9: return ProviderIndexOf("Player2");
+                case 13: return ProviderIndexOf("Claude");
+                case 14: return ProviderIndexOf("Moonshot");
+                default: return ProviderIndexOf("自定义 (Custom)");
+            }
+        }
+
+        // RimTuber（用户自研）：APIConfigs 列表，取第一个带密钥的配置；Player2 项除外
+        private static ImportedConfig ParseRimTuber(XmlDocument doc)
+        {
+            foreach (XmlNode li in doc.SelectNodes("//APIConfigs/li"))
+            {
+                string prov = GetChild(li, "provider");
+                string apiKey = GetChild(li, "apiKey");
+                string url = GetChild(li, "endpointUrl");
+                string model = GetChild(li, "model");
+
+                if (prov == "Player2")
                 {
-                    result.ProviderIndex = ProviderIndexOf("自定义 (Custom)");
-                    result.BaseUrl = baseUrl;
-                    result.Model = local["customModelName"]?.InnerText ?? "";
+                    var p2 = new ImportedConfig { ProviderIndex = ProviderIndexOf("Player2") };
+                    if (!string.IsNullOrEmpty(apiKey)) p2.ApiKey = apiKey;
+                    return p2;
                 }
-                return result;
+                if (string.IsNullOrEmpty(apiKey) || string.IsNullOrEmpty(url)) continue;
+                return new ImportedConfig
+                {
+                    ProviderIndex = ProviderIndexOf("自定义 (Custom)"),
+                    ApiKey = apiKey,
+                    BaseUrl = url,
+                    Model = model
+                };
             }
             return null;
         }
@@ -293,33 +391,7 @@ namespace GoldenBooksMod
         {
             for (int i = 0; i < WhisperProviderRegistry.Defs.Length; i++)
                 if (WhisperProviderRegistry.Defs[i].Label == label) return i;
-            return 3;
-        }
-
-        // RimTalk AIProvider 枚举序号 → 本模组供应商序号
-        private static int MapRimTalkProvider(int rimTalkIndex)
-        {
-            switch (rimTalkIndex)
-            {
-                case 0: return ProviderIndexOf("Google (Gemini)");   // Google
-                case 1: return ProviderIndexOf("OpenAI");           // OpenAI
-                case 2: return ProviderIndexOf("DeepSeek");         // DeepSeek
-                case 3: return ProviderIndexOf("Grok");             // Grok
-                case 4: return ProviderIndexOf("GLM");              // GLM
-                case 5: return ProviderIndexOf("GLM (Coding)");     // GLMCoding
-                case 6: return ProviderIndexOf("Alibaba (Intl)");   // AlibabaIntl
-                case 7: return ProviderIndexOf("Alibaba (CN)");     // AlibabaCN
-                case 8: return ProviderIndexOf("OpenRouter");       // OpenRouter
-                case 9: return ProviderIndexOf("Player2");          // Player2
-                case 13: return ProviderIndexOf("Claude");          // Claude
-                case 14: return ProviderIndexOf("Moonshot");        // Moonshot
-                default: return 3;                                  // Local/Custom/None → 自定义
-            }
-        }
-
-        private static int ParseInt(string s, int def)
-        {
-            return int.TryParse(s, out int v) ? v : def;
+            return ProviderIndexOf("自定义 (Custom)");
         }
 
         private static string GetText(XmlDocument doc, string field)
@@ -328,16 +400,9 @@ namespace GoldenBooksMod
             return n?.InnerText?.Trim();
         }
 
-        private static int GetInt(XmlDocument doc, string field, int def)
-        {
-            string s = GetText(doc, field);
-            return int.TryParse(s, out int v) ? v : def;
-        }
-
         private static string GetChild(XmlNode parent, string name)
         {
             return parent?.SelectNodes(name)?.Cast<XmlNode>()
                 .FirstOrDefault()?.InnerText?.Trim();
         }
-    }
-}
+    }}
