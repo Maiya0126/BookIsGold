@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
 	<GoldenBooks_YieldRate>资源产出倍率</GoldenBooks_YieldRate>
 	<GoldenBooks_SpawnChance>颜如玉出现概率</GoldenBooks_SpawnChance>
@@ -33,7 +33,7 @@
 	<GoldenBooks_WormSwarmLabel>书蠹出没</GoldenBooks_WormSwarmLabel>
 	<GoldenBooks_WormSwarmText>一群油壳书蠹拖着一只吱呀作响的书箱，浩浩荡荡逼近了殖民地！\n\n它们是书院的旧部，循书千年——如今它们腹中养着吃了一千年的字纸，也拖来了“见面礼”。\n\n击败它们，夺回书籍。小心，书蠹已被血气激怒。</GoldenBooks_WormSwarmText>
 
-	<GoldenBooks_StoryChainToggle>书灵纪剧情事件链</GoldenBooks_StoryChainToggle>
+	<GoldenBooks_StoryChainToggle>书灵物语剧情事件链</GoldenBooks_StoryChainToggle>
 	<GoldenBooks_StoryChainTip>关闭后：剧情信件与书灵事件不再触发，纯玩法模式。</GoldenBooks_StoryChainTip>
 	<GoldenBooks_ZhixiaThreshold>知夏乱入阈值（拆书/书蠹次数）</GoldenBooks_ZhixiaThreshold>
 	<GoldenBooks_ZhixiaFallbackDays>知夏兜底天数（颜执中入驻后）</GoldenBooks_ZhixiaFallbackDays>

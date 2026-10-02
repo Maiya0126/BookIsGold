@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-	<!-- 书灵纪：剧情补给事件 -->
+	<!-- 书灵物语：剧情补给事件 -->
 
-	<!-- 书灵纪专属事件分类（供 CategoryMTB 讲书人组件按 MTB 触发） -->
+	<!-- 书灵物语专属事件分类（供 CategoryMTB 讲书人组件按 MTB 触发） -->
 	<IncidentCategoryDef>
 		<defName>GoldenBooks_BookSupply</defName>
 		<label>书籍补给</label>

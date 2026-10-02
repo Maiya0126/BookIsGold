@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-	<!-- 书灵纪：书灵光环与状态 -->
+	<!-- 书灵物语：书灵光环与状态 -->
 
 	<!-- 砚翁光环：讲学 -->
 	<HediffDef>
@@ -12,6 +12,7 @@
 		<isBad>false</isBad>
 		<stages>
 			<li>
+				<minSeverity>0</minSeverity>
 				<becomeVisible>true</becomeVisible>
 				<statOffsets>
 					<ResearchSpeed>0.15</ResearchSpeed>
@@ -19,6 +20,7 @@
 				</statOffsets>
 			</li>
 			<li>
+				<minSeverity>1.005</minSeverity>
 				<label>如坐春风（书院十全）</label>
 				<becomeVisible>true</becomeVisible>
 				<statOffsets>
@@ -48,6 +50,7 @@
 		<isBad>false</isBad>
 		<stages>
 			<li>
+				<minSeverity>0</minSeverity>
 				<becomeVisible>true</becomeVisible>
 				<statOffsets>
 					<GlobalLearningFactor>0.10</GlobalLearningFactor>
@@ -55,6 +58,7 @@
 				</statOffsets>
 			</li>
 			<li>
+				<minSeverity>1.005</minSeverity>
 				<label>闹书房（书院十全）</label>
 				<becomeVisible>true</becomeVisible>
 				<statOffsets>
@@ -115,10 +119,12 @@
 		<stages>
 			<li>
 				<label>如坐春风</label>
+				<description>书灵·颜执中在身旁讲学，思如泉涌，心情舒畅。</description>
 				<baseMoodEffect>3</baseMoodEffect>
 			</li>
 			<li>
 				<label>如坐春风（书院十全）</label>
+				<description>书灵讲学已达化境，如沐春风，心情格外舒畅。</description>
 				<baseMoodEffect>5</baseMoodEffect>
 			</li>
 		</stages>
@@ -131,10 +137,12 @@
 		<stages>
 			<li>
 				<label>闹书房</label>
+				<description>书灵·颜知夏在身旁闹腾，苦闷尽消，气氛正好。</description>
 				<baseMoodEffect>8</baseMoodEffect>
 			</li>
 			<li>
 				<label>闹书房（书院十全）</label>
+				<description>小书灵闹腾得恰到好处，满屋欢喜，心情大好。</description>
 				<baseMoodEffect>12</baseMoodEffect>
 			</li>
 		</stages>

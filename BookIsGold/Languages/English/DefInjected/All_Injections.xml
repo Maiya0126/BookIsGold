@@ -1,6 +1,6 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
-	<!-- 书灵纪：种族 / 状态 / 事件 -->
+	<!-- 书灵物语：种族 / 状态 / 事件 -->
 	<GoldenBooks_BookSpirit_Yanzhongzhong.label>Book Spirit · Yan Zhizhong</GoldenBooks_BookSpirit_Yanzhongzhong.label>
 	<GoldenBooks_BookSpirit_Yanzhongzhong.description>A half-unrolled gilded tome, worn at the cover, its spine mended a dozen times with golden thread. Yan Zhizhong, courtesy-name Yanweng — headmaster of an academy of old, a book spirit for nearly a thousand years, faithful to the old creed "books never lie".\n\n[Aura · Lecture] Colonists within 9.9 tiles: Research Speed +15%, Learning +20%, Mood +3\n[Spirit Body] Low HP but very high dodge; slowly regenerates out of combat. Highly flammable — keep away from fire and rain!\n\nArrives only through story events; never appears in the wild.</GoldenBooks_BookSpirit_Yanzhongzhong.description>
 

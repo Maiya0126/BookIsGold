@@ -18,7 +18,7 @@ namespace GoldenBooksMod
         public List<string> allowedDefNames = new List<string>();
         public Dictionary<string, bool> bookWhitelist = new Dictionary<string, bool>();
 
-        // 书灵纪剧情链
+        // 书灵物语剧情链
         public bool storyChainEnabled = true;
         public int zhixiaThreshold = 5;
         public int zhixiaFallbackDays = 6;
@@ -285,7 +285,13 @@ namespace GoldenBooksMod
     [StaticConstructorOnStartup]
     public static class GoldenBooksPatcher
     {
-        static GoldenBooksPatcher() { ApplySettings(); }
+        static GoldenBooksPatcher()
+        {
+            ApplySettings();
+            // PatchAll 从 Mod 构造函数移到这里：避免 patch 失败连带毁掉 Mod 设置页
+            try { new Harmony("com.maiya.goldenbooks").PatchAll(); }
+            catch (Exception e) { Log.Error("[GoldenBooks] Harmony patch failed: " + e); }
+        }
 
         public static void ApplySettings()
         {
@@ -333,6 +339,8 @@ namespace GoldenBooksMod
         public static GoldenBooksSettings settings;
         private Vector2 scrollPosition = Vector2.zero;
         private Vector2 bookScrollPosition = Vector2.zero;
+        private Vector2 raceScrollPosition = Vector2.zero;
+        private Vector2 whisperScrollPosition = Vector2.zero;
         private string searchText = "";
         private string bookSearchText = "";
 
@@ -345,15 +353,57 @@ namespace GoldenBooksMod
         public GoldenBooksMod(ModContentPack content) : base(content)
         {
             settings = GetSettings<GoldenBooksSettings>();
-            new Harmony("com.maiya.goldenbooks").PatchAll();
+            // Harmony 打补丁已移至 GoldenBooksPatcher（StaticConstructorOnStartup），
+            // 构造函数只做设置初始化，保证设置页在任何情况下都能注册
         }
 
         public override string SettingsCategory() => "Golden Books 书中自有黄金屋";
 
+        private int settingsTab; // 0=核心玩法 1=书灵形态与藏书 2=书语·叙事者
+
         public override void DoSettingsWindowContents(Rect inRect)
         {
+            // 放大设置窗口，避免新增设置项与原生内容互相遮挡
+            Dialog_ModSettings dlg = Find.WindowStack.WindowOfType<Dialog_ModSettings>();
+            if (dlg != null)
+            {
+                float wantW = Mathf.Min(1050f, UI.screenWidth - 80f);
+                float wantH = Mathf.Min(780f, UI.screenHeight - 80f);
+                if (dlg.windowRect.width < wantW || dlg.windowRect.height < wantH)
+                {
+                    float newW = Mathf.Max(dlg.windowRect.width, wantW);
+                    float newH = Mathf.Max(dlg.windowRect.height, wantH);
+                    float dx = (dlg.windowRect.width - newW) / 2f;
+                    float dy = (dlg.windowRect.height - newH) / 2f;
+                    dlg.windowRect = new Rect(dlg.windowRect.x + dx, dlg.windowRect.y + dy, newW, newH);
+                }
+            }
+
+            List<TabRecord> tabs = new List<TabRecord>
+            {
+                new TabRecord("核心玩法", () => settingsTab = 0, settingsTab == 0),
+                new TabRecord("书灵形态与藏书", () => settingsTab = 1, settingsTab == 1),
+                new TabRecord("书语·叙事者", () => settingsTab = 2, settingsTab == 2),
+            };
+            Rect tabRect = inRect.TopPartPixels(32f);
+            Rect bodyRect = new Rect(inRect.x, tabRect.yMax, inRect.width, inRect.height - tabRect.height);
+            TabDrawer.DrawTabs(tabRect, tabs);
+
+            switch (settingsTab)
+            {
+                case 0: DrawCoreTab(bodyRect); break;
+                case 1: DrawLibraryTab(bodyRect); break;
+                case 2: DrawWhisperTab(bodyRect); break;
+            }
+        }
+
+        // 页签 0：核心玩法（产出/召唤 + 书灵物语剧情链 + 颜氏课业）
+        private void DrawCoreTab(Rect inRect)
+        {
+            Rect viewRect = new Rect(0f, 0f, inRect.width - 16f, 640f);
+            Widgets.BeginScrollView(inRect, ref scrollPosition, viewRect);
             Listing_Standard listing = new Listing_Standard();
-            listing.Begin(inRect);
+            listing.Begin(viewRect);
 
             listing.Label($"{"GoldenBooks_YieldRate".Translate()}: {settings.resourceYieldPct:P0}");
             settings.resourceYieldPct = listing.Slider(settings.resourceYieldPct, 0.01f, 2.0f);
@@ -361,7 +411,7 @@ namespace GoldenBooksMod
             settings.yanRuYuChance = listing.Slider(settings.yanRuYuChance, 0f, 1.0f);
             listing.GapLine();
 
-            // 书灵纪剧情链
+            // 书灵物语剧情链
             listing.CheckboxLabeled("GoldenBooks_StoryChainToggle".Translate(), ref settings.storyChainEnabled, "GoldenBooks_StoryChainTip".Translate());
             if (settings.storyChainEnabled)
             {
@@ -369,17 +419,6 @@ namespace GoldenBooksMod
                 settings.zhixiaThreshold = (int)listing.Slider(settings.zhixiaThreshold, 1f, 20f);
                 listing.Label($"{"GoldenBooks_ZhixiaFallbackDays".Translate()}: {settings.zhixiaFallbackDays}");
                 settings.zhixiaFallbackDays = (int)listing.Slider(settings.zhixiaFallbackDays, 1f, 30f);
-            }
-            listing.GapLine();
-
-            // 书语（AI 叙事者）
-            listing.CheckboxLabeled("GoldenBooks_WspToggle".Translate(), ref settings.whisperEnabled, "GoldenBooks_WspToggleTip".Translate());
-            if (settings.whisperEnabled)
-            {
-                listing.CheckboxLabeled("GoldenBooks_WspPersonaInject".Translate(), ref settings.whisperPersonaInjection, "GoldenBooks_WspPersonaInjectTip".Translate());
-                settings.whisperApiUrl = listing.TextEntryLabeled("GoldenBooks_WspApiUrl".Translate(), settings.whisperApiUrl);
-                settings.whisperApiKey = listing.TextEntryLabeled("GoldenBooks_WspApiKey".Translate(), settings.whisperApiKey);
-                settings.whisperModel = listing.TextEntryLabeled("GoldenBooks_WspModel".Translate(), settings.whisperModel);
             }
             listing.GapLine();
 
@@ -395,19 +434,38 @@ namespace GoldenBooksMod
             settings.keweiWealth = (int)listing.Slider(settings.keweiWealth, 1f, 15f);
             listing.Label($"{"GoldenBooks_KwClassics".Translate()}: {settings.keweiClassics}");
             settings.keweiClassics = (int)listing.Slider(settings.keweiClassics, 1f, 10f);
-            listing.GapLine();
+
             listing.End();
+            Widgets.EndScrollView();
+        }
 
-            float halfWidth = inRect.width / 2f - 10f;
-            float topY = listing.CurHeight + inRect.y;
-            float bottomY = inRect.height;
-            float listHeight = bottomY - topY;
+        // 页签 1：书灵形态与藏书（上：种族白名单 下：书籍白名单）
+        private void DrawLibraryTab(Rect inRect)
+        {
+            float halfH = (inRect.height - 12f) / 2f;
+            DrawRaceSelector(new Rect(inRect.x, inRect.y, inRect.width, halfH));
+            DrawBookSelector(new Rect(inRect.x, inRect.y + halfH + 12f, inRect.width, halfH));
+        }
 
-            Rect leftRect = new Rect(inRect.x, topY, halfWidth, listHeight);
-            DrawRaceSelector(leftRect);
+        // 页签 2：书语（AI 叙事者）
+        private void DrawWhisperTab(Rect inRect)
+        {
+            Rect viewRect = new Rect(0f, 0f, inRect.width - 16f, 420f);
+            Widgets.BeginScrollView(inRect, ref whisperScrollPosition, viewRect);
+            Listing_Standard listing = new Listing_Standard();
+            listing.Begin(viewRect);
 
-            Rect rightRect = new Rect(inRect.x + halfWidth + 20f, topY, halfWidth, listHeight);
-            DrawBookSelector(rightRect);
+            listing.CheckboxLabeled("GoldenBooks_WspToggle".Translate(), ref settings.whisperEnabled, "GoldenBooks_WspToggleTip".Translate());
+            if (settings.whisperEnabled)
+            {
+                listing.CheckboxLabeled("GoldenBooks_WspPersonaInject".Translate(), ref settings.whisperPersonaInjection, "GoldenBooks_WspPersonaInjectTip".Translate());
+                settings.whisperApiUrl = listing.TextEntryLabeled("GoldenBooks_WspApiUrl".Translate(), settings.whisperApiUrl);
+                settings.whisperApiKey = listing.TextEntryLabeled("GoldenBooks_WspApiKey".Translate(), settings.whisperApiKey);
+                settings.whisperModel = listing.TextEntryLabeled("GoldenBooks_WspModel".Translate(), settings.whisperModel);
+            }
+
+            listing.End();
+            Widgets.EndScrollView();
         }
 
         public override void WriteSettings()
@@ -458,7 +516,7 @@ namespace GoldenBooksMod
             List<RaceCandidate> filtered = cachedRaceCandidates.Where(c => MatchesFilter(c)).ToList();
             Rect viewRect = new Rect(0f, 0f, listRect.width - 16f, filtered.Count * 24f);
 
-            Widgets.BeginScrollView(listRect, ref scrollPosition, viewRect);
+            Widgets.BeginScrollView(listRect, ref raceScrollPosition, viewRect);
             Listing_Standard l = new Listing_Standard();
             l.Begin(viewRect);
             foreach (var c in filtered)
@@ -606,7 +664,7 @@ namespace GoldenBooksMod
     [HarmonyPatch(typeof(Pawn), "Kill")] public static class Patch_PawnKill { static void Postfix(Pawn __instance) { try { if (__instance != null && __instance.RaceProps.Humanlike && __instance.Faction == Faction.OfPlayer) GameComponent_BookWhispers.Get?.RecordDeath(__instance); } catch { } if (__instance.health != null && __instance.health.hediffSet.HasHediff(HediffDef.Named("GoldenBooks_BookSpiritEssence"))) { Map map = __instance.MapHeld; IntVec3 pos = __instance.PositionHeld; StoryChain_GameComponent.Get?.OnYanRuYuDeath(__instance); if (map != null) { Thing book = ThingMaker.MakeThing(ThingDef.Named("GoldenBooks_QuanXueShi")); GenSpawn.Spawn(book, pos, map); MoteMaker.ThrowText(pos.ToVector3(), map, "书灵归位", Color.yellow); if (__instance.Corpse != null) __instance.Corpse.Destroy(); else if (!__instance.Destroyed) __instance.Destroy(); Messages.Message("颜如玉已化作书本回归。", new TargetInfo(pos, map), MessageTypeDefOf.PositiveEvent); } } } }
     [HarmonyPatch(typeof(GenRecipe), "MakeRecipeProducts")] public static class Patch_MakeRecipeProducts { private const string Recipe_Wealth = "Extract_Knowledge_To_Wealth"; private const string Recipe_Food = "GoldenBooks_Extract_Food"; private const string Recipe_Speed = "GoldenBooks_Extract_Speed"; private const string Recipe_Bind = "GoldenBooks_Bind_FiveClassics"; private const string Recipe_Summon = "GoldenBooks_Summon_YanRuYu"; static IEnumerable<Thing> Postfix(IEnumerable<Thing> values, RecipeDef recipeDef, Pawn worker, List<Thing> ingredients) { float totalBookValue = 0f; if (ingredients != null) foreach (var item in ingredients) totalBookValue += item.MarketValue * item.stackCount; float multiplier = GoldenBooksMod.settings.resourceYieldPct; float successChance = Mathf.Clamp01(totalBookValue / 400.0f); bool isSuccess = Rand.Chance(successChance); if (recipeDef.defName == Recipe_Food || recipeDef.defName == Recipe_Speed || recipeDef.defName == Recipe_Wealth) { StoryChain_GameComponent.Get?.RegisterDismantle(); GameComponent_Kewei.Get?.RecordBookRead(); } if (recipeDef.defName == Recipe_Food) { if (isSuccess) { int count = Mathf.Max(1, (int)(totalBookValue / 5f * multiplier)); Thing millet = ThingMaker.MakeThing(ThingDef.Named("GoldenBooks_GoldenMillet")); millet.stackCount = count; GameComponent_Kewei.Get?.RecordMillet(count); yield return millet; } else { Thing frag = ThingMaker.MakeThing(ThingDef.Named("GoldenBooks_BookFragment")); frag.stackCount = 1; yield return frag; GoldenBooksUtils.TrySpawnBookworm(worker); } yield break; } if (recipeDef.defName == Recipe_Speed) { if (isSuccess) { int count = (int)(totalBookValue / 100f * multiplier); if (count < 1) { Thing millet = ThingMaker.MakeThing(ThingDef.Named("GoldenBooks_GoldenMillet")); millet.stackCount = 5; yield return millet; } else { Thing talisman = ThingMaker.MakeThing(ThingDef.Named("GoldenBooks_GodSpeedTalisman")); talisman.stackCount = count; yield return talisman; } } else { Thing frag = ThingMaker.MakeThing(ThingDef.Named("GoldenBooks_BookFragment")); frag.stackCount = 1; yield return frag; GoldenBooksUtils.TrySpawnBookworm(worker); } yield break; } if (recipeDef.defName == Recipe_Wealth) { if (isSuccess) { int baseCount = (int)(totalBookValue / 10f * multiplier); Thing gold = ThingMaker.MakeThing(ThingDefOf.Gold); gold.stackCount = Mathf.Max(1, baseCount); yield return gold; Thing jade = ThingMaker.MakeThing(ThingDefOf.Jade); jade.stackCount = Mathf.Max(1, baseCount); GameComponent_Kewei.Get?.RecordWealth(); yield return jade; if (Rand.Chance(GoldenBooksMod.settings.yanRuYuChance)) { Pawn mortalYanRuYu = GoldenBooksUtils.GenerateYanRuYu(false); if (mortalYanRuYu != null) { GoldenBooksUtils.DressUpYanRuYu(mortalYanRuYu); GoldenBooksUtils.EnsureBeautifulHair(mortalYanRuYu); string raceLabel = mortalYanRuYu.def.LabelCap; if (mortalYanRuYu.genes != null && mortalYanRuYu.genes.Xenotype != XenotypeDefOf.Baseliner) raceLabel = mortalYanRuYu.genes.Xenotype.LabelCap; Find.LetterStack.ReceiveLetter("GoldenBooks_LetterLabel".Translate(), "GoldenBooks_LetterText".Translate(mortalYanRuYu.Name.ToStringShort, raceLabel), LetterDefOf.PositiveEvent, mortalYanRuYu); GameComponent_Kewei.Get?.RecordMortal(); yield return mortalYanRuYu; } } } else { Thing frag = ThingMaker.MakeThing(ThingDef.Named("GoldenBooks_BookFragment")); frag.stackCount = 1; yield return frag; GoldenBooksUtils.TrySpawnBookworm(worker); } yield break; } if (recipeDef.defName == Recipe_Bind) { Thing classic = ThingMaker.MakeThing(ThingDef.Named("GoldenBooks_FiveClassics")); classic.stackCount = 1; GameComponent_Kewei.Get?.RecordClassic(); yield return classic; yield break; } if (recipeDef.defName == Recipe_Summon) { Pawn trueSpirit = GoldenBooksUtils.GenerateYanRuYu(true); if (trueSpirit != null) { GoldenBooksUtils.DressUpYanRuYu(trueSpirit); GoldenBooksUtils.EnsureBeautifulHair(trueSpirit); string raceLabel = trueSpirit.def.LabelCap; if (trueSpirit.genes != null && trueSpirit.genes.Xenotype != XenotypeDefOf.Baseliner) raceLabel = trueSpirit.genes.Xenotype.LabelCap; Find.LetterStack.ReceiveLetter("GoldenBooks_TrueSpiritLabel".Translate(), "GoldenBooks_TrueSpiritText".Translate(trueSpirit.Name.ToStringShort, raceLabel), LetterDefOf.PositiveEvent, trueSpirit); StoryChain_GameComponent.Get?.OnFirstSummon(trueSpirit); yield return trueSpirit; } yield break; } foreach (var t in values) yield return t; } }
 
-    // --- 8. 剧情事件链补丁（书灵纪）---
+    // --- 8. 剧情事件链补丁（书灵物语）---
     [HarmonyPatch(typeof(Game), "InitNewGame")]
     public static class Patch_GameInitNewGame { static void Postfix() { StoryChain_GameComponent.Ensure(); GameComponent_BookWhispers.Ensure(); } }
 

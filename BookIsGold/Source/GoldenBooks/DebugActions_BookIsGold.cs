@@ -7,7 +7,7 @@ using Verse;
 
 namespace GoldenBooksMod
 {
-    // --- 开发者模式调试按钮（书灵纪） ---
+    // --- 开发者模式调试按钮（书灵物语） ---
     public static class DebugActions_BookIsGold
     {
         [DebugAction("书中自有黄金屋 (Golden Books)", "书灵·颜执中现身 (Spawn Yan Zhongzhong)", actionType = DebugActionType.Action, allowedGameStates = AllowedGameStates.PlayingOnMap)]

@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>1.6\Assemblies\</OutputPath>
+    <OutputPath>$(ProjectDir)1.6\Assemblies\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -25,7 +25,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>1.6\Assemblies\</OutputPath>
+    <OutputPath>$(ProjectDir)1.6\Assemblies\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -96,13 +96,15 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>set "MOD_DIR=D:\games\steamapps\common\Rimworld\Mods\MaiyaMod05 Golden Books 书中自有黄金屋"
+    <PostBuildEvent>set "MOD_DIR=D:\Games\steamapps\common\RimWorld\Mods\MaiyaMod05 Golden Books 书中自有黄金屋"
 set "SOURCE_ROOT=$(ProjectDir)"
+if not exist "%25MOD_DIR%25\About" (echo [MaiyaMod] ERROR: MOD_DIR invalid, abort sync &amp; exit /B 1)
 if exist "%25MOD_DIR%25\Defs" rmdir /S /Q "%25MOD_DIR%25\Defs"
 if exist "%25MOD_DIR%25\Patches" rmdir /S /Q "%25MOD_DIR%25\Patches"
 if exist "%25MOD_DIR%25\Languages" rmdir /S /Q "%25MOD_DIR%25\Languages"
 if exist "%25MOD_DIR%25\Story" rmdir /S /Q "%25MOD_DIR%25\Story"
 if exist "%25MOD_DIR%25\1.6\Assemblies" rmdir /S /Q "%25MOD_DIR%25\1.6\Assemblies"
+if exist "%25MOD_DIR%25\Textures" rmdir /S /Q "%25MOD_DIR%25\Textures"
 mkdir "%25MOD_DIR%25\1.6\Assemblies"
 mkdir "%25MOD_DIR%25\Defs"
 mkdir "%25MOD_DIR%25\Languages"
@@ -111,6 +113,7 @@ xcopy "%25SOURCE_ROOT%25Defs" "%25MOD_DIR%25\Defs" /S /E /Y /I
 xcopy "%25SOURCE_ROOT%25Patches" "%25MOD_DIR%25\Patches" /S /E /Y /I
 xcopy "%25SOURCE_ROOT%25Languages" "%25MOD_DIR%25\Languages" /S /E /Y /I
 xcopy "%25SOURCE_ROOT%25..\Story" "%25MOD_DIR%25\Story" /S /E /Y /I
+xcopy "%25SOURCE_ROOT%25Textures" "%25MOD_DIR%25\Textures" /S /E /Y /I
 echo [MaiyaMod] Sync done.</PostBuildEvent>
   </PropertyGroup>
 </Project>

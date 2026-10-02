@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-	<!-- 书灵纪：书灵种族（颜执中 / 颜知夏） -->
+	<!-- 书灵物语：书灵种族（颜执中 / 颜知夏） -->
 	<!-- 仅由剧情事件生成：不入野外、不入势力、不进贸易 -->
 
 	<ThingDef Name="GoldenBooks_BookSpiritBase" Abstract="True">
@@ -34,7 +34,6 @@
 			<thinkTreeConstant>AnimalConstant</thinkTreeConstant>
 			<hasGenders>false</hasGenders>
 			<trainability>Advanced</trainability>
-			<wildness>0</wildness>
 			<petness>1.0</petness>
 			<herdAnimal>false</herdAnimal>
 			<predator>false</predator>

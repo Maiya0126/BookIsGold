@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-	<!-- 书灵纪：颜氏手札（内置小说阅读器）与装订配方 -->
+	<!-- 书灵物语：颜氏手札（内置小说阅读器）与装订配方 -->
 
 	<ThingDef ParentName="ResourceBase">
 		<defName>GoldenBooks_Handbook</defName>

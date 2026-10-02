@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using HarmonyLib;
@@ -373,10 +373,12 @@ namespace GoldenBooksMod
     }
 
     // --- 钩子 ---
-    [HarmonyPatch(typeof(CaravanExitMapUtility), "ExitMapAndCreateCaravan")]
+    // 1.6 中 ExitMapAndCreateCaravan 有两个重载，必须显式指定参数类型，否则 Harmony 报 AmbiguousMatchException
+    [HarmonyPatch(typeof(CaravanExitMapUtility), nameof(CaravanExitMapUtility.ExitMapAndCreateCaravan),
+        new[] { typeof(IEnumerable<Pawn>), typeof(Faction), typeof(PlanetTile), typeof(PlanetTile), typeof(PlanetTile), typeof(bool) })]
     public static class Patch_CaravanFormed
     {
-        static void Postfix(List<Pawn> pawns)
+        static void Postfix(IEnumerable<Pawn> pawns)
         {
             try
             {

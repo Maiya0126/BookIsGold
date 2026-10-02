@@ -6,7 +6,7 @@ using Verse;
 
 namespace GoldenBooksMod
 {
-    // --- 剧情事件链状态（书灵纪）---
+    // --- 剧情事件链状态（书灵物语）---
     public class StoryChain_GameComponent : GameComponent
     {
         public static StoryChain_GameComponent Get => Current.Game?.GetComponent<StoryChain_GameComponent>();

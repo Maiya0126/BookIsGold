@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-	<!-- 书灵纪：主界面「书语」按钮 -->
+	<!-- 书灵物语：主界面「书语」按钮 -->
 	<MainButtonDef>
 		<defName>GoldenBooks_BookWhispers</defName>
 		<label>书语</label>

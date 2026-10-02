@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-	<!-- 书灵纪：书灵 PawnKind（生成用，不入野外/势力） -->
+	<!-- 书灵物语：书灵 PawnKind（生成用，不入野外/势力） -->
 
 	<PawnKindDef ParentName="AnimalKindBase">
 		<defName>GoldenBooks_BookSpirit_Yanzhongzhong_Kind</defName>
@@ -8,6 +8,17 @@
 		<race>GoldenBooks_BookSpirit_Yanzhongzhong</race>
 		<ecoSystemWeight>0</ecoSystemWeight>
 		<combatPower>80</combatPower>
+		<lifeStages>
+			<li>
+				<label>书灵·颜执中</label>
+				<bodyGraphicData>
+					<texPath>Things/Pawn/Animal/GoldenBooks_BookSpirit_Yanzhongzhong</texPath>
+					<graphicClass>Graphic_Multi</graphicClass>
+					<drawSize>(1.3, 1.3)</drawSize>
+					<color>(255, 235, 180)</color>
+				</bodyGraphicData>
+			</li>
+		</lifeStages>
 	</PawnKindDef>
 
 	<PawnKindDef ParentName="AnimalKindBase">
@@ -16,5 +27,16 @@
 		<race>GoldenBooks_BookSpirit_Zhixia</race>
 		<ecoSystemWeight>0</ecoSystemWeight>
 		<combatPower>60</combatPower>
+		<lifeStages>
+			<li>
+				<label>书灵·颜知夏</label>
+				<bodyGraphicData>
+					<texPath>Things/Pawn/Animal/GoldenBooks_BookSpirit_Zhixia</texPath>
+					<graphicClass>Graphic_Multi</graphicClass>
+					<drawSize>(1.1, 1.1)</drawSize>
+					<color>(210, 230, 255)</color>
+				</bodyGraphicData>
+			</li>
+		</lifeStages>
 	</PawnKindDef>
 </Defs>

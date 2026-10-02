@@ -13,3 +13,4 @@ BookIsGold/1.6/Assemblies/*.pdb
 *.tmp
 Thumbs.db
 BookIsGold/obj/
+.acl-recovery/;*.acl-backup*;settings-ui-mockup.html

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-	<!-- 书灵纪：可选叙事者「砚翁与墨叽」 -->
+	<!-- 书灵物语：可选叙事者「砚翁与墨叽」 -->
 
 	<StorytellerDef ParentName="BaseStoryteller">
 		<defName>GoldenBooks_YanwengMoji</defName>
