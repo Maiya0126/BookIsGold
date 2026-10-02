@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
 	<!-- 书灵物语：种族 / 状态 / 事件 -->
 	<GoldenBooks_BookSpirit_Yanzhongzhong.label>Book Spirit · Yan Zhizhong</GoldenBooks_BookSpirit_Yanzhongzhong.label>
@@ -81,4 +81,15 @@
 
 	<GoldenBooks_KnowledgeSatiated.stages.0.label>Satiated by Knowledge</GoldenBooks_KnowledgeSatiated.stages.0.label>
 	<GoldenBooks_KnowledgeSatiated.stages.0.description>Every grain of millet I ate seemed to turn into knowledge flowing through my veins. This spiritual fullness is incredibly satisfying.</GoldenBooks_KnowledgeSatiated.stages.0.description>
-</LanguageData>
+	<GoldenBooks_SpiritBook_Yanzhongzhong.label>The Book of Yan Zhizhong</GoldenBooks_SpiritBook_Yanzhongzhong.label>
+	<GoldenBooks_SpiritBook_Yanzhongzhong.description>A thick brown tome — Yanweng's own form, its golden spine-thread still wet.\n\nThe spirit within is not gone. Place it on the Arcane Lectern with book fragments to recall him.\n\n"Turned into a book, lying quietly where I fell. Recall me when you will. — Zhizhong"</GoldenBooks_SpiritBook_Yanzhongzhong.description>
+
+	<GoldenBooks_SpiritBook_Zhixia.label>The Book of Yan Zhixia</GoldenBooks_SpiritBook_Zhixia.label>
+	<GoldenBooks_SpiritBook_Zhixia.description>A pale-blue booklet with curled corners, candy wrappers tucked inside — Moji's own form.\n\nThe spirit within is not gone. Place it on the Arcane Lectern with book fragments to recall her.\n\n"I'm just ducking back into the book for a bit! Wait for my comeback! (๑•̀ㅂ•́)و✧ — Moji"</GoldenBooks_SpiritBook_Zhixia.description>
+
+	<GoldenBooks_Recall_Spirit.label>Recall: Book Spirit</GoldenBooks_Recall_Spirit.label>
+	<GoldenBooks_Recall_Spirit.description>Use a spirit book (or the Quan Xue Shi) with book fragments as the catalyst to call the spirit back from its pages.\n\nAccepted: The Book of Yan Zhizhong, The Book of Yan Zhixia, Quan Xue Shi.</GoldenBooks_Recall_Spirit.description>
+	<GoldenBooks_Recall_Spirit.jobString>Recalling a book spirit</GoldenBooks_Recall_Spirit.jobString>
+
+	<GoldenBooks_SpiritVitality.label>Spirit Vitality</GoldenBooks_SpiritVitality.label>
+	<GoldenBooks_SpiritVitality.description>A book spirit eats no grain and sleeps no night — the devotion of readers is their sustenance.</GoldenBooks_SpiritVitality.description></LanguageData>

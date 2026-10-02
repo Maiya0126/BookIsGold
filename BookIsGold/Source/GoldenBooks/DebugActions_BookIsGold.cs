@@ -10,6 +10,16 @@ namespace GoldenBooksMod
     // --- 开发者模式调试按钮（书灵物语） ---
     public static class DebugActions_BookIsGold
     {
+        [DebugAction("书中自有黄金屋 (Golden Books)", "击杀书灵测试 (Kill Spirit Test)", actionType = DebugActionType.Action, allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void DebugKillSpiritTest()
+        {
+            Map map = Find.CurrentMap;
+            Pawn target = map.mapPawns.AllPawnsSpawned.FirstOrDefault(p => p.def.defName == "GoldenBooks_BookSpirit_Yanzhongzhong" || p.def.defName == "GoldenBooks_BookSpirit_Zhixia");
+            if (target == null) { Messages.Message("地图上没有书灵（请先用调试按钮生成一个）。", MessageTypeDefOf.RejectInput); return; }
+            target.Kill(null, null);
+            Log.Message("[GoldenBooks] Debug: 已击杀书灵 " + target.LabelShort + "，验证化书流程");
+        }
+
         [DebugAction("书中自有黄金屋 (Golden Books)", "书灵·颜执中现身 (Spawn Yan Zhongzhong)", actionType = DebugActionType.Action, allowedGameStates = AllowedGameStates.PlayingOnMap)]
         private static void DebugSpawnExecutor()
         {

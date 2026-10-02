@@ -100,4 +100,9 @@
 	<GoldenBooks_TestOk>Connection OK! The Whispers API works.</GoldenBooks_TestOk>
 	<GoldenBooks_TestFail>Connection failed: {0}</GoldenBooks_TestFail>
 	>
-</LanguageData>
+	<GoldenBooks_RecallLetterLabel>Recall Complete</GoldenBooks_RecallLetterLabel>
+	<GoldenBooks_RecallLetterText>A flash of golden light — {0} steps out of the pages once more.\n\n"I am back. The rest of our story — we write it together."</GoldenBooks_RecallLetterText>
+	<GoldenBooks_SpiritBookLetterLabel>Book Spirit Turned Book ({0})</GoldenBooks_SpiritBookLetterLabel>
+	<GoldenBooks_SpiritBookLetterText>The pages rustle; {0} becomes a book, lying quietly where they fell.\n\n"To turn into a page is not to perish — it is to rest. Recall me when you will. — Zhizhong"\n"I'm just ducking back into the book for a bit! Wait for my comeback! (๑•̀ㅂ•́)و✧ — Moji"\n\n(Place the spirit book on the Arcane Lectern with book fragments to recall them.)</GoldenBooks_SpiritBookLetterText>
+	<GoldenBooks_MortalCondolenceLabel>A Mortal Yan Ru Yu Has Passed</GoldenBooks_MortalCondolenceLabel>
+	<GoldenBooks_MortalCondolenceText>A letter from Yan Zhizhong, written with the lightest hand:\n\n"The mortal Yan Ru Yu has passed. My deepest condolences.\n\nHer pages remain — should you miss her, another may be called. But each person is their own, and no one replaces the departed. That weight is what it means to be mortal, and what makes it precious.\n\nThree book fragments, with the Yan clan's regards. — Zhizhong"</GoldenBooks_MortalCondolenceText></LanguageData>

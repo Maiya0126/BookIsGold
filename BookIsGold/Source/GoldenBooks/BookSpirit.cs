@@ -5,6 +5,27 @@ using Verse;
 
 namespace GoldenBooksMod
 {
+    // --- 书灵本源：需求恒满（不食不眠不娱、心情恒定） ---
+    public class HediffCompProperties_BookSpiritVitality : HediffCompProperties
+    {
+        public HediffCompProperties_BookSpiritVitality() { this.compClass = typeof(HediffComp_BookSpiritVitality); }
+    }
+
+    public class HediffComp_BookSpiritVitality : HediffComp
+    {
+        public override void CompPostTick(ref float severityAdjustment)
+        {
+            base.CompPostTick(ref severityAdjustment);
+            Pawn p = parent.pawn;
+            if (p == null || p.Dead || p.needs == null) return;
+            if (!p.IsHashIntervalTick(120)) return;
+            if (p.needs.food != null) p.needs.food.CurLevelPercentage = 1f;
+            if (p.needs.rest != null) p.needs.rest.CurLevelPercentage = 1f;
+            if (p.needs.joy != null) p.needs.joy.CurLevelPercentage = 1f;
+            if (p.needs.mood != null) p.needs.mood.CurLevelPercentage = 1f;
+        }
+    }
+
     // --- 书灵组件：光环 / 再生 / 怕水 ---
     public class CompProperties_BookSpirit : CompProperties
     {
@@ -28,6 +49,11 @@ namespace GoldenBooksMod
             Pawn p = Pawn;
             if (p == null || p.Dead || p.Map == null) return;
             if (!p.IsHashIntervalTick(Props.tickInterval)) return;
+
+            // 自挂"书灵本源"（覆盖旧存档与所有生成路径）
+            HediffDef vit = DefDatabase<HediffDef>.GetNamedSilentFail("GoldenBooks_SpiritVitality");
+            if (vit != null && p.health != null && p.health.hediffSet.GetFirstHediffOfDef(vit) == null)
+                p.health.AddHediff(vit);
 
             ApplyAura(p);
             TryRegenerate(p);

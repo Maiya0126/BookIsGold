@@ -43,10 +43,13 @@
 			</hediffGiverSets>
 			<body>QuadrupedAnimalWithPawsAndTail</body>
 			<baseBodySize>0.45</baseBodySize>
-			<baseHungerRate>0.08</baseHungerRate>
+			<baseHungerRate>0.02</baseHungerRate>
 			<baseHealthScale>0.35</baseHealthScale>
 			<foodType>VegetarianRoughAnimal</foodType>
 			<lifeExpectancy>9000</lifeExpectancy>
+			<deathAction Class="DeathActionProperties_Vanish">
+				<workerClass>DeathActionWorker_Vanish</workerClass>
+			</deathAction>
 			<lifeStageAges>
 				<li>
 					<def>AnimalAdult</def>
@@ -77,11 +80,11 @@
 			<MarketValue>8000</MarketValue>
 			<ComfyTemperatureMin>-60</ComfyTemperatureMin>
 			<ComfyTemperatureMax>45</ComfyTemperatureMax>
-			<ArmorRating_Sharp>0.30</ArmorRating_Sharp>
-			<ArmorRating_Blunt>0.30</ArmorRating_Blunt>
+			<ArmorRating_Sharp>2.0</ArmorRating_Sharp>
+			<ArmorRating_Blunt>2.0</ArmorRating_Blunt>
 			<ArmorRating_Heat>-0.20</ArmorRating_Heat>
 			<PainShockThreshold>0.9</PainShockThreshold>
-			<MeleeDodgeChance>0.45</MeleeDodgeChance>
+			<MeleeDodgeChance>60</MeleeDodgeChance>
 			<Wildness>0</Wildness>
 		</statBases>
 		<uiIconScale>1.5</uiIconScale>

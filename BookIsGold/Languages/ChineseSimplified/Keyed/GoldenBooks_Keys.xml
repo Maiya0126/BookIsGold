@@ -53,6 +53,13 @@
 	<GoldenBooks_TestOk>连接成功！书语 API 可用。</GoldenBooks_TestOk>
 	<GoldenBooks_TestFail>连接失败：{0}</GoldenBooks_TestFail>
 
+	<GoldenBooks_RecallLetterLabel>召还成功</GoldenBooks_RecallLetterLabel>
+	<GoldenBooks_RecallLetterText>台上金光一闪，{0}自书页间缓缓浮现——\n\n“回来了。接下来的故事，继续一起写。”</GoldenBooks_RecallLetterText>
+	<GoldenBooks_SpiritBookLetterLabel>书灵化书（{0}）</GoldenBooks_SpiritBookLetterLabel>
+	<GoldenBooks_SpiritBookLetterText>书页轻响，{0}化作一册书，静静躺在原地。\n\n“化作书页，非是消散，是歇息。期日再召。——执中”\n“本姑娘先回书里避一避！等我回来接着闹！(๑•̀ㅂ•́)و✧——墨叽”\n\n（将书灵之书放上劝学台，以古籍残卷为引，即可召还。）</GoldenBooks_SpiritBookLetterText>
+	<GoldenBooks_MortalCondolenceLabel>凡人如玉·殁</GoldenBooks_MortalCondolenceLabel>
+	<GoldenBooks_MortalCondolenceText>颜执中来信，落笔极轻：\n\n“凡人如玉，殁。老朽谨致哀思。\n\n其书页犹存——君若思念，可再唤一位。然人各不同，逝者不可代，此乃凡人之重，亦是凡人之贵。\n\n残卷三页，代颜氏致意。——执中 白”</GoldenBooks_MortalCondolenceText>
+
 	<GoldenBooks_WspTitle>书语</GoldenBooks_WspTitle>
 	<GoldenBooks_WspSubtitle>爷爷题的名。妹妹嫌土，但每天都抢着写。</GoldenBooks_WspSubtitle>
 	<GoldenBooks_WspEmpty>书语尚无记录。等到日落，自有人执笔。</GoldenBooks_WspEmpty>

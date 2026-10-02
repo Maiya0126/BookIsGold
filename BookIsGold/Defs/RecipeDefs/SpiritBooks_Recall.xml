@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<!-- 书灵物语：书灵之书（书灵死亡的形态，可召还回归） -->
+
+	<ThingDef ParentName="ResourceBase">
+		<defName>GoldenBooks_SpiritBook_Yanzhongzhong</defName>
+		<label>颜执中之书</label>
+		<description>砚翁化作的棕色古书，封皮厚重，书脊金线未干。\n\n书中之人并未消散——将其置于劝学台，辅以古籍残卷，即可召还。\n\n“化作一册书，静静躺在原地。期日再召。——执中”</description>
+		<graphicData>
+			<texPath>Things/Item/Book/TextBook</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+			<color>(150, 100, 55)</color>
+			<drawSize>0.85</drawSize>
+		</graphicData>
+		<statBases>
+			<MarketValue>2500</MarketValue>
+			<Mass>0.6</Mass>
+			<Beauty>3</Beauty>
+		</statBases>
+		<thingCategories>
+			<li>Items</li>
+		</thingCategories>
+		<stackLimit>1</stackLimit>
+		<tradeability>None</tradeability>
+	</ThingDef>
+
+	<ThingDef ParentName="ResourceBase">
+		<defName>GoldenBooks_SpiritBook_Zhixia</defName>
+		<label>颜知夏之书</label>
+		<description>墨叽化作的淡蓝册页小书，页角翘起，糖纸夹在中间。\n\n书中之人并未消散——将其置于劝学台，辅以古籍残卷，即可召还。\n\n“本姑娘先回书里避一避！等我回来接着闹！(๑•̀ㅂ•́)و✧——墨叽”</description>
+		<graphicData>
+			<texPath>Things/Item/Book/TextBook</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+			<color>(180, 205, 255)</color>
+			<drawSize>0.75</drawSize>
+		</graphicData>
+		<statBases>
+			<MarketValue>2500</MarketValue>
+			<Mass>0.4</Mass>
+			<Beauty>3</Beauty>
+		</statBases>
+		<thingCategories>
+			<li>Items</li>
+		</thingCategories>
+		<stackLimit>1</stackLimit>
+		<tradeability>None</tradeability>
+	</ThingDef>
+
+	<RecipeDef>
+		<defName>GoldenBooks_Recall_Spirit</defName>
+		<label>召还：书灵</label>
+		<description>以书灵之书（或《劝学诗》）为引，辅以古籍残卷，将书灵召还人间。\n\n可放入：颜执中之书、颜知夏之书、《劝学诗》。</description>
+		<jobString>正在召还书灵</jobString>
+		<workSpeedStat>ResearchSpeed</workSpeedStat>
+		<effectWorking>Research</effectWorking>
+		<soundWorking>Recipe_Machining</soundWorking>
+		<workAmount>1200</workAmount>
+		<recipeUsers>
+			<li>GoldenBooks_ArcaneLectern</li>
+		</recipeUsers>
+		<ingredients>
+			<li>
+				<filter>
+					<thingDefs>
+						<li>GoldenBooks_SpiritBook_Yanzhongzhong</li>
+						<li>GoldenBooks_SpiritBook_Zhixia</li>
+						<li>GoldenBooks_QuanXueShi</li>
+					</thingDefs>
+				</filter>
+				<count>1</count>
+			</li>
+			<li>
+				<filter>
+					<thingDefs>
+						<li>GoldenBooks_BookFragment</li>
+					</thingDefs>
+				</filter>
+				<count>2</count>
+			</li>
+		</ingredients>
+		<fixedIngredientFilter>
+			<thingDefs>
+				<li>GoldenBooks_SpiritBook_Yanzhongzhong</li>
+				<li>GoldenBooks_SpiritBook_Zhixia</li>
+				<li>GoldenBooks_QuanXueShi</li>
+				<li>GoldenBooks_BookFragment</li>
+			</thingDefs>
+		</fixedIngredientFilter>
+	</RecipeDef>
+</Defs>
