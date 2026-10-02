@@ -46,6 +46,15 @@
 	<GoldenBooks_WspApiKey>书语 API Key（留空则用离线模板）</GoldenBooks_WspApiKey>
 	<GoldenBooks_WspModel>书语 模型名</GoldenBooks_WspModel>
 
+	<GoldenBooks_ImportOk>已从 {0} 导入 API 配置（密钥/地址/模型）。</GoldenBooks_ImportOk>
+	<GoldenBooks_ImportEmpty>{0} 已找到，但其设置中没有可读的 API 配置。</GoldenBooks_ImportEmpty>
+	<GoldenBooks_ImportNotFound>未找到 {0} 模组（请确认已订阅并启用）。</GoldenBooks_ImportNotFound>
+	<GoldenBooks_ImportFail>从 {0} 导入失败，请手动填写。</GoldenBooks_ImportFail>
+	<GoldenBooks_TestNoConfig>请先填写 API 地址与密钥。</GoldenBooks_TestNoConfig>
+	<GoldenBooks_Testing>正在测试连接……</GoldenBooks_Testing>
+	<GoldenBooks_TestOk>连接成功！书语 API 可用。</GoldenBooks_TestOk>
+	<GoldenBooks_TestFail>连接失败：{0}</GoldenBooks_TestFail>
+
 	<GoldenBooks_WspTitle>书语</GoldenBooks_WspTitle>
 	<GoldenBooks_WspSubtitle>爷爷题的名。妹妹嫌土，但每天都抢着写。</GoldenBooks_WspSubtitle>
 	<GoldenBooks_WspEmpty>书语尚无记录。等到日落，自有人执笔。</GoldenBooks_WspEmpty>

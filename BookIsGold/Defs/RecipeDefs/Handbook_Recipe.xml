@@ -7,7 +7,7 @@
 		<label>颜氏手札</label>
 		<description>颜氏一族千年间的手记，装订着糖纸、票根、金线与旧岁月。\n\n选中后点击「翻阅手札」按钮，可阅读《劝学诗里的千年灵》全书。\n\n【获取】课业「识字·开蒙」奖励解锁配方；或颜知夏乱入时赠予。</description>
 		<graphicData>
-			<texPath>Things/Item/Book/TextBook</texPath>
+			<texPath>Things/Item/Book/Textbook/Textbook</texPath>
 			<graphicClass>Graphic_Single</graphicClass>
 			<color>(255, 235, 180)</color>
 			<drawSize>0.8</drawSize>

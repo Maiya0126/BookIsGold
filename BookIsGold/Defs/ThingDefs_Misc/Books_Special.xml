@@ -7,7 +7,7 @@
 		<thingClass>ThingWithComps</thingClass>
 
 		<graphicData>
-			<texPath>Things/Item/Book/TextBook</texPath>
+			<texPath>Things/Item/Book/Textbook/Textbook</texPath>
 			<graphicClass>Graphic_Random</graphicClass>
 			<color>(255, 215, 0)</color>
 			<drawSize>1.0</drawSize>

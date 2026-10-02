@@ -385,8 +385,9 @@ namespace GoldenBooksMod
                 new TabRecord("书灵形态与藏书", () => settingsTab = 1, settingsTab == 1),
                 new TabRecord("书语·叙事者", () => settingsTab = 2, settingsTab == 2),
             };
-            Rect tabRect = inRect.TopPartPixels(32f);
-            Rect bodyRect = new Rect(inRect.x, tabRect.yMax, inRect.width, inRect.height - tabRect.height);
+            // 页签整体下移，避免遮挡顶部的模组名称区
+            Rect tabRect = new Rect(inRect.x, inRect.y + 36f, inRect.width, 32f);
+            Rect bodyRect = new Rect(inRect.x, tabRect.yMax + 6f, inRect.width, inRect.height - tabRect.height - 42f);
             TabDrawer.DrawTabs(tabRect, tabs);
 
             switch (settingsTab)
@@ -439,12 +440,12 @@ namespace GoldenBooksMod
             Widgets.EndScrollView();
         }
 
-        // 页签 1：书灵形态与藏书（上：种族白名单 下：书籍白名单）
+        // 页签 1：书灵形态与藏书（左右两框，各自自带滚动条）
         private void DrawLibraryTab(Rect inRect)
         {
-            float halfH = (inRect.height - 12f) / 2f;
-            DrawRaceSelector(new Rect(inRect.x, inRect.y, inRect.width, halfH));
-            DrawBookSelector(new Rect(inRect.x, inRect.y + halfH + 12f, inRect.width, halfH));
+            float halfWidth = inRect.width / 2f - 10f;
+            DrawRaceSelector(new Rect(inRect.x, inRect.y, halfWidth, inRect.height));
+            DrawBookSelector(new Rect(inRect.x + halfWidth + 20f, inRect.y, halfWidth, inRect.height));
         }
 
         // 页签 2：书语（AI 叙事者）
@@ -459,6 +460,18 @@ namespace GoldenBooksMod
             if (settings.whisperEnabled)
             {
                 listing.CheckboxLabeled("GoldenBooks_WspPersonaInject".Translate(), ref settings.whisperPersonaInjection, "GoldenBooks_WspPersonaInjectTip".Translate());
+
+                // 导入/测试按钮行
+                Rect btnRow = listing.GetRect(34f);
+                float bw = (btnRow.width - 20f) / 3f;
+                if (Widgets.ButtonText(new Rect(btnRow.x, btnRow.y, bw, 30f), "从 RimTalk 导入 (Import from RimTalk)"))
+                    ImportAiModSettings("rimtalk");
+                if (Widgets.ButtonText(new Rect(btnRow.x + bw + 10f, btnRow.y, bw, 30f), "从 RimTuber 导入 (Import from RimTuber)"))
+                    ImportAiModSettings("rimtuber");
+                if (Widgets.ButtonText(new Rect(btnRow.x + (bw + 10f) * 2f, btnRow.y, bw, 30f), "测试连接 (Test Connection)"))
+                    TestWhisperConnection();
+
+                listing.Gap(6f);
                 settings.whisperApiUrl = listing.TextEntryLabeled("GoldenBooks_WspApiUrl".Translate(), settings.whisperApiUrl);
                 settings.whisperApiKey = listing.TextEntryLabeled("GoldenBooks_WspApiKey".Translate(), settings.whisperApiKey);
                 settings.whisperModel = listing.TextEntryLabeled("GoldenBooks_WspModel".Translate(), settings.whisperModel);
@@ -466,6 +479,87 @@ namespace GoldenBooksMod
 
             listing.End();
             Widgets.EndScrollView();
+        }
+
+        // 从其他 AI 模组（RimTalk/RimTuber）的设置中启发式读取 API 配置
+        private static void ImportAiModSettings(string idFragment)
+        {
+            try
+            {
+                foreach (Mod handle in LoadedModManager.ModHandles)
+                {
+                    if (handle?.Content?.PackageId == null) continue;
+                    if (!handle.Content.PackageId.ToLower().Contains(idFragment)) continue;
+
+                    // 在 Mod 实例上找 ModSettings 派生对象
+                    object settingsObj = null;
+                    foreach (var f in handle.GetType().GetFields(System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Public))
+                    {
+                        if (typeof(ModSettings).IsAssignableFrom(f.FieldType) && f.GetValue(handle) != null)
+                        { settingsObj = f.GetValue(handle); break; }
+                    }
+                    if (settingsObj == null)
+                    {
+                        var p = handle.GetType().GetProperty("Settings", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Public);
+                        settingsObj = p?.GetValue(handle);
+                    }
+                    if (settingsObj == null) { Messages.Message("GoldenBooks_ImportFail".Translate(idFragment), MessageTypeDefOf.RejectInput); return; }
+
+                    string key = null, url = null, model = null;
+                    var members = settingsObj.GetType().GetFields(System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Public).Cast<System.Reflection.MemberInfo>()
+                        .Concat(settingsObj.GetType().GetProperties(System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Public).Cast<System.Reflection.MemberInfo>());
+                    foreach (var mi in members)
+                    {
+                        string n = mi.Name.ToLower();
+                        object val = mi is System.Reflection.FieldInfo ff ? ff.GetValue(settingsObj) : ((System.Reflection.PropertyInfo)mi).GetValue(settingsObj);
+                        if (!(val is string s) || string.IsNullOrEmpty(s)) continue;
+                        if (key == null && (n.Contains("apikey") || n.Contains("api_key") || n.Contains("token"))) key = s;
+                        else if (url == null && (n.Contains("url") || n.Contains("endpoint") || n.Contains("address"))) url = s;
+                        else if (model == null && n.Contains("model")) model = s;
+                    }
+                    if (string.IsNullOrEmpty(key) && string.IsNullOrEmpty(url))
+                    { Messages.Message("GoldenBooks_ImportEmpty".Translate(idFragment), MessageTypeDefOf.NeutralEvent); return; }
+                    if (!string.IsNullOrEmpty(key)) settings.whisperApiKey = key;
+                    if (!string.IsNullOrEmpty(url) && (url.Contains("http") || url.Contains("/"))) settings.whisperApiUrl = url;
+                    if (!string.IsNullOrEmpty(model)) settings.whisperModel = model;
+                    Messages.Message("GoldenBooks_ImportOk".Translate(idFragment), MessageTypeDefOf.PositiveEvent);
+                    return;
+                }
+                Messages.Message("GoldenBooks_ImportNotFound".Translate(idFragment), MessageTypeDefOf.NeutralEvent);
+            }
+            catch (Exception ex)
+            {
+                Log.Warning("[GoldenBooks] 导入AI模组设置失败: " + ex.Message);
+                Messages.Message("GoldenBooks_ImportFail".Translate(idFragment), MessageTypeDefOf.RejectInput);
+            }
+        }
+
+        // 测试书语 API 连接（异步，完成后弹消息）
+        private static async void TestWhisperConnection()
+        {
+            string url = settings.whisperApiUrl, key = settings.whisperApiKey, model = settings.whisperModel;
+            if (string.IsNullOrEmpty(url) || string.IsNullOrEmpty(key))
+            { Messages.Message("GoldenBooks_TestNoConfig".Translate(), MessageTypeDefOf.RejectInput); return; }
+            Messages.Message("GoldenBooks_Testing".Translate(), MessageTypeDefOf.NeutralEvent);
+            try
+            {
+                using (var client = new System.Net.Http.HttpClient { Timeout = TimeSpan.FromSeconds(20) })
+                using (var req = new System.Net.Http.HttpRequestMessage(System.Net.Http.HttpMethod.Post, url))
+                {
+                    req.Headers.Add("Authorization", "Bearer " + key);
+                    string body = "{\"model\":\"" + model + "\",\"messages\":[{\"role\":\"user\",\"content\":\"ping\"}],\"max_tokens\":4}";
+                    req.Content = new System.Net.Http.StringContent(body, System.Text.Encoding.UTF8, "application/json");
+                    var resp = await client.SendAsync(req);
+                    if (resp.IsSuccessStatusCode)
+                        LongEventHandler.ExecuteWhenFinished(() => Messages.Message("GoldenBooks_TestOk".Translate(), MessageTypeDefOf.PositiveEvent));
+                    else
+                        LongEventHandler.ExecuteWhenFinished(() => Messages.Message("GoldenBooks_TestFail".Translate(resp.StatusCode), MessageTypeDefOf.RejectInput));
+                }
+            }
+            catch (Exception ex)
+            {
+                LongEventHandler.ExecuteWhenFinished(() => Messages.Message("GoldenBooks_TestFail".Translate(ex.Message), MessageTypeDefOf.RejectInput));
+            }
         }
 
         public override void WriteSettings()

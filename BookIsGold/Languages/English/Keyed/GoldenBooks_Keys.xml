@@ -93,5 +93,13 @@
 
 	<GoldenBooks_BtnAll>All</GoldenBooks_BtnAll>
 	<GoldenBooks_BtnNone>None</GoldenBooks_BtnNone>
-	<GoldenBooks_BtnReset>Reset</GoldenBooks_BtnReset>
+	<GoldenBooks_BtnReset>Reset</GoldenBooks_BtnReset	<GoldenBooks_ImportOk>API configuration imported from {0} (key/URL/model).</GoldenBooks_ImportOk>
+	<GoldenBooks_ImportEmpty>{0} found, but its settings expose no readable API config.</GoldenBooks_ImportEmpty>
+	<GoldenBooks_ImportNotFound>Mod {0} not found (check subscription & enable).</GoldenBooks_ImportNotFound>
+	<GoldenBooks_ImportFail>Import from {0} failed — fill in manually.</GoldenBooks_ImportFail>
+	<GoldenBooks_TestNoConfig>Fill in the API URL and key first.</GoldenBooks_TestNoConfig>
+	<GoldenBooks_Testing>Testing connection...</GoldenBooks_Testing>
+	<GoldenBooks_TestOk>Connection OK! The Whispers API works.</GoldenBooks_TestOk>
+	<GoldenBooks_TestFail>Connection failed: {0}</GoldenBooks_TestFail>
+	>
 </LanguageData>
