@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<!-- 书灵物语：化灵之仪——殖民者书灵（课业大成后，高智识殖民者化灵） -->
+
+	<ThingDef ParentName="GoldenBooks_BookSpiritBase">
+		<defName>GoldenBooks_BookSpirit_Colonist</defName>
+		<label>殖民地书灵</label>
+		<description>由殖民地学者化灵而成的书页精灵，浅金色的册页承载着他们自己写下的故事。\n\n【光环·讲学】周围9.9格内殖民者：研究速度+15%、学习+20%、心情+3\n【书灵之躯】血量低但闪避极高，脱战缓慢再生；极易燃——务必远离火源与雨水！\n\n由「化灵之仪」诞生，死亡后化作书灵之书，可经劝学台召还。</description>
+		<graphicData>
+			<texPath>Things/Pawn/Animal/GoldenBooks_BookSpirit_Colonist</texPath>
+			<graphicClass>Graphic_Multi</graphicClass>
+			<drawSize>(1.05, 1.05)</drawSize>
+			<color>(255, 224, 130)</color>
+		</graphicData>
+		<comps>
+			<li Class="GoldenBooksMod.CompProperties_BookSpirit">
+				<auraHediff>GoldenBooks_LectureAura</auraHediff>
+				<waterHediff>GoldenBooks_SoakedBook</waterHediff>
+			</li>
+		</comps>
+		<tools>
+			<li>
+				<label>页击</label>
+				<capacities>
+					<li>Blunt</li>
+				</capacities>
+				<power>3.5</power>
+				<cooldownTime>2</cooldownTime>
+				<linkedBodyPartsGroup>HeadAttackTool</linkedBodyPartsGroup>
+				<ensureLinkedBodyPartsGroupAlwaysUsable>true</ensureLinkedBodyPartsGroupAlwaysUsable>
+			</li>
+		</tools>
+	</ThingDef>
+
+	<PawnKindDef ParentName="AnimalKindBase">
+		<defName>GoldenBooks_BookSpirit_Colonist_Kind</defName>
+		<label>殖民地书灵</label>
+		<race>GoldenBooks_BookSpirit_Colonist</race>
+		<ecoSystemWeight>0</ecoSystemWeight>
+		<combatPower>70</combatPower>
+		<lifeStages>
+			<li>
+				<label>殖民地书灵</label>
+				<bodyGraphicData>
+					<texPath>Things/Pawn/Animal/GoldenBooks_BookSpirit_Colonist</texPath>
+					<graphicClass>Graphic_Multi</graphicClass>
+					<drawSize>(1.05, 1.05)</drawSize>
+					<color>(255, 224, 130)</color>
+				</bodyGraphicData>
+			</li>
+		</lifeStages>
+	</PawnKindDef>
+
+	<ThingDef ParentName="ResourceBase">
+		<defName>GoldenBooks_SpiritBook_Colonist</defName>
+		<label>书灵之书</label>
+		<description>化灵书灵化作的书册，浅金封面，写满他们自己名字的故事。\n\n书中之人并未消散——将其置于劝学台，辅以古籍残卷，即可召还。\n\n“自今日始，你亦是书中人。——砚翁”</description>
+		<graphicData>
+			<texPath>Things/Item/Book/TextBook</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+			<color>(230, 200, 120)</color>
+			<drawSize>0.8</drawSize>
+		</graphicData>
+		<statBases>
+			<MarketValue>2200</MarketValue>
+			<Mass>0.5</Mass>
+			<Beauty>3</Beauty>
+		</statBases>
+		<thingCategories>
+			<li>Items</li>
+		</thingCategories>
+		<stackLimit>1</stackLimit>
+		<tradeability>None</tradeability>
+		<comps>
+			<li Class="GoldenBooksMod.CompProperties_SpiritBookData">
+				<compClass>GoldenBooksMod.GoldenBooksComp_SpiritBookData</compClass>
+			</li>
+		</comps>
+	</ThingDef>
+</Defs>

@@ -405,4 +405,51 @@ namespace GoldenBooksMod
             return parent?.SelectNodes(name)?.Cast<XmlNode>()
                 .FirstOrDefault()?.InnerText?.Trim();
         }
-    }}
+    }
+    // --- 人格复制/提取/模板 ---
+    public static class WhisperPersonaHelper
+    {
+        // 覆盖目标 Pawn 的 RimTalk 人格
+        public static void CopyPersonaToPawn(Pawn to, string persona)
+        {
+            try
+            {
+                HediffDef pd = DefDatabase<HediffDef>.GetNamedSilentFail("RimTalk_PersonaData");
+                if (pd == null || to == null || to.health == null || string.IsNullOrEmpty(persona)) return;
+                Hediff ex = to.health.hediffSet.GetFirstHediffOfDef(pd);
+                if (ex != null) to.health.RemoveHediff(ex);
+                Hediff hd = HediffMaker.MakeHediff(pd, to);
+                if (hd == null) return;
+                var f = hd.GetType().GetField("Personality", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Public);
+                if (f != null) f.SetValue(hd, persona);
+                to.health.AddHediff(hd);
+            }
+            catch (Exception ex)
+            {
+                Log.Warning("[GoldenBooks] 人格复制失败: " + ex.Message);
+            }
+        }
+
+        // 从 Pawn 提取 RimTalk 人格文本
+        public static string ExtractPersonaFrom(Pawn p)
+        {
+            try
+            {
+                HediffDef pd = DefDatabase<HediffDef>.GetNamedSilentFail("RimTalk_PersonaData");
+                if (pd == null || p?.health?.hediffSet == null) return null;
+                Hediff h = p.health.hediffSet.GetFirstHediffOfDef(pd);
+                if (h == null) return null;
+                var f = h.GetType().GetField("Personality", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Public);
+                return f?.GetValue(h) as string;
+            }
+            catch { return null; }
+        }
+
+        public static string PersonaColonist(string name)
+        {
+            return GoldenBooksMod.settings != null && GameComponent_BookWhispers.IsChinese
+                ? "你是 " + name + "，一位由殖民地学者化灵而成的书灵。你保留了化灵前的记忆与性情，但如今栖身于浅金册页之中——不食不眠，以读书人的心念为生。你说话仍是你自己的风格，只是偶尔会提到书页、灯光与墨的气味。"
+                : "You are " + name + ", a colony scholar ascended into a book spirit. You keep your old memories and temperament, now dwelling within pale-golden pages — no food, no sleep, sustained by the devotion of readers. You still speak in your own style, occasionally mentioning pages, lamplight and the smell of ink.";
+        }
+    }
+}

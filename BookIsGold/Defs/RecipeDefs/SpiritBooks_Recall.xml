@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <Defs>
 	<!-- 书灵物语：书灵之书（书灵死亡的形态，可召还回归） -->
 
@@ -64,6 +64,7 @@
 					<thingDefs>
 						<li>GoldenBooks_SpiritBook_Yanzhongzhong</li>
 						<li>GoldenBooks_SpiritBook_Zhixia</li>
+						<li>GoldenBooks_SpiritBook_Colonist</li>
 						<li>GoldenBooks_QuanXueShi</li>
 					</thingDefs>
 				</filter>
@@ -82,6 +83,7 @@
 			<thingDefs>
 				<li>GoldenBooks_SpiritBook_Yanzhongzhong</li>
 				<li>GoldenBooks_SpiritBook_Zhixia</li>
+				<li>GoldenBooks_SpiritBook_Colonist</li>
 				<li>GoldenBooks_QuanXueShi</li>
 				<li>GoldenBooks_BookFragment</li>
 			</thingDefs>

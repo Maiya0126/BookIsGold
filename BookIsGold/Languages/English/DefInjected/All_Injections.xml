@@ -92,4 +92,8 @@
 	<GoldenBooks_Recall_Spirit.jobString>Recalling a book spirit</GoldenBooks_Recall_Spirit.jobString>
 
 	<GoldenBooks_SpiritVitality.label>Spirit Vitality</GoldenBooks_SpiritVitality.label>
-	<GoldenBooks_SpiritVitality.description>A book spirit eats no grain and sleeps no night — the devotion of readers is their sustenance.</GoldenBooks_SpiritVitality.description></LanguageData>
+	<GoldenBooks_SpiritVitality.description>A book spirit eats no grain and sleeps no night — the devotion of readers is their sustenance.</GoldenBooks_SpiritVitality.description>	<GoldenBooks_BookSpirit_Colonist.label>Colony Book Spirit</GoldenBooks_BookSpirit_Colonist.label>
+	<GoldenBooks_BookSpirit_Colonist.description>A page-sprite ascended from a colony scholar, pale-golden pages carrying stories written in their own name.\n\n[Aura · Lecture] Colonists within 9.9 tiles: Research Speed +15%, Learning +20%, Mood +3\n[Spirit Body] Low HP but very high dodge; slowly regenerates out of combat. Highly flammable — keep away from fire and rain!\n\nBorn of the Rite of Ascension; on death becomes a recallable spirit book.</GoldenBooks_BookSpirit_Colonist.description>
+
+	<GoldenBooks_SpiritBook_Colonist.label>Spirit Book</GoldenBooks_SpiritBook_Colonist.label>
+	<GoldenBooks_SpiritBook_Colonist.description>The book an ascended book spirit became — pale-gold cover filled with a story bearing their own name.\n\nThe spirit within is not gone. Place it on the Arcane Lectern with book fragments to recall them.\n\n"From this day, you too are one of the book. — Yanweng"</GoldenBooks_SpiritBook_Colonist.description></LanguageData>
