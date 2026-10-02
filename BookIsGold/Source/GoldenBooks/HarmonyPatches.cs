@@ -44,7 +44,7 @@ namespace GoldenBooksMod
         public int keweiBedImpressive = 45;
         public int keweiCaravans = 3;
         public int keweiWeddings = 1;
-        public int spiritAscendIntellect = 15;
+        public int spiritAscendIntellect = 12;
         public int colonistSpiritLimit = 2;
 
         public override void ExposeData()
@@ -73,7 +73,7 @@ namespace GoldenBooksMod
             Scribe_Values.Look(ref keweiBedImpressive, "keweiBedImpressive", 45);
             Scribe_Values.Look(ref keweiCaravans, "keweiCaravans", 3);
             Scribe_Values.Look(ref keweiWeddings, "keweiWeddings", 1);
-            Scribe_Values.Look(ref spiritAscendIntellect, "spiritAscendIntellect", 15);
+            Scribe_Values.Look(ref spiritAscendIntellect, "spiritAscendIntellect", 12);
             Scribe_Values.Look(ref colonistSpiritLimit, "colonistSpiritLimit", 2);
             base.ExposeData();
         }

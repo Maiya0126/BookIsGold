@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -51,7 +51,7 @@ namespace GoldenBooksMod
                 return "智识不足（需 " + s.spiritAscendIntellect + "）";
             if (AscendedCount() >= s.colonistSpiritLimit)
                 return "殖民地书灵已达上限（" + s.colonistSpiritLimit + "）";
-            if (!HasMaterial(p.MapHeld)) return "缺少材料（古籍残卷×10、五经×1）";
+            if (!HasMaterial(p.MapHeld)) return "缺少材料（古籍残卷×5、五经×1）";
             return null;
         }
 
@@ -69,7 +69,7 @@ namespace GoldenBooksMod
 
         private static void ConsumeMaterials(Map map)
         {
-            ConsumeDef(map, "GoldenBooks_BookFragment", 10);
+            ConsumeDef(map, "GoldenBooks_BookFragment", 5);
             ConsumeDef(map, "GoldenBooks_FiveClassics", 1);
         }
 
@@ -172,7 +172,7 @@ namespace GoldenBooksMod
                 {
                     defaultLabel = "化灵 (Become Book Spirit)",
                     defaultDesc = string.IsNullOrEmpty(reason)
-                        ? "化灵之仪：将这名学者化为书灵——失去人形，获得书灵之躯与讲学光环。（消耗古籍残卷×10、五经×1，不可逆）"
+                        ? "化灵之仪：将这名学者化为书灵——失去人形，获得书灵之躯与讲学光环。（消耗古籍残卷×5、五经×1，不可逆）"
                         : "化灵之仪（当前不可用：" + reason + "）",
                     icon = Icon(),
                     action = delegate
