@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using HarmonyLib;
@@ -29,6 +29,7 @@ namespace GoldenBooksMod
         public string whisperApiUrl = "https://api.deepseek.com/v1/chat/completions";
         public string whisperApiKey = "";
         public string whisperModel = "deepseek-chat";
+        public int whisperProvider = 0;
 
         // 颜氏课业
         public int keweiBooks = 15;
@@ -56,6 +57,7 @@ namespace GoldenBooksMod
             Scribe_Values.Look(ref whisperApiUrl, "whisperApiUrl", "https://api.deepseek.com/v1/chat/completions");
             Scribe_Values.Look(ref whisperApiKey, "whisperApiKey", "");
             Scribe_Values.Look(ref whisperModel, "whisperModel", "deepseek-chat");
+            Scribe_Values.Look(ref whisperProvider, "whisperProvider", 0);
             Scribe_Values.Look(ref keweiBooks, "keweiBooks", 15);
             Scribe_Values.Look(ref keweiMillet, "keweiMillet", 3);
             Scribe_Values.Look(ref keweiWealth, "keweiWealth", 5);
@@ -451,7 +453,7 @@ namespace GoldenBooksMod
         // 页签 2：书语（AI 叙事者）
         private void DrawWhisperTab(Rect inRect)
         {
-            Rect viewRect = new Rect(0f, 0f, inRect.width - 16f, 420f);
+            Rect viewRect = new Rect(0f, 0f, inRect.width - 16f, 460f);
             Widgets.BeginScrollView(inRect, ref whisperScrollPosition, viewRect);
             Listing_Standard listing = new Listing_Standard();
             listing.Begin(viewRect);
@@ -461,84 +463,78 @@ namespace GoldenBooksMod
             {
                 listing.CheckboxLabeled("GoldenBooks_WspPersonaInject".Translate(), ref settings.whisperPersonaInjection, "GoldenBooks_WspPersonaInjectTip".Translate());
 
-                // 导入/测试按钮行
-                Rect btnRow = listing.GetRect(34f);
-                float bw = (btnRow.width - 20f) / 3f;
-                if (Widgets.ButtonText(new Rect(btnRow.x, btnRow.y, bw, 30f), "从 RimTalk 导入 (Import from RimTalk)"))
-                    ImportAiModSettings("rimtalk");
-                if (Widgets.ButtonText(new Rect(btnRow.x + bw + 10f, btnRow.y, bw, 30f), "从 RimTuber 导入 (Import from RimTuber)"))
-                    ImportAiModSettings("rimtuber");
-                if (Widgets.ButtonText(new Rect(btnRow.x + (bw + 10f) * 2f, btnRow.y, bw, 30f), "测试连接 (Test Connection)"))
+                // 供应商选择（点击循环切换）
+                string[] providers = WhisperProviders();
+                Rect provRow = listing.GetRect(34f);
+                if (Widgets.ButtonText(new Rect(provRow.x, provRow.y, provRow.width, 30f),
+                    "GoldenBooks_WspProvider".Translate() + ": " + providers[settings.whisperProvider] + " (" + (settings.whisperProvider + 1) + "/" + providers.Length + ")"))
+                {
+                    settings.whisperProvider = (settings.whisperProvider + 1) % providers.Length;
+                    ApplyProviderDefaults();
+                }
+                listing.Gap(4f);
+
+                if (settings.whisperProvider == 2)
+                {
+                    // Player2 本地服务：无需密钥，仅展示客户端 ID
+                    listing.Label("GoldenBooks_WspPlayer2Note".Translate());
+                    listing.Gap(4f);
+                }
+                else
+                {
+                    settings.whisperApiUrl = listing.TextEntryLabeled("GoldenBooks_WspApiUrl".Translate(), settings.whisperApiUrl ?? "");
+                    settings.whisperApiKey = listing.TextEntryLabeled("GoldenBooks_WspApiKey".Translate(), settings.whisperApiKey ?? "");
+                    settings.whisperModel = listing.TextEntryLabeled("GoldenBooks_WspModel".Translate(), settings.whisperModel ?? "");
+                }
+
+                Rect testRow = listing.GetRect(34f);
+                if (Widgets.ButtonText(new Rect(testRow.x, testRow.y, 240f, 30f), "测试连接 (Test Connection)"))
                     TestWhisperConnection();
 
                 listing.Gap(6f);
-                settings.whisperApiUrl = listing.TextEntryLabeled("GoldenBooks_WspApiUrl".Translate(), settings.whisperApiUrl);
-                settings.whisperApiKey = listing.TextEntryLabeled("GoldenBooks_WspApiKey".Translate(), settings.whisperApiKey);
-                settings.whisperModel = listing.TextEntryLabeled("GoldenBooks_WspModel".Translate(), settings.whisperModel);
             }
 
             listing.End();
             Widgets.EndScrollView();
         }
 
-        // 从其他 AI 模组（RimTalk/RimTuber）的设置中启发式读取 API 配置
-        private static void ImportAiModSettings(string idFragment)
+        public static string[] WhisperProviders() => new[] { "DeepSeek", "OpenAI", "Player2（本地服务）", "自定义 (Custom)" };
+
+        public static string ProviderDefaultUrl(int p)
         {
-            try
+            switch (p)
             {
-                foreach (Mod handle in LoadedModManager.ModHandles)
-                {
-                    if (handle?.Content?.PackageId == null) continue;
-                    if (!handle.Content.PackageId.ToLower().Contains(idFragment)) continue;
-
-                    // 在 Mod 实例上找 ModSettings 派生对象
-                    object settingsObj = null;
-                    foreach (var f in handle.GetType().GetFields(System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Public))
-                    {
-                        if (typeof(ModSettings).IsAssignableFrom(f.FieldType) && f.GetValue(handle) != null)
-                        { settingsObj = f.GetValue(handle); break; }
-                    }
-                    if (settingsObj == null)
-                    {
-                        var p = handle.GetType().GetProperty("Settings", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Public);
-                        settingsObj = p?.GetValue(handle);
-                    }
-                    if (settingsObj == null) { Messages.Message("GoldenBooks_ImportFail".Translate(idFragment), MessageTypeDefOf.RejectInput); return; }
-
-                    string key = null, url = null, model = null;
-                    var members = settingsObj.GetType().GetFields(System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Public).Cast<System.Reflection.MemberInfo>()
-                        .Concat(settingsObj.GetType().GetProperties(System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Public).Cast<System.Reflection.MemberInfo>());
-                    foreach (var mi in members)
-                    {
-                        string n = mi.Name.ToLower();
-                        object val = mi is System.Reflection.FieldInfo ff ? ff.GetValue(settingsObj) : ((System.Reflection.PropertyInfo)mi).GetValue(settingsObj);
-                        if (!(val is string s) || string.IsNullOrEmpty(s)) continue;
-                        if (key == null && (n.Contains("apikey") || n.Contains("api_key") || n.Contains("token"))) key = s;
-                        else if (url == null && (n.Contains("url") || n.Contains("endpoint") || n.Contains("address"))) url = s;
-                        else if (model == null && n.Contains("model")) model = s;
-                    }
-                    if (string.IsNullOrEmpty(key) && string.IsNullOrEmpty(url))
-                    { Messages.Message("GoldenBooks_ImportEmpty".Translate(idFragment), MessageTypeDefOf.NeutralEvent); return; }
-                    if (!string.IsNullOrEmpty(key)) settings.whisperApiKey = key;
-                    if (!string.IsNullOrEmpty(url) && (url.Contains("http") || url.Contains("/"))) settings.whisperApiUrl = url;
-                    if (!string.IsNullOrEmpty(model)) settings.whisperModel = model;
-                    Messages.Message("GoldenBooks_ImportOk".Translate(idFragment), MessageTypeDefOf.PositiveEvent);
-                    return;
-                }
-                Messages.Message("GoldenBooks_ImportNotFound".Translate(idFragment), MessageTypeDefOf.NeutralEvent);
+                case 0: return "https://api.deepseek.com/v1/chat/completions";
+                case 1: return "https://api.openai.com/v1/chat/completions";
+                case 2: return "http://localhost:4315/v1/chat/completions";
+                default: return "";
             }
-            catch (Exception ex)
+        }
+
+        private static void ApplyProviderDefaults()
+        {
+            string def = ProviderDefaultUrl(settings.whisperProvider);
+            if (settings.whisperProvider == 2)
             {
-                Log.Warning("[GoldenBooks] 导入AI模组设置失败: " + ex.Message);
-                Messages.Message("GoldenBooks_ImportFail".Translate(idFragment), MessageTypeDefOf.RejectInput);
+                settings.whisperApiKey = "";
+                if (string.IsNullOrEmpty(settings.whisperModel) || settings.whisperModel == "deepseek-chat" || settings.whisperModel == "gpt-4o-mini") settings.whisperModel = "";
+            }
+            if (!string.IsNullOrEmpty(def) && settings.whisperApiUrl != def)
+            {
+                // 地址为空或仍是其他供应商默认值时，自动换成当前供应商默认
+                string[] others = { ProviderDefaultUrl(0), ProviderDefaultUrl(1), ProviderDefaultUrl(2) };
+                if (string.IsNullOrEmpty(settings.whisperApiUrl) || others.Contains(settings.whisperApiUrl))
+                    settings.whisperApiUrl = def;
             }
         }
 
         // 测试书语 API 连接（异步，完成后弹消息）
         private static async void TestWhisperConnection()
         {
-            string url = settings.whisperApiUrl, key = settings.whisperApiKey, model = settings.whisperModel;
-            if (string.IsNullOrEmpty(url) || string.IsNullOrEmpty(key))
+            string url = WhisperRequestUrl();
+            if (string.IsNullOrEmpty(url))
+            { Messages.Message("GoldenBooks_TestNoConfig".Translate(), MessageTypeDefOf.RejectInput); return; }
+            if (settings.whisperProvider != 2 && string.IsNullOrEmpty(settings.whisperApiKey))
             { Messages.Message("GoldenBooks_TestNoConfig".Translate(), MessageTypeDefOf.RejectInput); return; }
             Messages.Message("GoldenBooks_Testing".Translate(), MessageTypeDefOf.NeutralEvent);
             try
@@ -546,7 +542,8 @@ namespace GoldenBooksMod
                 using (var client = new System.Net.Http.HttpClient { Timeout = TimeSpan.FromSeconds(20) })
                 using (var req = new System.Net.Http.HttpRequestMessage(System.Net.Http.HttpMethod.Post, url))
                 {
-                    req.Headers.Add("Authorization", "Bearer " + key);
+                    ApplyAuth(req);
+                    string model = string.IsNullOrEmpty(settings.whisperModel) ? "default" : settings.whisperModel;
                     string body = "{\"model\":\"" + model + "\",\"messages\":[{\"role\":\"user\",\"content\":\"ping\"}],\"max_tokens\":4}";
                     req.Content = new System.Net.Http.StringContent(body, System.Text.Encoding.UTF8, "application/json");
                     var resp = await client.SendAsync(req);
@@ -562,7 +559,20 @@ namespace GoldenBooksMod
             }
         }
 
-        public override void WriteSettings()
+        public static string WhisperRequestUrl()
+        {
+            if (!string.IsNullOrEmpty(settings.whisperApiUrl)) return settings.whisperApiUrl;
+            return ProviderDefaultUrl(settings.whisperProvider);
+        }
+
+        public static void ApplyAuth(System.Net.Http.HttpRequestMessage req)
+        {
+            if (settings.whisperProvider == 2)
+                req.Headers.Add("X-P2-Client-Id", "019e12ba-6062-79ae-8c76-de13bea9af7a");
+            else if (!string.IsNullOrEmpty(settings.whisperApiKey))
+                req.Headers.Add("Authorization", "Bearer " + settings.whisperApiKey);
+        }
+public override void WriteSettings()
         {
             base.WriteSettings();
             GoldenBooksPatcher.ApplySettings();

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -270,8 +270,9 @@ namespace GoldenBooksMod
         // --- API 生成（OpenAI 兼容） ---
         private static bool HasApiConfig()
         {
+            if (GoldenBooksMod.settings.whisperProvider == 2) return true; // Player2 本地服务无需密钥
             return !string.IsNullOrEmpty(GoldenBooksMod.settings.whisperApiKey) &&
-                   !string.IsNullOrEmpty(GoldenBooksMod.settings.whisperApiUrl);
+                   !string.IsNullOrEmpty(GoldenBooksMod.WhisperRequestUrl());
         }
 
         private string[] GenerateViaApi(bool isYan, string summary)
@@ -284,9 +285,9 @@ namespace GoldenBooksMod
                     : "Write a 100~200 word daily colony chronicle in first person. Output the text only.");
                 string user = summary;
 
-                var req = new HttpRequestMessage(HttpMethod.Post, GoldenBooksMod.settings.whisperApiUrl);
-                req.Headers.Add("Authorization", "Bearer " + GoldenBooksMod.settings.whisperApiKey);
-                string body = "{\"model\":\"" + GoldenBooksMod.settings.whisperModel + "\",\"messages\":[" +
+                var req = new HttpRequestMessage(HttpMethod.Post, GoldenBooksMod.WhisperRequestUrl());
+                GoldenBooksMod.ApplyAuth(req);
+                string body = "{\"model\":\"" + (string.IsNullOrEmpty(GoldenBooksMod.settings.whisperModel) ? "default" : GoldenBooksMod.settings.whisperModel) + "\",\"messages\":[" +
                               "{\"role\":\"system\",\"content\":" + JsonEscape(sys) + "}," +
                               "{\"role\":\"user\",\"content\":" + JsonEscape(user) + "}]}";
                 req.Content = new StringContent(body, Encoding.UTF8, "application/json");

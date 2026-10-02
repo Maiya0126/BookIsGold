@@ -40,7 +40,9 @@
 	<GoldenBooks_WspToggleTip>When disabled no daily entries are generated. With an API key configured the text is AI-generated; otherwise offline templates are used.</GoldenBooks_WspToggleTip>
 	<GoldenBooks_WspPersonaInject>RimTalk persona auto-injection</GoldenBooks_WspPersonaInject>
 	<GoldenBooks_WspPersonaInjectTip>When RimTalk is detected, automatically attach dedicated personas to Yan Zhizhong / Yan Zhixia / the true Yan Ru Yu / mortal Yan Ru Yu (existing personas are never overwritten).</GoldenBooks_WspPersonaInjectTip>
-	<GoldenBooks_WspApiUrl>Whispers API URL (OpenAI compatible)</GoldenBooks_WspApiUrl>
+	<GoldenBooks_WspProvider>Provider</GoldenBooks_WspProvider>
+	<GoldenBooks_WspApiUrl>API URL</GoldenBooks_WspApiUrl>
+	<GoldenBooks_WspPlayer2Note>Player2: uses the locally running Player2 client. No key needed.</GoldenBooks_WspPlayer2Note>
 	<GoldenBooks_WspApiKey>Whispers API Key (leave empty for offline templates)</GoldenBooks_WspApiKey>
 	<GoldenBooks_WspModel>Whispers model name</GoldenBooks_WspModel>
 
@@ -93,11 +95,7 @@
 
 	<GoldenBooks_BtnAll>All</GoldenBooks_BtnAll>
 	<GoldenBooks_BtnNone>None</GoldenBooks_BtnNone>
-	<GoldenBooks_BtnReset>Reset</GoldenBooks_BtnReset	<GoldenBooks_ImportOk>API configuration imported from {0} (key/URL/model).</GoldenBooks_ImportOk>
-	<GoldenBooks_ImportEmpty>{0} found, but its settings expose no readable API config.</GoldenBooks_ImportEmpty>
-	<GoldenBooks_ImportNotFound>Mod {0} not found (check subscription & enable).</GoldenBooks_ImportNotFound>
-	<GoldenBooks_ImportFail>Import from {0} failed — fill in manually.</GoldenBooks_ImportFail>
-	<GoldenBooks_TestNoConfig>Fill in the API URL and key first.</GoldenBooks_TestNoConfig>
+	<GoldenBooks_BtnReset>Reset</GoldenBooks_BtnReset	<GoldenBooks_TestNoConfig>Fill in the API URL and key first.</GoldenBooks_TestNoConfig>
 	<GoldenBooks_Testing>Testing connection...</GoldenBooks_Testing>
 	<GoldenBooks_TestOk>Connection OK! The Whispers API works.</GoldenBooks_TestOk>
 	<GoldenBooks_TestFail>Connection failed: {0}</GoldenBooks_TestFail>
