@@ -301,7 +301,7 @@ namespace GoldenBooksMod
         {
             PawnKindDef kind = DefDatabase<PawnKindDef>.GetNamedSilentFail(kindName);
             if (kind == null || near == null || near.Map == null) return null;
-            Pawn spirit = PawnGenerator.GeneratePawn(new PawnGenerationRequest(kind, Faction.OfPlayer, forceGenerateNewPawn: true));
+            Pawn spirit = PawnGenerator.GeneratePawn(new PawnGenerationRequest(kind, Faction.OfPlayer, forceGenerateNewPawn: true, fixedBiologicalAge: 1, fixedChronologicalAge: 1));
             IntVec3 cell = CellFinder.RandomSpawnCellForPawnNear(near.PositionHeld, near.Map, 4);
             GenSpawn.Spawn(spirit, cell, near.Map);
             GameComponent_BookWhispers.TryInjectRimTalkPersonas();

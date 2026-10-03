@@ -116,7 +116,7 @@ namespace GoldenBooksMod
                 {
                     Pawn gen = PawnGenerator.GeneratePawn(new PawnGenerationRequest(
                         DefDatabase<PawnKindDef>.GetNamedSilentFail("GoldenBooks_BookSpirit_Colonist_Kind"),
-                        Faction.OfPlayer, forceGenerateNewPawn: true));
+                        Faction.OfPlayer, forceGenerateNewPawn: true, fixedBiologicalAge: 1, fixedChronologicalAge: 1));
                     GenSpawn.Spawn(gen, pos.IsValid ? pos : DropCellFinder.TradeDropSpot(map), map);
                     spirit = gen;
                 }

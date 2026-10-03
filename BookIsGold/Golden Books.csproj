@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>$(ProjectDir)1.6\Assemblies\</OutputPath>
+    <OutputPath>Assemblies\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -25,7 +25,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>$(ProjectDir)1.6\Assemblies\</OutputPath>
+    <OutputPath>Assemblies\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -33,10 +33,12 @@
   <ItemGroup>
     <Reference Include="0Harmony">
       <HintPath>..\..\..\Games\steamapps\workshop\content\294100\2009463077\Current\Assemblies\0Harmony.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Assembly-CSharp, Version=1.6.9438.37837, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Games\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -49,17 +51,21 @@
     <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Games\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>..\..\..\Games\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.IMGUIModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Games\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.IMGUIModule.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.TextRenderingModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Games\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -94,7 +100,7 @@
     <Content Include="Patches\Patch_ResearchBench_Link.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="1.6\Assemblies\" />
+    <Folder Include="Assemblies\" />
     <Folder Include="Defs\RecipeDefs\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
@@ -106,17 +112,15 @@ if exist "%25MOD_DIR%25\Defs" rmdir /S /Q "%25MOD_DIR%25\Defs"
 if exist "%25MOD_DIR%25\Patches" rmdir /S /Q "%25MOD_DIR%25\Patches"
 if exist "%25MOD_DIR%25\Languages" rmdir /S /Q "%25MOD_DIR%25\Languages"
 if exist "%25MOD_DIR%25\Story" rmdir /S /Q "%25MOD_DIR%25\Story"
-if exist "%25MOD_DIR%25\1.6\Assemblies" rmdir /S /Q "%25MOD_DIR%25\1.6\Assemblies"
-if exist "%25MOD_DIR%25\Textures" rmdir /S /Q "%25MOD_DIR%25\Textures"
-mkdir "%25MOD_DIR%25\1.6\Assemblies"
+if exist "%25MOD_DIR%25\Assemblies" rmdir /S /Q "%25MOD_DIR%25\Assemblies"
+mkdir "%25MOD_DIR%25\Assemblies"
 mkdir "%25MOD_DIR%25\Defs"
 mkdir "%25MOD_DIR%25\Languages"
-copy /Y "$(TargetDir)$(TargetName).dll" "%25MOD_DIR%25\1.6\Assemblies\"
+copy /Y "$(TargetDir)$(TargetName).dll" "%25MOD_DIR%25\Assemblies\"
 xcopy "%25SOURCE_ROOT%25Defs" "%25MOD_DIR%25\Defs" /S /E /Y /I
 xcopy "%25SOURCE_ROOT%25Patches" "%25MOD_DIR%25\Patches" /S /E /Y /I
 xcopy "%25SOURCE_ROOT%25Languages" "%25MOD_DIR%25\Languages" /S /E /Y /I
 xcopy "%25SOURCE_ROOT%25..\Story" "%25MOD_DIR%25\Story" /S /E /Y /I
-xcopy "%25SOURCE_ROOT%25Textures" "%25MOD_DIR%25\Textures" /S /E /Y /I
 echo [MaiyaMod] Sync done.</PostBuildEvent>
   </PropertyGroup>
 </Project>
