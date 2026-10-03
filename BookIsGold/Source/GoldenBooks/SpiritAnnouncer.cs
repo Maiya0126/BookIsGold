@@ -122,6 +122,7 @@ namespace GoldenBooksMod
         private int visibleChars;
         private const float CharsPerSecond = 30f;
         private bool typedDone;
+        private float lingerTimer;
         private Vector2 scrollPos = Vector2.zero;
 
         private const float PortraitSize = 130f;
@@ -213,7 +214,7 @@ namespace GoldenBooksMod
             }
             if (drewPortrait) Widgets.DrawBox(portraitRect, 1);
 
-            // 打字机文字（右侧滚动区）
+            // 打字机文字（右侧滚动区）；播完停留后自动切下一条（队列有货时）
             Rect textRect = new Rect(portraitRect.xMax + 10f, y, inRect.width - PortraitSize - 20f, contentH);
             if (!typedDone)
             {
@@ -221,6 +222,13 @@ namespace GoldenBooksMod
                 int target = Mathf.Min(item.text.Length, Mathf.FloorToInt(typingTimer * CharsPerSecond));
                 if (target != visibleChars) { visibleChars = target; scrollPos.y = float.MaxValue; }
                 if (visibleChars >= item.text.Length) typedDone = true;
+            }
+            else if (SpiritAnnouncer.QueueCount > 0)
+            {
+                // 自适应停留：短消息 4 秒，长消息按字数放宽（上限 12 秒）
+                float dwell = Mathf.Clamp(item.text.Length / 20f, 4f, 12f);
+                lingerTimer += Time.deltaTime;
+                if (lingerTimer >= dwell) { lingerTimer = 0f; ShowNext(); return; }
             }
             string shown = item.text.Substring(0, visibleChars);
             float h = Text.CalcHeight(shown, textRect.width - 8f) + 4f;
