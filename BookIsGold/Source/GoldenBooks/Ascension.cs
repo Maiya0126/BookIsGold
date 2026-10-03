@@ -102,6 +102,8 @@ namespace GoldenBooksMod
             string oldPersona = WhisperPersonaHelper.ExtractPersonaFrom(p);
             string oldShort = p.LabelShort;
             Name oldName = p.Name;
+            // 化灵保留原角色年龄
+            float ascendAge = p.ageTracker != null ? Mathf.Max(1f, p.ageTracker.AgeBiologicalYears) : 1f;
 
             // 人格延续：原人格 + 书灵状态说明
             string suffix = GameComponent_BookWhispers.IsChinese
@@ -109,14 +111,15 @@ namespace GoldenBooksMod
                 : "You have completed the Rite of Ascension — you are now a book spirit, a scholar within pale-golden pages. You no longer eat or sleep; readers' devotion sustains you.";
             p.Destroy();
 
-            Pawn spirit = GoldenBooksUtils.SpawnBookSpirit("GoldenBooks_BookSpirit_Colonist_Kind", null);
+            Pawn spirit = GoldenBooksUtils.SpawnBookSpirit("GoldenBooks_BookSpirit_Colonist_Kind", null, ascendAge);
             if (spirit == null)
             {
                 if (map != null)
                 {
-                    Pawn gen = PawnGenerator.GeneratePawn(new PawnGenerationRequest(
+                    PawnGenerationRequest genReq = new PawnGenerationRequest(
                         DefDatabase<PawnKindDef>.GetNamedSilentFail("GoldenBooks_BookSpirit_Colonist_Kind"),
-                        Faction.OfPlayer, forceGenerateNewPawn: true, fixedBiologicalAge: 1, fixedChronologicalAge: 1));
+                        Faction.OfPlayer, forceGenerateNewPawn: true, fixedBiologicalAge: ascendAge, fixedChronologicalAge: ascendAge);
+                    Pawn gen = PawnGenerator.GeneratePawn(genReq);
                     GenSpawn.Spawn(gen, pos.IsValid ? pos : DropCellFinder.TradeDropSpot(map), map);
                     spirit = gen;
                 }

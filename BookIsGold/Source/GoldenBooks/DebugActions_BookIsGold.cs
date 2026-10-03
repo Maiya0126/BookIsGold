@@ -26,7 +26,7 @@ namespace GoldenBooksMod
             Map map = Find.CurrentMap;
             PawnKindDef kind = DefDatabase<PawnKindDef>.GetNamedSilentFail("GoldenBooks_BookSpirit_Colonist_Kind");
             if (kind == null) { Log.Error("[GoldenBooks] 缺少 PawnKindDef"); return; }
-            Pawn spirit = PawnGenerator.GeneratePawn(new PawnGenerationRequest(kind, Faction.OfPlayer, forceGenerateNewPawn: true));
+            Pawn spirit = PawnGenerator.GeneratePawn(new PawnGenerationRequest(kind, Faction.OfPlayer, forceGenerateNewPawn: true, fixedBiologicalAge: 1, fixedChronologicalAge: 1));
             IntVec3 cell = UI.MouseCell();
             if (!cell.Standable(map)) cell = CellFinder.RandomSpawnCellForPawnNear(UI.MouseCell(), map, 5);
             spirit.Name = new NameTriple("", "书灵·测试学者", "");
