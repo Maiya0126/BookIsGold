@@ -134,6 +134,7 @@ namespace GoldenBooksMod
                 : oldPersona;
             WhisperPersonaHelper.CopyPersonaToPawn(spirit, basePersona + "\n" + suffix);
 
+            SpiritAnnouncer.AnnounceAscended(oldShort, spirit);
             Find.LetterStack.ReceiveLetter("GoldenBooks_AscendLabel".Translate(),
                 "GoldenBooks_AscendText".Translate(oldShort, spirit.LabelShort), LetterDefOf.PositiveEvent, spirit);
         }

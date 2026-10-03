@@ -73,6 +73,7 @@
     <Compile Include="Source\GoldenBooks\Handbook.cs" />
     <Compile Include="Source\GoldenBooks\WhisperApi.cs" />
     <Compile Include="Source\GoldenBooks\Ascension.cs" />
+    <Compile Include="Source\GoldenBooks\SpiritAnnouncer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="About\Preview.png" />

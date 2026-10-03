@@ -157,6 +157,8 @@ namespace GoldenBooksMod
                 ? "GoldenBooks_WspLetterLabel_Yan".Translate(e.day)
                 : "GoldenBooks_WspLetterLabel_Mo".Translate(e.day);
             Find.LetterStack.ReceiveLetter(header, text, LetterDefOf.NeutralEvent);
+            SpiritAnnouncer.Announce(isYan ? "Yan" : "Mo", text);
+            SpiritAnnouncer.Announce(isYan ? "Yan" : "Mo", text);
 
             stats = new WhisperStats();
         }
@@ -535,6 +537,7 @@ namespace GoldenBooksMod
                 {
                     GameComponent_BookWhispers.Get?.RecordRaid(parms.points);
                     GameComponent_Kewei.Get?.RecordRaid();
+                    SpiritAnnouncer.AnnounceRaid();
                 }
             }
             catch { }
@@ -546,7 +549,7 @@ namespace GoldenBooksMod
     {
         static void Postfix(ResearchProjectDef proj)
         {
-            try { GameComponent_BookWhispers.Get?.RecordResearch(proj); } catch { }
+            try { GameComponent_BookWhispers.Get?.RecordResearch(proj); SpiritAnnouncer.AnnounceResearch(proj); } catch { }
         }
     }
 }

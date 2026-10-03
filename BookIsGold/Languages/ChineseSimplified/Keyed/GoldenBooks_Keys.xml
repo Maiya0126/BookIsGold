@@ -126,4 +126,7 @@
 	<GoldenBooks_AscReasonMaterials>缺少材料（古籍残卷×{0}、五经×{1}）</GoldenBooks_AscReasonMaterials>
 	<GoldenBooks_TestBtn>测试连接 (Test Connection)</GoldenBooks_TestBtn>
 	<GoldenBooks_Provider_Custom>自定义 (Custom)</GoldenBooks_Provider_Custom>
-	<GoldenBooks_Provider_Player2>Player2（本地服务）</GoldenBooks_Provider_Player2></LanguageData>
+	<GoldenBooks_Provider_Player2>Player2（本地服务）</GoldenBooks_Provider_Player2>	<GoldenBooks_AnnTitle>书灵播报 · 书中自有黄金屋</GoldenBooks_AnnTitle>
+	<GoldenBooks_AnnToggle>书灵播报弹窗</GoldenBooks_AnnToggle>
+	<GoldenBooks_AnnToggleTip>事件发生时弹出书灵立绘播报窗（袭击/死亡/研究/化书/召还/化灵等）。</GoldenBooks_AnnToggleTip>
+</LanguageData>

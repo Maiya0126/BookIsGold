@@ -119,4 +119,7 @@
 	<GoldenBooks_AscReasonMaterials>Missing materials (book fragments ×{0}, Five Classics ×{1})</GoldenBooks_AscReasonMaterials>
 	<GoldenBooks_TestBtn>Test Connection</GoldenBooks_TestBtn>
 	<GoldenBooks_Provider_Custom>Custom</GoldenBooks_Provider_Custom>
-	<GoldenBooks_Provider_Player2>Player2 (local app)</GoldenBooks_Provider_Player2></LanguageData>
+	<GoldenBooks_Provider_Player2>Player2 (local app)</GoldenBooks_Provider_Player2>	<GoldenBooks_AnnTitle>Spirit Broadcast · Golden Books</GoldenBooks_AnnTitle>
+	<GoldenBooks_AnnToggle>Spirit broadcast popups</GoldenBooks_AnnToggle>
+	<GoldenBooks_AnnToggleTip>Pop up a spirit-portrait broadcast window on events (raids, deaths, research, spirit-book, recall, ascension).</GoldenBooks_AnnToggleTip>
+</LanguageData>
