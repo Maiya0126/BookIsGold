@@ -8,7 +8,7 @@
 		<description>砚翁化作的棕色古书，封皮厚重，书脊金线未干。\n\n书中之人并未消散——将其置于劝学台，辅以古籍残卷，即可召还。\n\n“化作一册书，静静躺在原地。期日再召。——执中”</description>
 		<graphicData>
 			<texPath>Things/Item/Book/TextBook</texPath>
-			<graphicClass>Graphic_Single</graphicClass>
+			<graphicClass>Graphic_Random</graphicClass>
 			<color>(150, 100, 55)</color>
 			<drawSize>0.85</drawSize>
 		</graphicData>
@@ -30,7 +30,7 @@
 		<description>墨叽化作的淡蓝册页小书，页角翘起，糖纸夹在中间。\n\n书中之人并未消散——将其置于劝学台，辅以古籍残卷，即可召还。\n\n“本姑娘先回书里避一避！等我回来接着闹！(๑•̀ㅂ•́)و✧——墨叽”</description>
 		<graphicData>
 			<texPath>Things/Item/Book/TextBook</texPath>
-			<graphicClass>Graphic_Single</graphicClass>
+			<graphicClass>Graphic_Random</graphicClass>
 			<color>(180, 205, 255)</color>
 			<drawSize>0.75</drawSize>
 		</graphicData>
