@@ -75,7 +75,7 @@
 		<stackLimit>1</stackLimit>
 		<tradeability>None</tradeability>
 		<comps>
-			<li Class="GoldenBooksMod.CompProperties_SpiritBookData">
+			<li Class="GoldenBooksMod.GoldenBooksCompProperties_SpiritBookData">
 				<compClass>GoldenBooksMod.GoldenBooksComp_SpiritBookData</compClass>
 			</li>
 		</comps>
