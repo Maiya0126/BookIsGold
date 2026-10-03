@@ -171,6 +171,10 @@ namespace GoldenBooksMod
 
                 var s = GoldenBooksMod.settings;
                 string reason = SpiritAscension.AscendBlockReason(__instance);
+                // 显示策略：智识达标才显示；书灵满员时仍显示（置灰）提示上限存在
+                SkillRecord iSkill = __instance.skills?.GetSkill(SkillDefOf.Intellectual);
+                bool intellectOk = iSkill != null && !iSkill.TotallyDisabled && iSkill.Level >= s.spiritAscendIntellect;
+                if (!intellectOk) return;
                 Command_Action g = new Command_Action
                 {
                     defaultLabel = "化灵 (Become Book Spirit)",
