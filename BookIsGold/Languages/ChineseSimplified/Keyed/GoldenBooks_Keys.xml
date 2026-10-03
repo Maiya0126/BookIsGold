@@ -117,4 +117,13 @@
 	<GoldenBooks_AscFragments>化灵材料·古籍残卷</GoldenBooks_AscFragments>
 	<GoldenBooks_AscClassics>化灵材料·五经</GoldenBooks_AscClassics>
 	<GoldenBooks_AscendLabel>化灵之仪·完成</GoldenBooks_AscendLabel>
-	<GoldenBooks_AscendText>劝学台上金光如墨晕开，{0}的身影化作万千书页，又缓缓凝成一册浅金的册页精灵。\n\n“自今日始，你亦是书中人。——砚翁”\n“哇——新同学！欢迎加入气氛组！(๑•̀ㅂ•́)و✧——墨叽”\n\n{1} 已化灵为书灵：不食不眠，携讲学光环，死亡后化作书灵之书可召还。</GoldenBooks_AscendText></LanguageData>
+	<GoldenBooks_AscendText>劝学台上金光如墨晕开，{0}的身影化作万千书页，又缓缓凝成一册浅金的册页精灵。\n\n“自今日始，你亦是书中人。——砚翁”\n“哇——新同学！欢迎加入气氛组！(๑•̀ㅂ•́)و✧——墨叽”\n\n{1} 已化灵为书灵：不食不眠，携讲学光环，死亡后化作书灵之书可召还。</GoldenBooks_AscendText>	<GoldenBooks_AscGizmoLabel>化灵 (Become Book Spirit)</GoldenBooks_AscGizmoLabel>
+	<GoldenBooks_AscGizmoDesc>化灵之仪：将这名学者化为书灵——失去人形，获得书灵之躯与讲学光环。（消耗古籍残卷×{0}、五经×{1}，不可逆）</GoldenBooks_AscGizmoDesc>
+	<GoldenBooks_AscGizmoBlocked>化灵之仪（当前不可用：{0}）</GoldenBooks_AscGizmoBlocked>
+	<GoldenBooks_AscReasonKewei>课业主线未大成</GoldenBooks_AscReasonKewei>
+	<GoldenBooks_AscReasonIntellect>智识不足（需 {0}）</GoldenBooks_AscReasonIntellect>
+	<GoldenBooks_AscReasonLimit>殖民地书灵已达上限（{0}）</GoldenBooks_AscReasonLimit>
+	<GoldenBooks_AscReasonMaterials>缺少材料（古籍残卷×{0}、五经×{1}）</GoldenBooks_AscReasonMaterials>
+	<GoldenBooks_TestBtn>测试连接 (Test Connection)</GoldenBooks_TestBtn>
+	<GoldenBooks_Provider_Custom>自定义 (Custom)</GoldenBooks_Provider_Custom>
+	<GoldenBooks_Provider_Player2>Player2（本地服务）</GoldenBooks_Provider_Player2></LanguageData>

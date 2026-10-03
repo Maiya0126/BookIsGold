@@ -110,4 +110,13 @@
 	<GoldenBooks_AscLimit>Ascended spirit limit</GoldenBooks_AscLimit>
 	<GoldenBooks_AscendLabel>Rite of Ascension · Complete</GoldenBooks_AscendLabel>
 	<GoldenBooks_AscendText>Golden light spreads like ink across the lectern as {0}'s figure scatters into countless pages, then gathers into a pale-golden booklet spirit.\n\n"From this day, you too are one of the book. — Yanweng"\n"Waaah — new classmate! Welcome to the Vibes Department! (๑•̀ㅂ•́)و✧ — Moji"\n\n{1} has ascended: no food, no sleep, carries the Lecture aura, and turns into a recallable spirit book upon death.</GoldenBooks_AscendText>	<GoldenBooks_AscFragments>Ascension material · book fragments</GoldenBooks_AscFragments>
-	<GoldenBooks_AscClassics>Ascension material · Five Classics</GoldenBooks_AscClassics></LanguageData>
+	<GoldenBooks_AscClassics>Ascension material · Five Classics</GoldenBooks_AscClassics>	<GoldenBooks_AscGizmoLabel>Ascend (Become Book Spirit)</GoldenBooks_AscGizmoLabel>
+	<GoldenBooks_AscGizmoDesc>Rite of Ascension: turn this scholar into a book spirit — lose their human form, gain the spirit body and the Lecture aura. (Costs book fragments ×{0}, Five Classics ×{1}. Irreversible.)</GoldenBooks_AscGizmoDesc>
+	<GoldenBooks_AscGizmoBlocked>Rite of Ascension (unavailable: {0})</GoldenBooks_AscGizmoBlocked>
+	<GoldenBooks_AscReasonKewei>Main lessons not yet mastered</GoldenBooks_AscReasonKewei>
+	<GoldenBooks_AscReasonIntellect>Intellect too low (requires {0})</GoldenBooks_AscReasonIntellect>
+	<GoldenBooks_AscReasonLimit>Colony spirit limit reached ({0})</GoldenBooks_AscReasonLimit>
+	<GoldenBooks_AscReasonMaterials>Missing materials (book fragments ×{0}, Five Classics ×{1})</GoldenBooks_AscReasonMaterials>
+	<GoldenBooks_TestBtn>Test Connection</GoldenBooks_TestBtn>
+	<GoldenBooks_Provider_Custom>Custom</GoldenBooks_Provider_Custom>
+	<GoldenBooks_Provider_Player2>Player2 (local app)</GoldenBooks_Provider_Player2></LanguageData>

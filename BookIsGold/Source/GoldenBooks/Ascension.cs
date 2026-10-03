@@ -45,13 +45,13 @@ namespace GoldenBooksMod
         {
             var s = GoldenBooksMod.settings;
             if (GameComponent_Kewei.Get == null || GameComponent_Kewei.Get.mainStage < 6)
-                return "课业主线未大成";
+                return "GoldenBooks_AscReasonKewei".Translate();
             SkillRecord skill = p.skills?.GetSkill(SkillDefOf.Intellectual);
             if (skill == null || skill.TotallyDisabled || skill.Level < s.spiritAscendIntellect)
-                return "智识不足（需 " + s.spiritAscendIntellect + "）";
+                return "GoldenBooks_AscReasonIntellect".Translate(s.spiritAscendIntellect);
             if (AscendedCount() >= s.colonistSpiritLimit)
-                return "殖民地书灵已达上限（" + s.colonistSpiritLimit + "）";
-            if (!HasMaterial(p.MapHeld)) return "缺少材料（古籍残卷×" + s.spiritAscendFragments + "、五经×" + s.spiritAscendClassics + "）";
+                return "GoldenBooks_AscReasonLimit".Translate(s.colonistSpiritLimit);
+            if (!HasMaterial(p.MapHeld)) return "GoldenBooks_AscReasonMaterials".Translate(s.spiritAscendFragments, s.spiritAscendClassics);
             return null;
         }
 
@@ -177,10 +177,10 @@ namespace GoldenBooksMod
                 if (!intellectOk) return;
                 Command_Action g = new Command_Action
                 {
-                    defaultLabel = "化灵 (Become Book Spirit)",
+                    defaultLabel = "GoldenBooks_AscGizmoLabel".Translate(),
                     defaultDesc = string.IsNullOrEmpty(reason)
-                        ? "化灵之仪：将这名学者化为书灵——失去人形，获得书灵之躯与讲学光环。（消耗古籍残卷×" + s.spiritAscendFragments + "、五经×" + s.spiritAscendClassics + "，不可逆）"
-                        : "化灵之仪（当前不可用：" + reason + "）",
+                        ? "GoldenBooks_AscGizmoDesc".Translate(s.spiritAscendFragments, s.spiritAscendClassics)
+                        : "GoldenBooks_AscGizmoBlocked".Translate(reason),
                     icon = Icon(),
                     action = delegate
                     {

@@ -43,6 +43,14 @@ namespace GoldenBooksMod
             new WhisperProviderDef { Label = "自定义 (Custom)", EndpointUrl = "" }
         };
 
+        // 供应商显示名：优先走翻译键（GoldenBooks_Provider_<Label>），无翻译则用原文
+        public static string WhisperProviderLabel(int index)
+        {
+            string label = Defs[index].Label;
+            TaggedString key = ("GoldenBooks_Provider_" + label.Replace(" ", "").Replace("(", "").Replace(")", ""));
+            if (Translator.TryTranslate(key.RawText, out TaggedString result)) return result;
+            return label;
+        }
         public static bool IsPlayer2(int index) => Defs[index].Label == "Player2";
     }
 

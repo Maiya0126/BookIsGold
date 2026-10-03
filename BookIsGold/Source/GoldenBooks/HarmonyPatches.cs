@@ -514,7 +514,7 @@ namespace GoldenBooksMod
 
                 // 供应商下拉框
                 Rect provRow = listing.GetRect(34f);
-                string curProvider = WhisperProviderRegistry.Defs[settings.whisperProvider].Label;
+                string curProvider = WhisperProviderRegistry.WhisperProviderLabel(settings.whisperProvider);
                 if (Widgets.ButtonText(new Rect(provRow.x, provRow.y, provRow.width, 30f),
                     "供应商 (Provider): " + curProvider))
                 {
@@ -522,7 +522,7 @@ namespace GoldenBooksMod
                     for (int i = 0; i < WhisperProviderRegistry.Defs.Length; i++)
                     {
                         int idx = i;
-                        opts.Add(new FloatMenuOption(WhisperProviderRegistry.Defs[i].Label,
+                        opts.Add(new FloatMenuOption(WhisperProviderRegistry.WhisperProviderLabel(i),
                             () => { settings.whisperProvider = idx; ApplyProviderDefaults(); }));
                     }
                     Find.WindowStack.Add(new FloatMenu(opts));
@@ -574,7 +574,7 @@ namespace GoldenBooksMod
 
                 // 测试连接
                 Rect testRow = listing.GetRect(34f);
-                if (Widgets.ButtonText(new Rect(testRow.x, testRow.y, 260f, 30f), "测试连接 (Test Connection)"))
+                if (Widgets.ButtonText(new Rect(testRow.x, testRow.y, 260f, 30f), "GoldenBooks_TestBtn".Translate()))
                     TestWhisperConnection();
 
                 listing.Gap(6f);
@@ -598,7 +598,7 @@ namespace GoldenBooksMod
                 if (!string.IsNullOrEmpty(cfg.ApiKey)) settings.whisperApiKey = cfg.ApiKey;
                 if (!string.IsNullOrEmpty(cfg.Model)) settings.whisperModel = cfg.Model;
                 if (!string.IsNullOrEmpty(cfg.BaseUrl)) settings.whisperApiUrl = cfg.BaseUrl;
-                Messages.Message("已从 " + displayName + " 导入配置：" + WhisperProviderRegistry.Defs[cfg.ProviderIndex].Label,
+                Messages.Message("已从 " + displayName + " 导入配置：" + WhisperProviderRegistry.WhisperProviderLabel(cfg.ProviderIndex),
                     MessageTypeDefOf.PositiveEvent);
             }
             catch (Exception ex)
@@ -648,7 +648,7 @@ namespace GoldenBooksMod
         // 测试书语 API 连接（异步，完成后弹消息）
         private static async void TestWhisperConnection()
         {
-            Messages.Message("正在测试连接……", MessageTypeDefOf.NeutralEvent);
+            Messages.Message("GoldenBooks_Testing".Translate(), MessageTypeDefOf.NeutralEvent);
             try
             {
                 string url;
@@ -658,7 +658,7 @@ namespace GoldenBooksMod
                 {
                     url = WhisperRequestUrl();
                     if (string.IsNullOrEmpty(url) || string.IsNullOrEmpty(settings.whisperApiKey))
-                    { Messages.Message("请先填写 API 地址与密钥。", MessageTypeDefOf.RejectInput); return; }
+                    { Messages.Message("GoldenBooks_TestNoConfig".Translate(), MessageTypeDefOf.RejectInput); return; }
                 }
 
                 using (var client = new System.Net.Http.HttpClient { Timeout = TimeSpan.FromSeconds(30) })
