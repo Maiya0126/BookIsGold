@@ -15,3 +15,6 @@ Thumbs.db
 BookIsGold/obj/
 .acl-recovery/
 *.acl-backup*
+
+BookIsGold/Assemblies/*.dll
+BookIsGold/Assemblies/*.pdb
