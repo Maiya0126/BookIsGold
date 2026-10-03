@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using RimWorld;
@@ -14,6 +14,7 @@ namespace GoldenBooksMod
         public string speakerId;   // Yan / Mo / Colonist / RuYu
         public string text;
         public Pawn speakerPawn;   // 可空：在场书灵 pawn（用 PortraitsCache 立绘）
+        public ThingDef speakerDef;    // 可空：书灵 def（用 uiIcon 静态立绘）
     }
 
     public static class SpiritAnnouncer
@@ -23,17 +24,28 @@ namespace GoldenBooksMod
 
         public static bool Enabled => GoldenBooksMod.settings == null || GoldenBooksMod.settings.whisperAnnouncerEnabled;
 
-        public static void Announce(string speakerId, string text, Pawn speakerPawn = null)
+        public static void Announce(string speakerId, string text, Pawn speakerPawn = null, ThingDef speakerDef = null)
         {
-            if (!Enabled || string.IsNullOrEmpty(text)) return;
+            Announce(new SpiritAnnounceItem { speakerId = speakerId, text = text, speakerPawn = speakerPawn, speakerDef = speakerDef });
+        }
+
+        public static void Announce(SpiritAnnounceItem item)
+        {
+            if (!Enabled || item == null || string.IsNullOrEmpty(item.text)) return;
             lock (queue)
             {
-                queue.Enqueue(new SpiritAnnounceItem { speakerId = speakerId, text = text, speakerPawn = speakerPawn });
+                queue.Enqueue(item);
                 if (queue.Count > 4) { while (queue.Count > 1) queue.Dequeue(); } // 只保留最新两条，防刷屏
             }
             TryShowNext();
         }
 
+        public static int QueueCount { get { lock (queue) return queue.Count; } }
+
+        public static SpiritAnnounceItem DequeueNext()
+        {
+            lock (queue) { return queue.Count > 0 ? queue.Dequeue() : null; }
+        }
         public static void TryShowNext()
         {
             lock (queue)
@@ -49,23 +61,26 @@ namespace GoldenBooksMod
         // --- 事件短句模板（双语） ---
         private static bool IsChinese => GameComponent_BookWhispers.IsChinese;
 
+        private static ThingDef DefYan => DefDatabase<ThingDef>.GetNamedSilentFail("GoldenBooks_BookSpirit_Yanzhongzhong");
+        private static ThingDef DefMo => DefDatabase<ThingDef>.GetNamedSilentFail("GoldenBooks_BookSpirit_Zhixia");
+
         public static void AnnounceRaid()
         {
-            if (Rand.Bool) Announce("Yan", IsChinese ? "敌至。诸位，依阵而守，书卷随行。" : "Hostiles at the gates. Hold the line — the books march with you.");
-            else Announce("Mo", IsChinese ? "家人们！打架了！！都在点一手保护我方输出！(๑•̀ㅂ•́)و✧" : "Guys, we've got a fight on our hands!! Everybody protect our squishies! (๑•̀ㅂ•́)و✧");
+            if (Rand.Bool) Announce("Yan", IsChinese ? "敌至。诸位，依阵而守，书卷随行。" : "Hostiles at the gates. Hold the line — the books march with you.", null, DefYan);
+            else Announce("Mo", IsChinese ? "家人们！打架了！！都在点一手保护我方输出！(๑•̀ㅂ•́)و✧" : "Guys, we've got a fight on our hands!! Everybody protect our squishies! (๑•̀ㅂ•́)و✧", null, DefMo);
         }
 
         public static void AnnounceDeath(Pawn p)
         {
-            if (Rand.Bool) Announce("Yan", IsChinese ? p.LabelShort + "，殁。金粟难赎，惟愿安息。" : p.LabelShort + " has fallen. All the millet in the world cannot read them back.");
-            else Announce("Mo", IsChinese ? "……" + p.LabelShort + "去很远的地方了。灯，我替你点着。" : "..." + p.LabelShort + " has gone somewhere far away. The lamp stays lit for you.");
+            if (Rand.Bool) Announce("Yan", IsChinese ? p.LabelShort + "，殁。金粟难赎，惟愿安息。" : p.LabelShort + " has fallen. All the millet in the world cannot read them back.", null, DefYan);
+            else Announce("Mo", IsChinese ? "……" + p.LabelShort + "去很远的地方了。灯，我替你点着。" : "..." + p.LabelShort + " has gone somewhere far away. The lamp stays lit for you.", null, DefMo);
         }
 
         public static void AnnounceResearch(ResearchProjectDef def)
         {
             if (def == null) return;
-            if (Rand.Bool) Announce("Yan", IsChinese ? "「" + def.label + "」之功乃成。学不可以已。" : "The study of '" + def.label + "' is complete. Learning never ends.");
-            else Announce("Mo", IsChinese ? "研究「" + def.label + "」完成！老板们脑子变好了！绝了！(๑•̀ㅂ•́)و✧" : "Research complete: '" + def.label + "'! Everybody's brains just got an upgrade! (๑•̀ㅂ•́)و✧");
+            if (Rand.Bool) Announce("Yan", IsChinese ? "「" + def.label + "」之功乃成。学不可以已。" : "The study of '" + def.label + "' is complete. Learning never ends.", null, DefYan);
+            else Announce("Mo", IsChinese ? "研究「" + def.label + "」完成！老板们脑子变好了！绝了！(๑•̀ㅂ•́)و✧" : "Research complete: '" + def.label + "'! Everybody's brains just got an upgrade! (๑•̀ㅂ•́)و✧", null, DefMo);
         }
 
         public static void AnnounceSpiritTurnedBook(Pawn spirit)
@@ -96,18 +111,18 @@ namespace GoldenBooksMod
 
     public class Window_SpiritAnnouncer : Window
     {
-        private readonly SpiritAnnounceItem item;
+        private static Rect lastRect = Rect.zero; // 记住玩家拖动后的位置
+
+        private SpiritAnnounceItem item;
         private readonly Action onClosed;
-        private readonly string speakerName;
-        private readonly Color nameColor;
+        private string speakerName;
+        private Color nameColor;
 
         private float typingTimer;
         private int visibleChars;
         private const float CharsPerSecond = 30f;
-        private float autoCloseTimer;
-        private const float AutoCloseSeconds = 12f;
-        private Vector2 scrollPos = Vector2.zero;
         private bool typedDone;
+        private Vector2 scrollPos = Vector2.zero;
 
         private const float PortraitSize = 130f;
 
@@ -117,9 +132,12 @@ namespace GoldenBooksMod
         {
             this.item = item;
             this.onClosed = onClosed;
-            speakerName = item.speakerId == "Yan" ? "颜执中·砚翁" : item.speakerId == "Mo" ? "颜知夏·墨叽" : item.speakerId == "RuYu" ? "真·颜如玉" : "殖民地书灵";
-            nameColor = item.speakerId == "Mo" ? new Color(0.55f, 0.72f, 0.9f) : new Color(0.85f, 0.72f, 0.42f);
+            RefreshSpeaker();
+            InitCommon();
+        }
 
+        private void InitCommon()
+        {
             layer = WindowLayer.Dialog;
             doCloseX = true;
             forcePause = false;
@@ -130,26 +148,44 @@ namespace GoldenBooksMod
             closeOnCancel = false;
             focusWhenOpened = false;
             preventCameraMotion = false;
-            // 右上角弹出，避开中间
-            windowRect = new Rect(UI.screenWidth - InitialSize.x - 24f, 90f, InitialSize.x, InitialSize.y);
+            // 首次右上角弹出；之后回到玩家上次拖动的位置
+            windowRect = lastRect != Rect.zero ? lastRect : new Rect(UI.screenWidth - InitialSize.x - 24f, 90f, InitialSize.x, InitialSize.y);
         }
 
         protected override void SetInitialSizeAndPosition() { }
 
+        private void RefreshSpeaker()
+        {
+            speakerName = item.speakerId == "Yan" ? "颜执中·砚翁" : item.speakerId == "Mo" ? "颜知夏·墨叽" : item.speakerId == "RuYu" ? "真·颜如玉" : "殖民地书灵";
+            nameColor = item.speakerId == "Mo" ? new Color(0.55f, 0.72f, 0.9f) : new Color(0.85f, 0.72f, 0.42f);
+            typingTimer = 0f;
+            visibleChars = 0;
+            typedDone = false;
+            scrollPos = Vector2.zero;
+        }
+
+        private void ShowNext()
+        {
+            SpiritAnnounceItem next = SpiritAnnouncer.DequeueNext();
+            if (next == null) { Close(); return; }
+            item = next;
+            RefreshSpeaker();
+        }
+
         public override void DoWindowContents(Rect inRect)
         {
-            // 自动关闭
-            autoCloseTimer += Time.deltaTime;
-            if (autoCloseTimer > AutoCloseSeconds) { Close(); return; }
-
             float y = inRect.y;
 
-            // 标题
+            // 标题 + 下一条按钮（队列有货时）
             GUI.color = new Color(1f, 0.85f, 0.3f, 0.85f);
             Text.Font = GameFont.Tiny;
-            Widgets.Label(new Rect(inRect.x, y, inRect.width - 24f, 16f), "GoldenBooks_AnnTitle".Translate());
-            GUI.color = Color.white;
+            Widgets.Label(new Rect(inRect.x, y, inRect.width - 90f, 16f), "GoldenBooks_AnnTitle".Translate());
             Text.Font = GameFont.Small;
+            GUI.color = Color.white;
+            if (SpiritAnnouncer.QueueCount > 0)
+            {
+                if (Widgets.ButtonText(new Rect(inRect.xMax - 88f, y - 4f, 88f, 24f), "下一条 ▶")) { ShowNext(); return; }
+            }
             y += 18f;
 
             // 名字条
@@ -160,7 +196,7 @@ namespace GoldenBooksMod
 
             float contentH = inRect.yMax - y - 8f;
 
-            // 立绘
+            // 立绘：在场 pawn 用 PortraitsCache；否则 def.uiIcon（引擎加载，必命中）
             Rect portraitRect = new Rect(inRect.x, y, PortraitSize, Mathf.Min(PortraitSize, contentH));
             bool drewPortrait = false;
             if (item.speakerPawn != null && !item.speakerPawn.Destroyed)
@@ -168,14 +204,12 @@ namespace GoldenBooksMod
                 RenderTexture portrait = PortraitsCache.Get(item.speakerPawn, new Vector2(PortraitSize, PortraitSize), Rot4.South, new Vector3(0f, 0f, 0.3f), 2.2f);
                 if (portrait != null) { GUI.DrawTexture(portraitRect, portrait, ScaleMode.ScaleToFit); drewPortrait = true; }
             }
-            if (!drewPortrait)
+            if (!drewPortrait && item.speakerDef != null && item.speakerDef.uiIcon != null)
             {
-                string tex = item.speakerId == "Yan" ? "Things/Pawn/Animal/GoldenBooks_BookSpirit_Yanzhongzhong_south"
-                           : item.speakerId == "Mo" ? "Things/Pawn/Animal/GoldenBooks_BookSpirit_Zhixia_south"
-                           : item.speakerId == "Colonist" ? "Things/Pawn/Animal/GoldenBooks_BookSpirit_Colonist_south"
-                           : null;
-                Texture2D staticTex = tex != null ? ContentFinder<Texture2D>.Get(tex, false) : null;
-                if (staticTex != null) { GUI.color = Color.white; GUI.DrawTexture(portraitRect, staticTex, ScaleMode.ScaleToFit); drewPortrait = true; }
+                GUI.color = item.speakerDef.uiIconColor;
+                GUI.DrawTexture(portraitRect, item.speakerDef.uiIcon, ScaleMode.ScaleToFit);
+                GUI.color = Color.white;
+                drewPortrait = true;
             }
             if (drewPortrait) Widgets.DrawBox(portraitRect, 1);
 
@@ -199,6 +233,7 @@ namespace GoldenBooksMod
         public override void PostClose()
         {
             base.PostClose();
+            lastRect = windowRect; // 记住位置
             onClosed?.Invoke();
         }
     }

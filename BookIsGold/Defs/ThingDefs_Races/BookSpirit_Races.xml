@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <Defs>
 	<!-- 书灵物语：书灵种族（颜执中 / 颜知夏） -->
 	<!-- 仅由剧情事件生成：不入野外、不入势力、不进贸易 -->
@@ -87,6 +87,7 @@
 			<MeleeDodgeChance>60</MeleeDodgeChance>
 			<Wildness>0</Wildness>
 		</statBases>
+		<uiIconPath>Things/Pawn/Animal/GoldenBooks_BookSpirit_Yanzhongzhong_south</uiIconPath>
 		<uiIconScale>1.5</uiIconScale>
 	</ThingDef>
 
@@ -132,7 +133,10 @@
 			<drawSize>(1.1, 1.1)</drawSize>
 			<color>(210, 230, 255)</color>
 		</graphicData>
-		<comps>
+
+		<uiIconPath>Things/Pawn/Animal/GoldenBooks_BookSpirit_Zhixia_south</uiIconPath>
+		<uiIconColor>(210, 230, 255)</uiIconColor>
+		<uiIconScale>1.5</uiIconScale>		<comps>
 			<li Class="GoldenBooksMod.CompProperties_BookSpirit">
 				<auraHediff>GoldenBooks_NoiseStudyAura</auraHediff>
 				<waterHediff>GoldenBooks_SoakedBook</waterHediff>

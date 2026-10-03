@@ -20,6 +20,21 @@ namespace GoldenBooksMod
             Log.Message("[GoldenBooks] Debug: 已击杀书灵 " + target.LabelShort + "，验证化书流程");
         }
 
+        [DebugAction("书中自有黄金屋 (Golden Books)", "生成殖民地书灵 (Spawn Colony Book Spirit)", actionType = DebugActionType.Action, allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void DebugSpawnColonistSpirit()
+        {
+            Map map = Find.CurrentMap;
+            PawnKindDef kind = DefDatabase<PawnKindDef>.GetNamedSilentFail("GoldenBooks_BookSpirit_Colonist_Kind");
+            if (kind == null) { Log.Error("[GoldenBooks] 缺少 PawnKindDef"); return; }
+            Pawn spirit = PawnGenerator.GeneratePawn(new PawnGenerationRequest(kind, Faction.OfPlayer, forceGenerateNewPawn: true));
+            IntVec3 cell = UI.MouseCell();
+            if (!cell.Standable(map)) cell = CellFinder.RandomSpawnCellForPawnNear(UI.MouseCell(), map, 5);
+            spirit.Name = new NameTriple("", "书灵·测试学者", "");
+            GenSpawn.Spawn(spirit, cell, map);
+            GameComponent_BookWhispers.TryInjectRimTalkPersonas();
+            Log.Message("[GoldenBooks] Debug: 已在鼠标处生成 殖民地书灵");
+        }
+
         [DebugAction("书中自有黄金屋 (Golden Books)", "书灵·颜执中现身 (Spawn Yan Zhongzhong)", actionType = DebugActionType.Action, allowedGameStates = AllowedGameStates.PlayingOnMap)]
         private static void DebugSpawnExecutor()
         {

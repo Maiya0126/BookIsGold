@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <Defs>
 	<!-- 书灵物语：化灵之仪——殖民者书灵（课业大成后，高智识殖民者化灵） -->
 
@@ -12,6 +12,9 @@
 			<drawSize>(1.05, 1.05)</drawSize>
 			<color>(255, 224, 130)</color>
 		</graphicData>
+		<uiIconPath>Things/Pawn/Animal/GoldenBooks_BookSpirit_Colonist_south</uiIconPath>
+		<uiIconColor>(255, 224, 130)</uiIconColor>
+		<uiIconScale>1.5</uiIconScale>
 		<comps>
 			<li Class="GoldenBooksMod.CompProperties_BookSpirit">
 				<auraHediff>GoldenBooks_LectureAura</auraHediff>
