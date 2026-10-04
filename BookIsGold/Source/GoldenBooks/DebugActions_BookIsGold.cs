@@ -10,6 +10,13 @@ namespace GoldenBooksMod
     // --- 开发者模式调试按钮（书灵物语） ---
     public static class DebugActions_BookIsGold
     {
+        [DebugAction("书中自有黄金屋 (Golden Books)", "重置许愿冷却 (Reset Wish Cooldown)", actionType = DebugActionType.Action, allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void DebugResetWishCooldown()
+        {
+            GameComponent_WhisperWish.ResetCooldown();
+            Log.Message("[GoldenBooks] Debug: 许愿冷却已重置");
+        }
+
         [DebugAction("书中自有黄金屋 (Golden Books)", "击杀书灵测试 (Kill Spirit Test)", actionType = DebugActionType.Action, allowedGameStates = AllowedGameStates.PlayingOnMap)]
         private static void DebugKillSpiritTest()
         {

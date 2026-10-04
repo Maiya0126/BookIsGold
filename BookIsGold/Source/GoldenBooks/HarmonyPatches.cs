@@ -48,6 +48,8 @@ namespace GoldenBooksMod
         public int spiritAscendIntellect = 12;
         public int colonistSpiritLimit = 2;
         public int spiritAscendFragments = 5;
+        public bool whisperWishEnabled = true;
+        public int wishDailyLimit = 3;
         public int spiritAscendClassics = 1;
 
         public override void ExposeData()
@@ -80,6 +82,8 @@ namespace GoldenBooksMod
             Scribe_Values.Look(ref spiritAscendIntellect, "spiritAscendIntellect", 12);
             Scribe_Values.Look(ref colonistSpiritLimit, "colonistSpiritLimit", 2);
             Scribe_Values.Look(ref spiritAscendFragments, "spiritAscendFragments", 5);
+            Scribe_Values.Look(ref whisperWishEnabled, "whisperWishEnabled", true);
+            Scribe_Values.Look(ref wishDailyLimit, "wishDailyLimit", 3);
             Scribe_Values.Look(ref spiritAscendClassics, "spiritAscendClassics", 1);
             base.ExposeData();
         }

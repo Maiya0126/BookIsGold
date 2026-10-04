@@ -270,7 +270,10 @@ namespace GoldenBooksMod
         }
 
         // --- API 生成（OpenAI 兼容） ---
-        private static bool HasApiConfig()
+        public static string JsonEscapePublic(string s) => JsonEscape(s);
+
+        public static string ExtractJsonFieldPublic(string json, string field) => ExtractJsonField(json, field);
+        public static bool HasApiConfig()
         {
             if (GoldenBooksMod.settings.whisperProvider == 2) return true; // Player2 本地服务无需密钥
             return !string.IsNullOrEmpty(GoldenBooksMod.settings.whisperApiKey) &&
@@ -447,11 +450,20 @@ namespace GoldenBooksMod
         public override void DoWindowContents(Rect inRect)
         {
             Text.Font = GameFont.Medium;
-            Widgets.Label(new Rect(0f, 0f, inRect.width, 36f), "GoldenBooks_WspTitle".Translate());
+            Widgets.Label(new Rect(0f, 0f, inRect.width - 160f, 36f), "GoldenBooks_WspTitle".Translate());
             Text.Font = GameFont.Small;
             GUI.color = new Color(0.75f, 0.65f, 0.45f);
             Widgets.Label(new Rect(0f, 38f, inRect.width, 26f), "GoldenBooks_WspSubtitle".Translate());
             GUI.color = Color.white;
+            // 书灵许愿入口
+            if (GoldenBooksMod.settings.whisperWishEnabled &&
+                Widgets.ButtonText(new Rect(inRect.xMax - 150f, 2f, 150f, 32f), "GoldenBooks_WishBtn".Translate()))
+            {
+                if (GameComponent_WhisperWish.CanWishToday())
+                    Find.WindowStack.Add(new Window_SpiritWish());
+                else
+                    Messages.Message("GoldenBooks_WishCooldown".Translate(GoldenBooksMod.settings.wishDailyLimit), MessageTypeDefOf.RejectInput);
+            }
 
             GameComponent_BookWhispers comp = GameComponent_BookWhispers.Get;
             List<WhisperEntry> list = comp?.entries;

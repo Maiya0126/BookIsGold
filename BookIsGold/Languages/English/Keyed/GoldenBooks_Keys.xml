@@ -122,4 +122,22 @@
 	<GoldenBooks_Provider_Player2>Player2 (local app)</GoldenBooks_Provider_Player2>	<GoldenBooks_AnnTitle>Spirit Broadcast · Golden Books</GoldenBooks_AnnTitle>
 	<GoldenBooks_AnnToggle>Spirit broadcast popups</GoldenBooks_AnnToggle>
 	<GoldenBooks_AnnToggleTip>Pop up a spirit-portrait broadcast window on events (raids, deaths, research, spirit-book, recall, ascension).</GoldenBooks_AnnToggleTip>
-</LanguageData>
+	<GoldenBooks_WishBtn>Make a Wish</GoldenBooks_WishBtn>
+	<GoldenBooks_WishTitle>Spirit Wishes</GoldenBooks_WishTitle>
+	<GoldenBooks_WishSubtitle>Speak your wish — today's spirit decides.</GoldenBooks_WishSubtitle>
+	<GoldenBooks_WishStatus>Wishes today: {0}/{1} · Next costs: {2}</GoldenBooks_WishStatus>
+	<GoldenBooks_WishFree>Free wish:</GoldenBooks_WishFree>
+	<GoldenBooks_WishSend>Wish</GoldenBooks_WishSend>
+	<GoldenBooks_WishFreeHint>Configure an API to unlock free-form wishes — the spirits will interpret and arrange them.</GoldenBooks_WishFreeHint>
+	<GoldenBooks_WishWaiting>The spirit is considering...</GoldenBooks_WishWaiting>
+	<GoldenBooks_WishHint>Pick a wish above, or (with an API configured) write your own. Wishes are recorded in the daily Book Whispers.</GoldenBooks_WishHint>
+	<GoldenBooks_WishCooldown>Today's wishes are used up (daily limit {0}). Academy rules — come back tomorrow.</GoldenBooks_WishCooldown>
+	<GoldenBooks_WishNoFragments>Not enough book fragments to pay for this wish.</GoldenBooks_WishNoFragments>
+	<GoldenBooks_WishCalm>{0}: A peaceful day is a gift too.</GoldenBooks_WishCalm>
+	<GoldenBooks_WishExecuteFail>The arranged event could not take place (conditions may not allow it).</GoldenBooks_WishExecuteFail>
+	<GoldenBooks_WishInspirationLabel>The Spirit's Epiphany</GoldenBooks_WishInspirationLabel>
+	<GoldenBooks_WishInspirationText>The spirit passes a thread of thought into {0}'s mind — {1}!</GoldenBooks_WishInspirationText>
+	<GoldenBooks_WishUiTitle>Spirit Wishes</GoldenBooks_WishUiTitle>
+	<GoldenBooks_WishToggle>Spirit wish system</GoldenBooks_WishToggle>
+	<GoldenBooks_WishToggleTip>When disabled, the "Make a Wish" entry is hidden.</GoldenBooks_WishToggleTip>
+	<GoldenBooks_WishLimit>Daily wish limit</GoldenBooks_WishLimit></LanguageData>

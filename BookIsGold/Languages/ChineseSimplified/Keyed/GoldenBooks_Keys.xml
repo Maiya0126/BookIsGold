@@ -129,4 +129,22 @@
 	<GoldenBooks_Provider_Player2>Player2（本地服务）</GoldenBooks_Provider_Player2>	<GoldenBooks_AnnTitle>书灵播报 · 书中自有黄金屋</GoldenBooks_AnnTitle>
 	<GoldenBooks_AnnToggle>书灵播报弹窗</GoldenBooks_AnnToggle>
 	<GoldenBooks_AnnToggleTip>事件发生时弹出书灵立绘播报窗（袭击/死亡/研究/化书/召还/化灵等）。</GoldenBooks_AnnToggleTip>
-</LanguageData>
+	<GoldenBooks_WishBtn>向书灵许愿</GoldenBooks_WishBtn>
+	<GoldenBooks_WishTitle>书灵许愿</GoldenBooks_WishTitle>
+	<GoldenBooks_WishSubtitle>说出你的愿望——由今日执笔的书灵定夺。</GoldenBooks_WishSubtitle>
+	<GoldenBooks_WishStatus>今日已许 {0}/{1} 次 · 下一次消耗：{2}</GoldenBooks_WishStatus>
+	<GoldenBooks_WishFree>自由许愿：</GoldenBooks_WishFree>
+	<GoldenBooks_WishSend>许愿</GoldenBooks_WishSend>
+	<GoldenBooks_WishFreeHint>配置 API 后可用「自由许愿」，由书灵解析你的愿望并安排事件。</GoldenBooks_WishFreeHint>
+	<GoldenBooks_WishWaiting>书灵正在思量……</GoldenBooks_WishWaiting>
+	<GoldenBooks_WishHint>选择上方的愿望，或（配置 API 后）直接写下你的愿望。许愿将写入今日《书语》。</GoldenBooks_WishHint>
+	<GoldenBooks_WishCooldown>今日许愿次数已用完（每日上限 {0} 次）。书院的规矩——明天再来。</GoldenBooks_WishCooldown>
+	<GoldenBooks_WishNoFragments>残卷不足，无法支付许愿消耗。</GoldenBooks_WishNoFragments>
+	<GoldenBooks_WishCalm>{0}：平安一日，亦是一种赐予。</GoldenBooks_WishCalm>
+	<GoldenBooks_WishExecuteFail>事件安排未能成行（可能当前条件不适合）。</GoldenBooks_WishExecuteFail>
+	<GoldenBooks_WishInspirationLabel>书灵的顿悟</GoldenBooks_WishInspirationLabel>
+	<GoldenBooks_WishInspirationText>书灵将一缕心念渡入 {0} 眉间——{1}！</GoldenBooks_WishInspirationText>
+	<GoldenBooks_WishUiTitle>书灵许愿</GoldenBooks_WishUiTitle>
+	<GoldenBooks_WishToggle>书灵许愿系统</GoldenBooks_WishToggle>
+	<GoldenBooks_WishToggleTip>关闭后「向书灵许愿」入口隐藏。</GoldenBooks_WishToggleTip>
+	<GoldenBooks_WishLimit>每日许愿次数上限</GoldenBooks_WishLimit></LanguageData>

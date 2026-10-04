@@ -80,6 +80,8 @@
     <Compile Include="Source\GoldenBooks\WhisperApi.cs" />
     <Compile Include="Source\GoldenBooks\Ascension.cs" />
     <Compile Include="Source\GoldenBooks\SpiritAnnouncer.cs" />
+    <Compile Include="Source\GoldenBooks\SpiritWish.cs" />
+    <Compile Include="Source\GoldenBooks\SpiritWishWindow.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="About\Preview.png" />
