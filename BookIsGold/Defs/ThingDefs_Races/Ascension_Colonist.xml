@@ -10,10 +10,10 @@
 			<texPath>Things/Pawn/Animal/GoldenBooks_BookSpirit_Colonist</texPath>
 			<graphicClass>Graphic_Multi</graphicClass>
 			<drawSize>(1.05, 1.05)</drawSize>
-			<color>(255, 224, 130)</color>
+			<color>(150, 215, 195)</color>
 		</graphicData>
 		<uiIconPath>Things/Pawn/Animal/GoldenBooks_BookSpirit_Colonist_south</uiIconPath>
-		<uiIconColor>(255, 224, 130)</uiIconColor>
+		<uiIconColor>(150, 215, 195)</uiIconColor>
 		<uiIconScale>1.5</uiIconScale>
 		<comps>
 			<li Class="GoldenBooksMod.CompProperties_BookSpirit">
@@ -48,7 +48,7 @@
 					<texPath>Things/Pawn/Animal/GoldenBooks_BookSpirit_Colonist</texPath>
 					<graphicClass>Graphic_Multi</graphicClass>
 					<drawSize>(1.05, 1.05)</drawSize>
-					<color>(255, 224, 130)</color>
+					<color>(150, 215, 195)</color>
 				</bodyGraphicData>
 			</li>
 		</lifeStages>
@@ -61,7 +61,7 @@
 		<graphicData>
 			<texPath>Things/Item/Book/TextBook</texPath>
 			<graphicClass>Graphic_Random</graphicClass>
-			<color>(230, 200, 120)</color>
+			<color>(150, 215, 195)</color>
 			<drawSize>0.8</drawSize>
 		</graphicData>
 		<statBases>
