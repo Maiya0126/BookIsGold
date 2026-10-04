@@ -47,7 +47,7 @@ namespace GoldenBooksMod
             {
                 case "raidBig": return zh ? "来一场大袭击" : "A big raid";
                 case "raidSmall": return zh ? "来一场小袭击" : "A small raid";
-                case "manhunter": return zh ? "敲击兽群狂暴" : "Manhunter pack";
+                case "manhunter": return zh ? "随机大型兽群来袭" : "Aggressive beast pack";
                 case "caravan": return zh ? "商队来访" : "Trade caravan";
                 case "visitor": return zh ? "访客到访" : "Visitors";
                 case "wanderer": return zh ? "新人加入" : "A wanderer joins";
