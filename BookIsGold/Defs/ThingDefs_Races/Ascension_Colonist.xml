@@ -60,7 +60,7 @@
 		<description>化灵书灵化作的书册，浅金封面，写满他们自己名字的故事。\n\n书中之人并未消散——将其置于劝学台，辅以古籍残卷，即可召还。\n\n“自今日始，你亦是书中人。——砚翁”</description>
 		<graphicData>
 			<texPath>Things/Item/Book/TextBook</texPath>
-			<graphicClass>Graphic_Single</graphicClass>
+			<graphicClass>Graphic_Random</graphicClass>
 			<color>(230, 200, 120)</color>
 			<drawSize>0.8</drawSize>
 		</graphicData>
