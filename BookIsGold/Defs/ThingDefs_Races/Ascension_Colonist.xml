@@ -8,13 +8,9 @@
 		<description>由殖民地学者化灵而成的书页精灵，浅金色的册页承载着他们自己写下的故事。\n\n【光环·讲学】周围9.9格内殖民者：研究速度+15%、学习+20%、心情+3\n【书灵之躯】血量低但闪避极高，脱战缓慢再生；极易燃——务必远离火源与雨水！\n\n由「化灵之仪」诞生，死亡后化作书灵之书，可经劝学台召还。</description>
 		<graphicData>
 			<texPath>Things/Pawn/Animal/GoldenBooks_BookSpirit_Colonist</texPath>
-			<graphicClass>Graphic_Multi</graphicClass>
 			<drawSize>(1.05, 1.05)</drawSize>
 			<color>(150, 215, 195)</color>
 		</graphicData>
-		<uiIconPath>Things/Pawn/Animal/GoldenBooks_BookSpirit_Colonist_south</uiIconPath>
-		<uiIconColor>(150, 215, 195)</uiIconColor>
-		<uiIconScale>1.5</uiIconScale>
 		<comps>
 			<li Class="GoldenBooksMod.CompProperties_BookSpirit">
 				<auraHediff>GoldenBooks_LectureAura</auraHediff>
@@ -35,7 +31,7 @@
 		</tools>
 	</ThingDef>
 
-	<PawnKindDef ParentName="AnimalKindBase">
+	<PawnKindDef>
 		<defName>GoldenBooks_BookSpirit_Colonist_Kind</defName>
 		<label>殖民地书灵</label>
 		<race>GoldenBooks_BookSpirit_Colonist</race>
@@ -46,7 +42,6 @@
 				<label>殖民地书灵</label>
 				<bodyGraphicData>
 					<texPath>Things/Pawn/Animal/GoldenBooks_BookSpirit_Colonist</texPath>
-					<graphicClass>Graphic_Multi</graphicClass>
 					<drawSize>(1.05, 1.05)</drawSize>
 					<color>(150, 215, 195)</color>
 				</bodyGraphicData>
