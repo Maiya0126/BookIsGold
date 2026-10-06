@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-	<!-- 书灵物语：书灵种族（颜执中 / 颜知夏） -->
+	<!-- 书灵物语：书灵种族（颜执中 / 颜知夏）——人类化书灵 -->
 	<!-- 仅由剧情事件生成：不入野外、不入势力、不进贸易 -->
+	<!-- Humanlike 智力：可分配工作、RimTalk 对话、殖民者栏管理 -->
 
 	<ThingDef Name="GoldenBooks_BookSpiritBase" Abstract="True">
 		<category>Pawn</category>
@@ -23,51 +24,45 @@
 			<li>ITab_Pawn_Health</li>
 			<li>ITab_Pawn_Needs</li>
 			<li>ITab_Pawn_Character</li>
-			<li>ITab_Pawn_Training</li>
 			<li>ITab_Pawn_Social</li>
 			<li>ITab_Pawn_Gear</li>
 			<li>ITab_Pawn_Log</li>
+			<li>ITab_Pawn_FormingCaravan</li>
 		</inspectorTabs>
 		<race>
+			<!-- 关键：Humanlike 智力 → 殖民者行为（工作/RimTalk/心情系统） -->
+			<intelligence>Humanlike</intelligence>
+			<thinkTreeMain>Humanlike</thinkTreeMain>
+			<thinkTreeConstant>HumanlikeConstant</thinkTreeConstant>
+			<!-- 保持 Animal 渲染树 → 书页精灵外观 -->
 			<renderTree>Animal</renderTree>
-			<thinkTreeMain>Animal</thinkTreeMain>
-			<thinkTreeConstant>AnimalConstant</thinkTreeConstant>
 			<hasGenders>false</hasGenders>
-			<trainability>Advanced</trainability>
-			<petness>1.0</petness>
-			<herdAnimal>false</herdAnimal>
-			<predator>false</predator>
-			<canBePredatorPrey>false</canBePredatorPrey>
-			<body>QuadrupedAnimalWithPawsAndTail</body>
+			<!-- Human body → 人类医疗/健康系统兼容 -->
+			<body>Human</body>
 			<baseBodySize>0.45</baseBodySize>
 			<baseHungerRate>0.02</baseHungerRate>
 			<baseHealthScale>0.35</baseHealthScale>
-			<foodType>VegetarianRoughAnimal</foodType>
+			<foodType>OmnivoreHuman</foodType>
 			<lifeExpectancy>20</lifeExpectancy>
+			<makesFootprints>true</makesFootprints>
+			<nameCategory>HumanStandard</nameCategory>
 			<deathAction Class="DeathActionProperties_Vanish">
 				<workerClass>DeathActionWorker_Vanish</workerClass>
 			</deathAction>
 			<lifeStageAges>
 				<li>
-					<def>AnimalAdult</def>
+					<def>HumanlikeAdult</def>
 					<minAge>0</minAge>
 				</li>
 			</lifeStageAges>
 			<soundMeleeHitPawn>Pawn_Melee_SmallScratch_HitPawn</soundMeleeHitPawn>
 			<soundMeleeHitBuilding>Pawn_Melee_SmallScratch_HitBuilding</soundMeleeHitBuilding>
 			<soundMeleeMiss>Pawn_Melee_SmallScratch_Miss</soundMeleeMiss>
-			<headPosPerRotation>
-				<li>(0.0, 0, 0.07)</li>
-				<li>(0.19, 0, 0)</li>
-				<li>(0.0, 0, -0.07)</li>
-				<li>(-0.19, 0, 0)</li>
-			</headPosPerRotation>
 		</race>
 		<recipes>
 			<li>Euthanize</li>
 			<li>Anesthetize</li>
 			<li>CureScaria</li>
-			<li>Sterilize</li>
 		</recipes>
 		<statBases>
 			<Mass>0.8</Mass>
@@ -82,7 +77,6 @@
 			<ArmorRating_Heat>-0.20</ArmorRating_Heat>
 			<PainShockThreshold>0.9</PainShockThreshold>
 			<MeleeDodgeChance>60</MeleeDodgeChance>
-			<Wildness>0</Wildness>
 		</statBases>
 	</ThingDef>
 
@@ -90,7 +84,7 @@
 	<ThingDef ParentName="GoldenBooks_BookSpiritBase">
 		<defName>GoldenBooks_BookSpirit_Yanzhongzhong</defName>
 		<label>书灵·颜执中</label>
-		<description>半卷厚重的鎏金古书，封皮磨旧，书脊以金线修补过十几次。前朝书院山长颜执中，号砚翁——化灵近千年，恪守“书不曾欺人”的旧训。\n\n【光环·讲学】周围9.9格内殖民者：研究速度+15%、学习+20%、心情+3\n【书灵之躯】血量低但闪避极高，脱战缓慢再生；极易燃——务必远离火源与雨水！\n\n他只由剧情事件降临，不会出现在野外。</description>
+		<description>半卷厚重的鎏金古书，封皮磨旧，书脊以金线修补过十几次。前朝书院山长颜执中，号砚翁——化灵近千年，恪守"书不曾欺人"的旧训。\n\n【光环·讲学】周围9.9格内殖民者：研究速度+15%、学习+20%、心情+3\n【书灵之躯】血量低但闪避极高，脱战缓慢再生；极易燃——务必远离火源与雨水！\n\n他只由剧情事件降临，不会出现在野外。</description>
 		<comps>
 			<li Class="GoldenBooksMod.CompProperties_BookSpirit">
 				<auraHediff>GoldenBooks_LectureAura</auraHediff>
@@ -115,7 +109,7 @@
 	<ThingDef ParentName="GoldenBooks_BookSpiritBase">
 		<defName>GoldenBooks_BookSpirit_Zhixia</defName>
 		<label>书灵·颜知夏</label>
-		<description>一册轻巧的册页小书，页角翘起，夹着糖纸、票根和不知哪个时代的小纸片。颜执中的孙女颜知夏，乳名墨叽——偷学秘术的天才，永远十二岁半。\n\n【光环·闹书房】周围9.9格内殖民者：心情+8、学习+10%、精神崩溃阈值-5%\n【书灵之躯】血量低但闪避极高，脱战缓慢再生；极易燃——务必远离火源与雨水！\n\n她只由剧情事件降临，不会出现在野外。</description>
+		<description>一册轻巧的册页小书，页角翘起，夹着糖纸、票根和不知哪个时代的小纸片。颜执中的孙女颜知夏，乳名墨叽——偷学秘术的天才，永远十九岁。\n\n【光环·闹书房】周围9.9格内殖民者：心情+8、学习+10%、精神崩溃阈值-5%\n【书灵之躯】血量低但闪避极高，脱战缓慢再生；极易燃——务必远离火源与雨水！\n\n她只由剧情事件降临，不会出现在野外。</description>
 		<comps>
 			<li Class="GoldenBooksMod.CompProperties_BookSpirit">
 				<auraHediff>GoldenBooks_NoiseStudyAura</auraHediff>

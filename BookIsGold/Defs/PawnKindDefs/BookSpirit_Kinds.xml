@@ -1,12 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-	<!-- 书灵物语：书灵 PawnKind（生成用，不入野外/势力） -->
+	<!-- 书灵物语：书灵 PawnKind（人类化，独立定义照变形记工作实例） -->
 
 	<PawnKindDef>
 		<defName>GoldenBooks_BookSpirit_Yanzhongzhong_Kind</defName>
 		<label>书灵·颜执中</label>
 		<race>GoldenBooks_BookSpirit_Yanzhongzhong</race>
-		<ecoSystemWeight>0</ecoSystemWeight>
 		<combatPower>80</combatPower>
 		<lifeStages>
 			<li>
@@ -24,7 +23,6 @@
 		<defName>GoldenBooks_BookSpirit_Zhixia_Kind</defName>
 		<label>书灵·颜知夏</label>
 		<race>GoldenBooks_BookSpirit_Zhixia</race>
-		<ecoSystemWeight>0</ecoSystemWeight>
 		<combatPower>60</combatPower>
 		<lifeStages>
 			<li>
@@ -33,6 +31,23 @@
 					<texPath>Things/Pawn/Animal/GoldenBooks_BookSpirit_Zhixia</texPath>
 					<drawSize>(1.1, 1.1)</drawSize>
 					<color>(210, 230, 255)</color>
+				</bodyGraphicData>
+			</li>
+		</lifeStages>
+	</PawnKindDef>
+
+	<PawnKindDef>
+		<defName>GoldenBooks_BookSpirit_Colonist_Kind</defName>
+		<label>殖民地书灵</label>
+		<race>GoldenBooks_BookSpirit_Colonist</race>
+		<combatPower>70</combatPower>
+		<lifeStages>
+			<li>
+				<label>殖民地书灵</label>
+				<bodyGraphicData>
+					<texPath>Things/Pawn/Animal/GoldenBooks_BookSpirit_Colonist</texPath>
+					<drawSize>(1.05, 1.05)</drawSize>
+					<color>(150, 215, 195)</color>
 				</bodyGraphicData>
 			</li>
 		</lifeStages>
