@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using RimWorld;
 using UnityEngine;
@@ -88,7 +88,7 @@ namespace GoldenBooksMod
         {
             PawnKindDef kind = DefDatabase<PawnKindDef>.GetNamedSilentFail("GoldenBooks_BookSpirit_Yanzhongzhong_Kind");
             if (kind == null || near == null || near.Map == null) return null;
-            Pawn spirit = PawnGenerator.GeneratePawn(new PawnGenerationRequest(kind, Faction.OfPlayer, forceGenerateNewPawn: true));
+            Pawn spirit = PawnGenerator.GeneratePawn(new PawnGenerationRequest(kind, Faction.OfPlayer, forceGenerateNewPawn: true, fixedBiologicalAge: 67, fixedChronologicalAge: 67));
             IntVec3 cell = CellFinder.RandomSpawnCellForPawnNear(near.Position, near.Map, 4);
             GenSpawn.Spawn(spirit, cell, near.Map);
             return spirit;
@@ -137,7 +137,7 @@ namespace GoldenBooksMod
             PawnKindDef kind = DefDatabase<PawnKindDef>.GetNamedSilentFail("GoldenBooks_BookSpirit_Zhixia_Kind");
             if (kind != null && map != null)
             {
-                Pawn spirit = PawnGenerator.GeneratePawn(new PawnGenerationRequest(kind, Faction.OfPlayer, forceGenerateNewPawn: true));
+                Pawn spirit = PawnGenerator.GeneratePawn(new PawnGenerationRequest(kind, Faction.OfPlayer, forceGenerateNewPawn: true, fixedBiologicalAge: 67, fixedChronologicalAge: 67));
                 IntVec3 cell = DropCellFinder.TradeDropSpot(map);
                 GenSpawn.Spawn(spirit, cell, map);
                 zhixia = spirit;

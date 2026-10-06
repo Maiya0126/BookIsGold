@@ -38,15 +38,12 @@
 			<herdAnimal>false</herdAnimal>
 			<predator>false</predator>
 			<canBePredatorPrey>false</canBePredatorPrey>
-			<hediffGiverSets>
-				<li>OrganicStandard</li>
-			</hediffGiverSets>
 			<body>QuadrupedAnimalWithPawsAndTail</body>
 			<baseBodySize>0.45</baseBodySize>
 			<baseHungerRate>0.02</baseHungerRate>
 			<baseHealthScale>0.35</baseHealthScale>
 			<foodType>VegetarianRoughAnimal</foodType>
-			<lifeExpectancy>9000</lifeExpectancy>
+			<lifeExpectancy>20</lifeExpectancy>
 			<deathAction Class="DeathActionProperties_Vanish">
 				<workerClass>DeathActionWorker_Vanish</workerClass>
 			</deathAction>
