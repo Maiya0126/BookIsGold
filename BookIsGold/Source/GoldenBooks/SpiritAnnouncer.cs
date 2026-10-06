@@ -130,7 +130,6 @@ namespace GoldenBooksMod
         // 立绘缓存（懒加载）
         private static Texture2D _yanPortrait;
         private static Texture2D _moPortrait;
-        private static Texture2D _colonistPortrait;
 
         private static Texture2D GetPortrait(string speakerId)
         {
@@ -142,9 +141,6 @@ namespace GoldenBooksMod
                 case "Mo":
                     if (_moPortrait == null) _moPortrait = ContentFinder<Texture2D>.Get("UI/Lihui/zhixia_lihui", false);
                     return _moPortrait;
-                case "Colonist":
-                    if (_colonistPortrait == null) _colonistPortrait = ContentFinder<Texture2D>.Get("UI/Lihui/zhixia_lihui", false);
-                    return _colonistPortrait;
                 default: return null;
             }
         }
