@@ -1,55 +1,46 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-	<!-- 书灵物语：书灵 PawnKind（人类化，独立定义照变形记工作实例） -->
+	<!-- 书灵物语：书灵 PawnKind（标准 Human 种族 + 书灵身份） -->
 
-	<PawnKindDef ParentName="AnimalKindBase">
+	<PawnKindDef ParentName="Colonist">
 		<defName>GoldenBooks_BookSpirit_Yanzhongzhong_Kind</defName>
 		<label>书灵·颜执中</label>
-		<race>GoldenBooks_BookSpirit_Yanzhongzhong</race>
+		<race>Human</race>
 		<combatPower>80</combatPower>
-		<lifeStages>
+		<backstoryFilters>
 			<li>
-				<label>书灵·颜执中</label>
-				<bodyGraphicData>
-					<texPath>Things/Pawn/Animal/GoldenBooks_BookSpirit_Yanzhongzhong</texPath>
-					<drawSize>(1.3, 1.3)</drawSize>
-					<color>(255, 235, 180)</color>
-				</bodyGraphicData>
+				<categories>
+					<li>Offworld</li>
+				</categories>
 			</li>
-		</lifeStages>
+		</backstoryFilters>
 	</PawnKindDef>
 
-	<PawnKindDef ParentName="AnimalKindBase">
+	<PawnKindDef ParentName="Colonist">
 		<defName>GoldenBooks_BookSpirit_Zhixia_Kind</defName>
 		<label>书灵·颜知夏</label>
-		<race>GoldenBooks_BookSpirit_Zhixia</race>
+		<race>Human</race>
 		<combatPower>60</combatPower>
-		<lifeStages>
+		<backstoryFilters>
 			<li>
-				<label>书灵·颜知夏</label>
-				<bodyGraphicData>
-					<texPath>Things/Pawn/Animal/GoldenBooks_BookSpirit_Zhixia</texPath>
-					<drawSize>(1.1, 1.1)</drawSize>
-					<color>(210, 230, 255)</color>
-				</bodyGraphicData>
+				<categories>
+					<li>Offworld</li>
+				</categories>
 			</li>
-		</lifeStages>
+		</backstoryFilters>
 	</PawnKindDef>
 
-	<PawnKindDef ParentName="AnimalKindBase">
+	<PawnKindDef ParentName="Colonist">
 		<defName>GoldenBooks_BookSpirit_Colonist_Kind</defName>
 		<label>殖民地书灵</label>
-		<race>GoldenBooks_BookSpirit_Colonist</race>
+		<race>Human</race>
 		<combatPower>70</combatPower>
-		<lifeStages>
+		<backstoryFilters>
 			<li>
-				<label>殖民地书灵</label>
-				<bodyGraphicData>
-					<texPath>Things/Pawn/Animal/GoldenBooks_BookSpirit_Colonist</texPath>
-					<drawSize>(1.05, 1.05)</drawSize>
-					<color>(150, 215, 195)</color>
-				</bodyGraphicData>
+				<categories>
+					<li>Offworld</li>
+				</categories>
 			</li>
-		</lifeStages>
+		</backstoryFilters>
 	</PawnKindDef>
 </Defs>

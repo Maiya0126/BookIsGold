@@ -1,78 +1,97 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-	<!-- 书灵物语：化灵之仪——殖民者书灵（课业大成后，高智识殖民者化灵） -->
+	<!-- 书灵物语：殖民地书灵——使用标准 Human 种族 -->
+	<!-- 书灵特征通过 SpiritVitality hediff + BookSpirit comp 在生成后添加 -->
 
-	<ThingDef ParentName="GoldenBooks_BookSpiritBase">
+	<ThingDef ParentName="BasePawn">
 		<defName>GoldenBooks_BookSpirit_Colonist</defName>
 		<label>殖民地书灵</label>
-		<description>由殖民地学者化灵而成的书页精灵，浅金色的册页承载着他们自己写下的故事。\n\n【光环·讲学】周围9.9格内殖民者：研究速度+15%、学习+20%、心情+3\n【书灵之躯】血量低但闪避极高，脱战缓慢再生；极易燃——务必远离火源与雨水！\n\n由「化灵之仪」诞生，死亡后化作书灵之书，可经劝学台召还。</description>
-		<graphicData>
-			<texPath>Things/Pawn/Animal/GoldenBooks_BookSpirit_Colonist</texPath>
-			<drawSize>(1.05, 1.05)</drawSize>
-			<color>(150, 215, 195)</color>
-		</graphicData>
+		<description>由殖民地学者化灵而成的书灵。不食不眠，以读书人的心念为生。\n\n【光环·讲学】周围9.9格内殖民者：研究速度+15%、学习+20%、心情+3\n\n由「化灵之仪」诞生，死亡后化作书灵之书，可经劝学台召还。</description>
+		<altitudeLayer>Pawn</altitudeLayer>
+		<category>Pawn</category>
+		<thingClass>Pawn</thingClass>
+		<selectable>true</selectable>
+		<hasTooltip>true</hasTooltip>
+		<drawGUIOverlay>true</drawGUIOverlay>
+		<drawHighlight>true</drawHighlight>
+		<useHitPoints>false</useHitPoints>
+		<tickerType>Normal</tickerType>
+		<comps>
+			<li>
+				<compClass>CompAttachBase</compClass>
+			</li>
+		</comps>
+		<inspectorTabs>
+			<li>ITab_Pawn_Health</li>
+			<li>ITab_Pawn_Needs</li>
+			<li>ITab_Pawn_Character</li>
+			<li>ITab_Pawn_Social</li>
+			<li>ITab_Pawn_Gear</li>
+			<li>ITab_Pawn_Log</li>
+			<li>ITab_Pawn_FormingCaravan</li>
+		</inspectorTabs>
+		<race>
+			<intelligence>Humanlike</intelligence>
+			<renderTree>Humanlike</renderTree>
+			<thinkTreeMain>Humanlike</thinkTreeMain>
+			<thinkTreeConstant>HumanlikeConstant</thinkTreeConstant>
+			<hasGenders>false</hasGenders>
+			<makesFootprints>true</makesFootprints>
+			<nameCategory>HumanStandard</nameCategory>
+			<bloodDef>Filth_Blood</bloodDef>
+			<body>Human</body>
+			<baseBodySize>1</baseBodySize>
+			<baseHungerRate>0.02</baseHungerRate>
+			<baseHealthScale>1</baseHealthScale>
+			<foodType>OmnivoreHuman</foodType>
+			<lifeExpectancy>20</lifeExpectancy>
+			<deathAction Class="DeathActionProperties_Vanish">
+				<workerClass>DeathActionWorker_Vanish</workerClass>
+			</deathAction>
+			<lifeStageAges>
+				<li>
+					<def>HumanlikeAdult</def>
+					<minAge>0</minAge>
+				</li>
+			</lifeStageAges>
+		</race>
+		<recipes>
+			<li>Euthanize</li>
+			<li>Anesthetize</li>
+			<li>CureScaria</li>
+		</recipes>
+		<statBases>
+			<Mass>60</Mass>
+			<Flammability>0.7</Flammability>
+			<ToxicResistance>1.0</ToxicResistance>
+			<MoveSpeed>4.6</MoveSpeed>
+			<MarketValue>8000</MarketValue>
+			<ComfyTemperatureMin>-60</ComfyTemperatureMin>
+			<ComfyTemperatureMax>45</ComfyTemperatureMax>
+			<ArmorRating_Sharp>0.5</ArmorRating_Sharp>
+			<ArmorRating_Blunt>0.5</ArmorRating_Blunt>
+			<ArmorRating_Heat>0.3</ArmorRating_Heat>
+			<PainShockThreshold>0.9</PainShockThreshold>
+		</statBases>
 		<comps>
 			<li Class="GoldenBooksMod.CompProperties_BookSpirit">
 				<auraHediff>GoldenBooks_LectureAura</auraHediff>
 				<waterHediff>GoldenBooks_SoakedBook</waterHediff>
 			</li>
 		</comps>
-		<tools>
-			<li>
-				<label>页击</label>
-				<capacities>
-					<li>Blunt</li>
-				</capacities>
-				<power>3.5</power>
-				<cooldownTime>2</cooldownTime>
-				<linkedBodyPartsGroup>HeadAttackTool</linkedBodyPartsGroup>
-				<ensureLinkedBodyPartsGroupAlwaysUsable>true</ensureLinkedBodyPartsGroupAlwaysUsable>
-			</li>
-		</tools>
 	</ThingDef>
 
-	<PawnKindDef>
+	<PawnKindDef ParentName="Colonist">
 		<defName>GoldenBooks_BookSpirit_Colonist_Kind</defName>
 		<label>殖民地书灵</label>
 		<race>GoldenBooks_BookSpirit_Colonist</race>
-		<ecoSystemWeight>0</ecoSystemWeight>
 		<combatPower>70</combatPower>
-		<lifeStages>
+		<backstoryFilters>
 			<li>
-				<label>殖民地书灵</label>
-				<bodyGraphicData>
-					<texPath>Things/Pawn/Animal/GoldenBooks_BookSpirit_Colonist</texPath>
-					<drawSize>(1.05, 1.05)</drawSize>
-					<color>(150, 215, 195)</color>
-				</bodyGraphicData>
+				<categories>
+					<li>Offworld</li>
+				</categories>
 			</li>
-		</lifeStages>
+		</backstoryFilters>
 	</PawnKindDef>
-
-	<ThingDef ParentName="ResourceBase">
-		<defName>GoldenBooks_SpiritBook_Colonist</defName>
-		<label>书灵之书</label>
-		<description>化灵书灵化作的书册，浅金封面，写满他们自己名字的故事。\n\n书中之人并未消散——将其置于劝学台，辅以古籍残卷，即可召还。\n\n“自今日始，你亦是书中人。——砚翁”</description>
-		<graphicData>
-			<texPath>Things/Item/Book/TextBook</texPath>
-			<graphicClass>Graphic_Random</graphicClass>
-			<color>(150, 215, 195)</color>
-			<drawSize>0.8</drawSize>
-		</graphicData>
-		<statBases>
-			<MarketValue>2200</MarketValue>
-			<Mass>0.5</Mass>
-			<Beauty>3</Beauty>
-		</statBases>
-		<thingCategories>
-			<li>Items</li>
-		</thingCategories>
-		<stackLimit>1</stackLimit>
-		<tradeability>None</tradeability>
-		<comps>
-			<li Class="GoldenBooksMod.GoldenBooksCompProperties_SpiritBookData">
-				<compClass>GoldenBooksMod.GoldenBooksComp_SpiritBookData</compClass>
-			</li>
-		</comps>
-	</ThingDef>
 </Defs>

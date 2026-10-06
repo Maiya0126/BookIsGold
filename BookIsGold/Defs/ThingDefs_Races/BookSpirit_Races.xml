@@ -1,10 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-	<!-- 书灵物语：书灵种族（颜执中 / 颜知夏）——人类化书灵 -->
-	<!-- 仅由剧情事件生成：不入野外、不入势力、不进贸易 -->
-	<!-- Humanlike 智力：可分配工作、RimTalk 对话、殖民者栏管理 -->
+	<!-- 书灵物语：书灵种族（颜执中 / 颜知夏）——使用标准 Human 种族 + 书灵特征 Hediff -->
+	<!-- 外观：标准人类模型（可靠性优先），身份通过名字/人格/Hediff 体现 -->
 
-	<ThingDef Name="GoldenBooks_BookSpiritBase" Abstract="True">
+	<ThingDef Name="GoldenBooks_BookSpiritBase" Abstract="True" ParentName="BasePawn">
 		<category>Pawn</category>
 		<thingClass>Pawn</thingClass>
 		<altitudeLayer>Pawn</altitudeLayer>
@@ -30,22 +29,20 @@
 			<li>ITab_Pawn_FormingCaravan</li>
 		</inspectorTabs>
 		<race>
-			<!-- 关键：Humanlike 智力 → 殖民者行为（工作/RimTalk/心情系统） -->
 			<intelligence>Humanlike</intelligence>
+			<renderTree>Humanlike</renderTree>
 			<thinkTreeMain>Humanlike</thinkTreeMain>
 			<thinkTreeConstant>HumanlikeConstant</thinkTreeConstant>
-			<!-- 保持 Animal 渲染树 → 书页精灵外观 -->
-			<renderTree>Animal</renderTree>
 			<hasGenders>false</hasGenders>
-			<!-- Human body → 人类医疗/健康系统兼容 -->
-			<body>QuadrupedAnimalWithPawsAndTail</body>
-			<baseBodySize>0.45</baseBodySize>
-			<baseHungerRate>0.02</baseHungerRate>
-			<baseHealthScale>0.35</baseHealthScale>
-			<foodType>VegetarianRoughAnimal</foodType>
-			<lifeExpectancy>20</lifeExpectancy>
 			<makesFootprints>true</makesFootprints>
 			<nameCategory>HumanStandard</nameCategory>
+			<bloodDef>Filth_Blood</bloodDef>
+			<body>Human</body>
+			<baseBodySize>1</baseBodySize>
+			<baseHungerRate>0.02</baseHungerRate>
+			<baseHealthScale>1</baseHealthScale>
+			<foodType>OmnivoreHuman</foodType>
+			<lifeExpectancy>20</lifeExpectancy>
 			<deathAction Class="DeathActionProperties_Vanish">
 				<workerClass>DeathActionWorker_Vanish</workerClass>
 			</deathAction>
@@ -55,9 +52,6 @@
 					<minAge>0</minAge>
 				</li>
 			</lifeStageAges>
-			<soundMeleeHitPawn>Pawn_Melee_SmallScratch_HitPawn</soundMeleeHitPawn>
-			<soundMeleeHitBuilding>Pawn_Melee_SmallScratch_HitBuilding</soundMeleeHitBuilding>
-			<soundMeleeMiss>Pawn_Melee_SmallScratch_Miss</soundMeleeMiss>
 		</race>
 		<recipes>
 			<li>Euthanize</li>
@@ -65,68 +59,43 @@
 			<li>CureScaria</li>
 		</recipes>
 		<statBases>
-			<Mass>0.8</Mass>
-			<Flammability>2.0</Flammability>
+			<Mass>60</Mass>
+			<Flammability>0.7</Flammability>
 			<ToxicResistance>1.0</ToxicResistance>
-			<MoveSpeed>6.5</MoveSpeed>
+			<MoveSpeed>4.6</MoveSpeed>
 			<MarketValue>8000</MarketValue>
 			<ComfyTemperatureMin>-60</ComfyTemperatureMin>
 			<ComfyTemperatureMax>45</ComfyTemperatureMax>
-			<ArmorRating_Sharp>2.0</ArmorRating_Sharp>
-			<ArmorRating_Blunt>2.0</ArmorRating_Blunt>
-			<ArmorRating_Heat>-0.20</ArmorRating_Heat>
+			<ArmorRating_Sharp>0.5</ArmorRating_Sharp>
+			<ArmorRating_Blunt>0.5</ArmorRating_Blunt>
+			<ArmorRating_Heat>0.3</ArmorRating_Heat>
 			<PainShockThreshold>0.9</PainShockThreshold>
-			<MeleeDodgeChance>60</MeleeDodgeChance>
 		</statBases>
 	</ThingDef>
 
-	<!-- 书灵·颜执中：鎏金古卷，讲学光环 -->
+	<!-- 书灵·颜执中：前朝山长 -->
 	<ThingDef ParentName="GoldenBooks_BookSpiritBase">
 		<defName>GoldenBooks_BookSpirit_Yanzhongzhong</defName>
 		<label>书灵·颜执中</label>
-		<description>半卷厚重的鎏金古书，封皮磨旧，书脊以金线修补过十几次。前朝书院山长颜执中，号砚翁——化灵近千年，恪守"书不曾欺人"的旧训。\n\n【光环·讲学】周围9.9格内殖民者：研究速度+15%、学习+20%、心情+3\n【书灵之躯】血量低但闪避极高，脱战缓慢再生；极易燃——务必远离火源与雨水！\n\n他只由剧情事件降临，不会出现在野外。</description>
+		<description>前朝书院山长颜执中，号砚翁——化灵近千年，恪守"书不曾欺人"的旧训。\n\n【光环·讲学】周围9.9格内殖民者：研究速度+15%、学习+20%、心情+3\n【书灵之躯】不食不眠，以心念为生。死亡后化作书灵之书，可经劝学台召还。</description>
 		<comps>
 			<li Class="GoldenBooksMod.CompProperties_BookSpirit">
 				<auraHediff>GoldenBooks_LectureAura</auraHediff>
 				<waterHediff>GoldenBooks_SoakedBook</waterHediff>
 			</li>
 		</comps>
-		<tools>
-			<li>
-				<label>卷击</label>
-				<capacities>
-					<li>Blunt</li>
-				</capacities>
-				<power>3.5</power>
-				<cooldownTime>2</cooldownTime>
-				<linkedBodyPartsGroup>HeadAttackTool</linkedBodyPartsGroup>
-				<ensureLinkedBodyPartsGroupAlwaysUsable>true</ensureLinkedBodyPartsGroupAlwaysUsable>
-			</li>
-		</tools>
 	</ThingDef>
 
-	<!-- 书灵·颜知夏：轻巧册页，闹书房光环 -->
+	<!-- 书灵·颜知夏：天才少女 -->
 	<ThingDef ParentName="GoldenBooks_BookSpiritBase">
 		<defName>GoldenBooks_BookSpirit_Zhixia</defName>
 		<label>书灵·颜知夏</label>
-		<description>一册轻巧的册页小书，页角翘起，夹着糖纸、票根和不知哪个时代的小纸片。颜执中的孙女颜知夏，乳名墨叽——偷学秘术的天才，永远十九岁。\n\n【光环·闹书房】周围9.9格内殖民者：心情+8、学习+10%、精神崩溃阈值-5%\n【书灵之躯】血量低但闪避极高，脱战缓慢再生；极易燃——务必远离火源与雨水！\n\n她只由剧情事件降临，不会出现在野外。</description>
+		<description>颜执中的孙女颜知夏，乳名墨叽——偷学秘术的天才，永远十九岁。\n\n【光环·闹书房】周围9.9格内殖民者：心情+8、学习+10%、精神崩溃阈值-5%\n【书灵之躯】不食不眠，以心念为生。死亡后化作书灵之书，可经劝学台召还。</description>
 		<comps>
 			<li Class="GoldenBooksMod.CompProperties_BookSpirit">
 				<auraHediff>GoldenBooks_NoiseStudyAura</auraHediff>
 				<waterHediff>GoldenBooks_SoakedBook</waterHediff>
 			</li>
 		</comps>
-		<tools>
-			<li>
-				<label>页击</label>
-				<capacities>
-					<li>Blunt</li>
-				</capacities>
-				<power>3.5</power>
-				<cooldownTime>2</cooldownTime>
-				<linkedBodyPartsGroup>HeadAttackTool</linkedBodyPartsGroup>
-				<ensureLinkedBodyPartsGroupAlwaysUsable>true</ensureLinkedBodyPartsGroupAlwaysUsable>
-			</li>
-		</tools>
 	</ThingDef>
 </Defs>
