@@ -91,6 +91,7 @@ namespace GoldenBooksMod
             Pawn spirit = PawnGenerator.GeneratePawn(new PawnGenerationRequest(kind, Faction.OfPlayer, forceGenerateNewPawn: true, fixedBiologicalAge: 67, fixedChronologicalAge: 67));
             IntVec3 cell = CellFinder.RandomSpawnCellForPawnNear(near.Position, near.Map, 4);
             GenSpawn.Spawn(spirit, cell, near.Map);
+            GoldenBooksUtils.InitializeSpiritSkillsAndTraits(spirit, spirit.def.defName);
             return spirit;
         }
 

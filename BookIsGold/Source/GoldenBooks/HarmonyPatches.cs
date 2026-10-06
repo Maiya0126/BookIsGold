@@ -301,6 +301,60 @@ namespace GoldenBooksMod
             return trueSpirit;
         }
 
+        // 书灵技能与特质初始化（照人物设定）
+        public static void InitializeSpiritSkillsAndTraits(Pawn spirit, string defName)
+        {
+            if (spirit?.skills == null || spirit?.story == null) return;
+
+            void SetSkill(SkillDef def, int level)
+            {
+                var rec = spirit.skills.GetSkill(def);
+                if (rec != null && !rec.TotallyDisabled)
+                {
+                    rec.Level = level;
+                    rec.xpSinceLastLevel = 0;
+                    rec.passion = level >= 12 ? Passion.Major : Passion.Minor;
+                }
+            }
+
+            void AddTrait(TraitDef def, int degree = 0)
+            {
+                if (!spirit.story.traits.HasTrait(def))
+                    spirit.story.traits.GainTrait(new Trait(def, degree));
+            }
+
+            if (defName == "GoldenBooks_BookSpirit_Yanzhongzhong")
+            {
+                // 砚翁：前朝山长 → 智识/社交/艺术/医学
+                SetSkill(SkillDefOf.Intellectual, 18);
+                SetSkill(SkillDefOf.Social, 15);
+                SetSkill(SkillDefOf.Artistic, 12);
+                SetSkill(SkillDefOf.Medicine, 10);
+                SetSkill(SkillDefOf.Crafting, 8);
+                SetSkill(SkillDefOf.Cooking, 5);
+                AddTrait(TraitDef.Named("NightOwl"));
+                AddTrait(TraitDefOf.Ascetic);
+            }
+            else if (defName == "GoldenBooks_BookSpirit_Zhixia")
+            {
+                // 墨叽：天才少女 → 艺术/智识/社交/手工
+                SetSkill(SkillDefOf.Artistic, 15);
+                SetSkill(SkillDefOf.Intellectual, 15);
+                SetSkill(SkillDefOf.Social, 12);
+                SetSkill(SkillDefOf.Crafting, 10);
+                SetSkill(SkillDefOf.Cooking, 8);
+                AddTrait(TraitDef.Named("NightOwl"));
+                AddTrait(TraitDef.Named("TooSmart"));
+                AddTrait(TraitDefOf.Kind);
+            }
+            else if (defName == "GoldenBooks_BookSpirit_Colonist")
+            {
+                // 殖民地书灵：温和学者
+                SetSkill(SkillDefOf.Intellectual, 12);
+                SetSkill(SkillDefOf.Artistic, 10);
+                AddTrait(TraitDef.Named("NightOwl"));
+            }
+        }
         // 召还书灵（爷孙）
         public static Pawn SpawnBookSpirit(string kindName, Pawn near, float? fixedAge = null, string persona = null)
         {
@@ -312,6 +366,7 @@ namespace GoldenBooksMod
             Pawn spirit = PawnGenerator.GeneratePawn(req);
             IntVec3 cell = CellFinder.RandomSpawnCellForPawnNear(near.PositionHeld, near.Map, 4);
             GenSpawn.Spawn(spirit, cell, near.Map);
+            InitializeSpiritSkillsAndTraits(spirit, spirit.def.defName);
             GameComponent_BookWhispers.TryInjectRimTalkPersonas();
             return spirit;
         }
