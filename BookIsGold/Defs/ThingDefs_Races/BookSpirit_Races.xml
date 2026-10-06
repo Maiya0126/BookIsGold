@@ -38,11 +38,11 @@
 			<renderTree>Animal</renderTree>
 			<hasGenders>false</hasGenders>
 			<!-- Human body → 人类医疗/健康系统兼容 -->
-			<body>Human</body>
+			<body>QuadrupedAnimalWithPawsAndTail</body>
 			<baseBodySize>0.45</baseBodySize>
 			<baseHungerRate>0.02</baseHungerRate>
 			<baseHealthScale>0.35</baseHealthScale>
-			<foodType>OmnivoreHuman</foodType>
+			<foodType>VegetarianRoughAnimal</foodType>
 			<lifeExpectancy>20</lifeExpectancy>
 			<makesFootprints>true</makesFootprints>
 			<nameCategory>HumanStandard</nameCategory>

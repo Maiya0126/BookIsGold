@@ -2,7 +2,7 @@
 <Defs>
 	<!-- 书灵物语：书灵 PawnKind（人类化，独立定义照变形记工作实例） -->
 
-	<PawnKindDef>
+	<PawnKindDef ParentName="AnimalKindBase">
 		<defName>GoldenBooks_BookSpirit_Yanzhongzhong_Kind</defName>
 		<label>书灵·颜执中</label>
 		<race>GoldenBooks_BookSpirit_Yanzhongzhong</race>
@@ -19,7 +19,7 @@
 		</lifeStages>
 	</PawnKindDef>
 
-	<PawnKindDef>
+	<PawnKindDef ParentName="AnimalKindBase">
 		<defName>GoldenBooks_BookSpirit_Zhixia_Kind</defName>
 		<label>书灵·颜知夏</label>
 		<race>GoldenBooks_BookSpirit_Zhixia</race>
@@ -36,7 +36,7 @@
 		</lifeStages>
 	</PawnKindDef>
 
-	<PawnKindDef>
+	<PawnKindDef ParentName="AnimalKindBase">
 		<defName>GoldenBooks_BookSpirit_Colonist_Kind</defName>
 		<label>殖民地书灵</label>
 		<race>GoldenBooks_BookSpirit_Colonist</race>
