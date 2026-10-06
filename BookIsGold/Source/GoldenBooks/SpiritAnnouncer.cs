@@ -127,6 +127,28 @@ namespace GoldenBooksMod
 
         private const float PortraitSize = 130f;
 
+        // 立绘缓存（懒加载）
+        private static Texture2D _yanPortrait;
+        private static Texture2D _moPortrait;
+        private static Texture2D _colonistPortrait;
+
+        private static Texture2D GetPortrait(string speakerId)
+        {
+            switch (speakerId)
+            {
+                case "Yan":
+                    if (_yanPortrait == null) _yanPortrait = ContentFinder<Texture2D>.Get("UI/Lihui/zhizhong_lihui", false);
+                    return _yanPortrait;
+                case "Mo":
+                    if (_moPortrait == null) _moPortrait = ContentFinder<Texture2D>.Get("UI/Lihui/zhixia_lihui", false);
+                    return _moPortrait;
+                case "Colonist":
+                    if (_colonistPortrait == null) _colonistPortrait = ContentFinder<Texture2D>.Get("UI/Lihui/zhixia_lihui", false);
+                    return _colonistPortrait;
+                default: return null;
+            }
+        }
+
         public override Vector2 InitialSize => new Vector2(470f, 250f);
 
         public Window_SpiritAnnouncer(SpiritAnnounceItem item, Action onClosed)
@@ -200,7 +222,15 @@ namespace GoldenBooksMod
             // 立绘：在场 pawn 用 PortraitsCache；否则 def.uiIcon（引擎加载，必命中）
             Rect portraitRect = new Rect(inRect.x, y, PortraitSize, Mathf.Min(PortraitSize, contentH));
             bool drewPortrait = false;
-            if (item.speakerPawn != null && !item.speakerPawn.Destroyed)
+            // 专属立绘（爷孙/殖民地书灵）
+            Texture2D customPortrait = GetPortrait(item.speakerId);
+            if (customPortrait != null)
+            {
+                GUI.DrawTexture(portraitRect, customPortrait, ScaleMode.ScaleToFit);
+                drewPortrait = true;
+            }
+            // 在场 pawn 用 PortraitsCache
+            if (!drewPortrait && item.speakerPawn != null && !item.speakerPawn.Destroyed)
             {
                 RenderTexture portrait = PortraitsCache.Get(item.speakerPawn, new Vector2(PortraitSize, PortraitSize), Rot4.South, new Vector3(0f, 0f, 0.3f), 2.2f);
                 if (portrait != null) { GUI.DrawTexture(portraitRect, portrait, ScaleMode.ScaleToFit); drewPortrait = true; }
