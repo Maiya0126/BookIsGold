@@ -382,14 +382,14 @@ namespace GoldenBooksMod
                         if (p.RaceProps.Humanlike && p.Faction == Faction.OfPlayer)
                         {
                             if (p.health.hediffSet.HasHediff(HediffDef.Named("GoldenBooks_BookSpiritEssence")))
-                                InjectPersona(p, PersonaRuYu());
+                                InjectPersona(p, PersonaRuYu(), force: true);
                             else if (p.Name != null && p.Name.ToStringShort.Contains("颜如玉"))
-                                InjectPersona(p, PersonaMortal());
+                                InjectPersona(p, PersonaMortal(), force: true);
                         }
                         else if (!p.RaceProps.Humanlike && p.Faction == Faction.OfPlayer)
                         {
-                            if (p.def.defName == "GoldenBooks_BookSpirit_Yanzhongzhong") InjectPersona(p, PersonaYan());
-                            else if (p.def.defName == "GoldenBooks_BookSpirit_Zhixia") InjectPersona(p, PersonaMo());
+                            if (p.def.defName == "GoldenBooks_BookSpirit_Yanzhongzhong") InjectPersona(p, PersonaYan(), force: true);
+                            else if (p.def.defName == "GoldenBooks_BookSpirit_Zhixia") InjectPersona(p, PersonaMo(), force: true);
                         }
                     }
                     catch { }
@@ -397,14 +397,14 @@ namespace GoldenBooksMod
             }
         }
 
-        public static void InjectPersona(Pawn p, string persona)
+        public static void InjectPersona(Pawn p, string persona, bool force = false)
         {
             try
             {
                 HediffDef personaDef = DefDatabase<HediffDef>.GetNamedSilentFail("RimTalk_PersonaData");
                 if (personaDef == null || p == null || p.health == null) return;
                 Hediff existing = p.health.hediffSet.GetFirstHediffOfDef(personaDef);
-                if (existing != null)
+                if (existing != null && !force)
                 {
                     // 已有人格则不覆盖（保留玩家手调）
                     return;

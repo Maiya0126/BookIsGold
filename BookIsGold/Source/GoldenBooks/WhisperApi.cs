@@ -418,7 +418,7 @@ namespace GoldenBooksMod
     public static class WhisperPersonaHelper
     {
         // 覆盖目标 Pawn 的 RimTalk 人格
-        public static void CopyPersonaToPawn(Pawn to, string persona)
+        public static void CopyPersonaToPawn(Pawn to, string persona, bool force = false)
         {
             try
             {
