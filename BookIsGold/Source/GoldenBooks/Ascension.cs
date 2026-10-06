@@ -168,10 +168,15 @@ namespace GoldenBooksMod
                 if (__instance == null || !__instance.Spawned) return;
                 if (!__instance.RaceProps.Humanlike || __instance.Faction != Faction.OfPlayer) return;
                 if (__instance.IsPrisoner || __instance.IsSlave) return;
+                // 排除所有书灵（本体已是书灵，不能再化灵）
+                if (__instance.health?.hediffSet != null)
+                {
+                    if (__instance.health.hediffSet.HasHediff(HediffDef.Named("GoldenBooks_SpiritVitality"))) return;
+                    if (__instance.health.hediffSet.HasHediff(HediffDef.Named("GoldenBooks_BookSpiritEssence"))) return;
+                }
                 if (__instance.def.defName == "GoldenBooks_BookSpirit_Yanzhongzhong" ||
                     __instance.def.defName == "GoldenBooks_BookSpirit_Zhixia" ||
                     __instance.def.defName == "GoldenBooks_BookSpirit_Colonist") return;
-                if (Find.TickManager.TicksGame % 2 == 1) return; // 降低开销
 
                 var s = GoldenBooksMod.settings;
                 string reason = SpiritAscension.AscendBlockReason(__instance);
