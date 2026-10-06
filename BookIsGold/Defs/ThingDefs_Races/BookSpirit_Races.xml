@@ -33,7 +33,7 @@
 			<renderTree>Humanlike</renderTree>
 			<thinkTreeMain>Humanlike</thinkTreeMain>
 			<thinkTreeConstant>HumanlikeConstant</thinkTreeConstant>
-			<hasGenders>false</hasGenders>
+			<hasGenders>true</hasGenders>
 			<makesFootprints>true</makesFootprints>
 			<nameCategory>HumanStandard</nameCategory>
 			<bloodDef>Filth_Blood</bloodDef>
