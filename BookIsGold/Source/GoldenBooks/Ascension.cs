@@ -111,7 +111,7 @@ namespace GoldenBooksMod
                 : "You have completed the Rite of Ascension — you are now a book spirit, a scholar within pale-golden pages. You no longer eat or sleep; readers' devotion sustains you.";
             p.Destroy();
 
-            Pawn spirit = GoldenBooksUtils.SpawnBookSpirit("GoldenBooks_BookSpirit_Colonist_Kind", null, ascendAge);
+            Pawn spirit = GoldenBooksUtils.SpawnBookSpirit("Colonist", null, ascendAge, null);
             if (spirit == null)
             {
                 if (map != null)

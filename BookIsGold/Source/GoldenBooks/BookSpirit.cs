@@ -1,7 +1,8 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using RimWorld;
 using Verse;
+using UnityEngine;
 
 namespace GoldenBooksMod
 {
@@ -105,6 +106,20 @@ namespace GoldenBooksMod
                 if (injury == null || injury.IsPermanent()) continue;
                 if (injury.Severity <= 0f) continue;
                 injury.Heal(Props.regenAmount);
+            }
+        }
+
+        // 书灵雾气粒子效果
+        private void SpawnSpiritParticles(Pawn p)
+        {
+            if (Rand.Chance(0.35f))
+            {
+                Vector3 offset = new Vector3(Rand.Range(-0.5f, 0.5f), 0f, Rand.Range(-0.2f, 0.5f));
+                string glyph = new string[] { "✧", "·", "˚", "✦" }[Rand.Range(0, 4)];
+                Color c = p.def.defName == "GoldenBooks_BookSpirit_Zhixia"
+                    ? new Color(0.7f, 0.85f, 1.0f, 0.6f)
+                    : new Color(1.0f, 0.9f, 0.6f, 0.6f);
+                MoteMaker.ThrowText(p.DrawPos + offset, p.Map, glyph, c);
             }
         }
 

@@ -86,13 +86,7 @@ namespace GoldenBooksMod
 
         private Pawn TrySpawnExecutor(Pawn near)
         {
-            PawnKindDef kind = DefDatabase<PawnKindDef>.GetNamedSilentFail("GoldenBooks_BookSpirit_Yanzhongzhong_Kind");
-            if (kind == null || near == null || near.Map == null) return null;
-            Pawn spirit = PawnGenerator.GeneratePawn(new PawnGenerationRequest(kind, Faction.OfPlayer, forceGenerateNewPawn: true, fixedBiologicalAge: 67, fixedChronologicalAge: 67));
-            IntVec3 cell = CellFinder.RandomSpawnCellForPawnNear(near.Position, near.Map, 4);
-            GenSpawn.Spawn(spirit, cell, near.Map);
-            GoldenBooksUtils.InitializeSpiritSkillsAndTraits(spirit, spirit.def.defName);
-            return spirit;
+            return GoldenBooksUtils.SpawnBookSpirit("Yan", near, 67f, GameComponent_BookWhispers.PersonaYan());
         }
 
         // 事件4：真·颜如玉死亡化书 →「颜执中的手书」+ 解锁书蠹出没
