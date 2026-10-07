@@ -913,7 +913,7 @@ public override void WriteSettings()
             cachedRaceCandidates = new List<RaceCandidate>();
             // [种族列表初始化]
             var alienRaces = DefDatabase<ThingDef>.AllDefsListForReading.Where(t => t.race != null && t.race.Humanlike && t.defName != "Human" && !t.defName.Contains("Corpse") && !t.defName.Contains("Meat") && !t.defName.Contains("Creep") && !t.defName.Contains("Shambler") && !t.label.Contains("corpse"));
-            foreach (var t in alienRaces) { cachedRaceCandidates.Add(new RaceCandidate { DefName = t.defName, Label = $"[Race] {t.LabelCap}", IsPrettyDefault = true }); }
+            foreach (var t in alienRaces) { cachedRaceCandidates.Add(new RaceCandidate { DefName = t.defName, Label = GameComponent_BookWhispers.IsChinese ? $"[种族] {t.LabelCap}" : $"[Race] {t.LabelCap}", IsPrettyDefault = true }); }
 
             var xenos = DefDatabase<XenotypeDef>.AllDefsListForReading.Where(x => !x.defName.Contains("Creep") && !x.defName.Contains("Shambler") && !x.defName.Contains("Metalhorror") && x.description != null);
             foreach (var x in xenos)
