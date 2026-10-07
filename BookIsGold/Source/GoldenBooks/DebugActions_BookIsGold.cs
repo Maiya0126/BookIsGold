@@ -31,7 +31,7 @@ namespace GoldenBooksMod
         private static void DebugSpawnColonistSpirit()
         {
             Map map = Find.CurrentMap;
-            PawnKindDef kind = DefDatabase<PawnKindDef>.GetNamedSilentFail("GoldenBooks_BookSpirit_Colonist_Kind");
+            PawnKindDef kind = DefDatabase<PawnKindDef>.GetNamedSilentFail("GB_Colonist_Spirit_Kind");
             if (kind == null) { Log.Error("[GoldenBooks] 缺少 PawnKindDef"); return; }
             Pawn spirit = PawnGenerator.GeneratePawn(new PawnGenerationRequest(kind, Faction.OfPlayer, PawnGenerationContext.PlayerStarter, forceGenerateNewPawn: true, fixedBiologicalAge: 1, fixedChronologicalAge: 1));
             IntVec3 cell = UI.MouseCell();
@@ -46,7 +46,7 @@ namespace GoldenBooksMod
         private static void DebugSpawnExecutor()
         {
             Map map = Find.CurrentMap;
-            PawnKindDef kind = DefDatabase<PawnKindDef>.GetNamedSilentFail("GoldenBooks_BookSpirit_Yanzhongzhong_Kind");
+            PawnKindDef kind = DefDatabase<PawnKindDef>.GetNamedSilentFail("GB_Yan_Kind");
             if (kind == null) { Log.Error("[GoldenBooks] 缺少 PawnKindDef"); return; }
             Pawn spirit = PawnGenerator.GeneratePawn(new PawnGenerationRequest(kind, Faction.OfPlayer, forceGenerateNewPawn: true));
             IntVec3 cell = UI.MouseCell();
@@ -60,7 +60,7 @@ namespace GoldenBooksMod
         private static void DebugSpawnZhixia()
         {
             Map map = Find.CurrentMap;
-            PawnKindDef kind = DefDatabase<PawnKindDef>.GetNamedSilentFail("GoldenBooks_BookSpirit_Zhixia_Kind");
+            PawnKindDef kind = DefDatabase<PawnKindDef>.GetNamedSilentFail("GB_Zhi_Kind");
             if (kind == null) { Log.Error("[GoldenBooks] 缺少 PawnKindDef"); return; }
             Pawn spirit = PawnGenerator.GeneratePawn(new PawnGenerationRequest(kind, Faction.OfPlayer, forceGenerateNewPawn: true));
             IntVec3 cell = UI.MouseCell();

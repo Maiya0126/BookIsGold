@@ -129,7 +129,7 @@ namespace GoldenBooksMod
 
             Map map = Find.AnyPlayerHomeMap;
             Thing zhixia = null;
-            PawnKindDef kind = DefDatabase<PawnKindDef>.GetNamedSilentFail("GoldenBooks_BookSpirit_Zhixia_Kind");
+            PawnKindDef kind = DefDatabase<PawnKindDef>.GetNamedSilentFail("GB_Zhi_Kind");
             if (kind != null && map != null)
             {
                 Pawn spirit = PawnGenerator.GeneratePawn(new PawnGenerationRequest(kind, Faction.OfPlayer, forceGenerateNewPawn: true, fixedBiologicalAge: 67, fixedChronologicalAge: 67));

@@ -19,7 +19,7 @@ namespace GoldenBooksMod
             int n = 0;
             if (Current.Game == null) return 0;
             foreach (Map m in Find.Maps)
-                n += m.mapPawns.AllPawnsSpawned.Count(p => p.def.defName == "GoldenBooks_BookSpirit_Colonist");
+                n += m.mapPawns.AllPawnsSpawned.Count(p => p.kindDef.defName == "GB_Colonist_Spirit_Kind");
             return n;
         }
 
@@ -99,7 +99,7 @@ namespace GoldenBooksMod
                 if (map != null)
                 {
                     PawnGenerationRequest genReq = new PawnGenerationRequest(
-                        DefDatabase<PawnKindDef>.GetNamedSilentFail("GoldenBooks_BookSpirit_Colonist_Kind"),
+                        DefDatabase<PawnKindDef>.GetNamedSilentFail("GB_Colonist_Spirit_Kind"),
                         Faction.OfPlayer, PawnGenerationContext.PlayerStarter, forceGenerateNewPawn: true, fixedBiologicalAge: ascendAge, fixedChronologicalAge: ascendAge);
                     Pawn gen = PawnGenerator.GeneratePawn(genReq);
                     GenSpawn.Spawn(gen, pos.IsValid ? pos : DropCellFinder.TradeDropSpot(map), map);
@@ -156,9 +156,9 @@ namespace GoldenBooksMod
                     if (__instance.health.hediffSet.HasHediff(HediffDef.Named("GoldenBooks_SpiritVitality"))) return;
                     if (__instance.health.hediffSet.HasHediff(HediffDef.Named("GoldenBooks_BookSpiritEssence"))) return;
                 }
-                if (__instance.def.defName == "GoldenBooks_BookSpirit_Yanzhongzhong" ||
-                    __instance.def.defName == "GoldenBooks_BookSpirit_Zhixia" ||
-                    __instance.def.defName == "GoldenBooks_BookSpirit_Colonist") return;
+                if (__instance.kindDef.defName == "GB_Yan_Kind" ||
+                    __instance.kindDef.defName == "GB_Zhi_Kind" ||
+                    __instance.kindDef.defName == "GB_Colonist_Spirit_Kind") return;
 
                 var s = GoldenBooksMod.settings;
                 string reason = SpiritAscension.AscendBlockReason(__instance);

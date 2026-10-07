@@ -85,12 +85,12 @@ namespace GoldenBooksMod
 
         public static void AnnounceSpiritTurnedBook(Pawn spirit)
         {
-            Announce(spirit.def.defName == "GoldenBooks_BookSpirit_Zhixia" ? "Mo" : "Yan",
+            Announce(spirit.kindDef.defName == "GoldenBooks_BookSpirit_Zhixia" ? "Mo" : "Yan",
                 IsChinese
-                    ? (spirit.def.defName == "GoldenBooks_BookSpirit_Zhixia"
+                    ? (spirit.kindDef.defName == "GoldenBooks_BookSpirit_Zhixia"
                         ? "本姑娘先回书里避一避！等我回来接着闹！(๑•̀ㅂ•́)و✧"
                         : "化作书页，非是消散，是歇息。期日再召。")
-                    : (spirit.def.defName == "GoldenBooks_BookSpirit_Zhixia"
+                    : (spirit.kindDef.defName == "GoldenBooks_BookSpirit_Zhixia"
                         ? "Ducking back into the book for a bit! Wait for my comeback!"
                         : "To turn into a page is not to perish — it is to rest. Recall me when you will."),
                 spirit);
@@ -98,7 +98,7 @@ namespace GoldenBooksMod
 
         public static void AnnounceRecalled(Pawn spirit)
         {
-            Announce(spirit.def.defName == "GoldenBooks_BookSpirit_Zhixia" ? "Mo" : "Yan",
+            Announce(spirit.kindDef.defName == "GoldenBooks_BookSpirit_Zhixia" ? "Mo" : "Yan",
                 IsChinese ? "回来了。接下来的故事，继续一起写。" : "I am back. The rest of our story — we write it together.",
                 spirit);
         }

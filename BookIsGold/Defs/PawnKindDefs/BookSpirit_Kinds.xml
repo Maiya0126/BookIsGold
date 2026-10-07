@@ -1,52 +1,31 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-	<!-- 书灵物语：书灵 PawnKind（标准 Human 种族 + 书灵身份） -->
+	<!-- 书灵 PawnKind（独立定义，不用 ParentName 避免继承失败） -->
 
-	<PawnKindDef ParentName="Colonist">
-		<defName>GoldenBooks_BookSpirit_Yanzhongzhong_Kind</defName>
+	<PawnKindDef>
+		<defName>GB_Yan_Kind</defName>
 		<label>书灵·颜执中</label>
 		<race>Human</race>
 		<combatPower>80</combatPower>
 		<initialResistanceRange>18~35</initialResistanceRange>
 		<initialWillRange>4~9</initialWillRange>
-		<backstoryFilters>
-			<li>
-				<categories>
-					<li>Offworld</li>
-				</categories>
-			</li>
-		</backstoryFilters>
 	</PawnKindDef>
 
-	<PawnKindDef ParentName="Colonist">
-		<defName>GoldenBooks_BookSpirit_Zhixia_Kind</defName>
+	<PawnKindDef>
+		<defName>GB_Zhi_Kind</defName>
 		<label>书灵·颜知夏</label>
 		<race>Human</race>
 		<combatPower>60</combatPower>
 		<initialResistanceRange>15~30</initialResistanceRange>
 		<initialWillRange>4~9</initialWillRange>
-		<backstoryFilters>
-			<li>
-				<categories>
-					<li>Offworld</li>
-				</categories>
-			</li>
-		</backstoryFilters>
 	</PawnKindDef>
 
-	<PawnKindDef ParentName="Colonist">
-		<defName>GoldenBooks_BookSpirit_Colonist_Kind</defName>
+	<PawnKindDef>
+		<defName>GB_Colonist_Spirit_Kind</defName>
 		<label>殖民地书灵</label>
 		<race>Human</race>
 		<combatPower>70</combatPower>
 		<initialResistanceRange>15~30</initialResistanceRange>
 		<initialWillRange>4~9</initialWillRange>
-		<backstoryFilters>
-			<li>
-				<categories>
-					<li>Offworld</li>
-				</categories>
-			</li>
-		</backstoryFilters>
 	</PawnKindDef>
 </Defs>
