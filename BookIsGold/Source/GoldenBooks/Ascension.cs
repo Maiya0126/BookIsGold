@@ -10,25 +10,7 @@ using Verse;
 namespace GoldenBooksMod
 {
     // --- 化灵之仪：高智识殖民者化灵为书灵（课业大成后解锁） ---
-
-    public class GoldenBooksCompProperties_SpiritBookData : CompProperties
-    {
-        public GoldenBooksCompProperties_SpiritBookData() { this.compClass = typeof(GoldenBooksComp_SpiritBookData); }
-    }
-
-    // 书灵之书数据：保存化灵书灵的名字与 RimTalk 人格（轻量，序列化 pawn 不做）
-    public class GoldenBooksComp_SpiritBookData : ThingComp
-    {
-        public string spiritName = "";
-        public string persona = "";
-
-        public override void PostExposeData()
-        {
-            base.PostExposeData();
-            Scribe_Values.Look(ref spiritName, "spiritName", "");
-            Scribe_Values.Look(ref persona, "persona", "");
-        }
-    }
+    // GoldenBooksCompProperties_SpiritBookData / GoldenBooksComp_SpiritBookData 定义在 BookSpirit.cs
 
     public static class SpiritAscension
     {

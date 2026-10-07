@@ -78,12 +78,6 @@
 		<defName>GoldenBooks_BookSpirit_Yanzhongzhong</defName>
 		<label>书灵·颜执中</label>
 		<description>前朝书院山长颜执中，号砚翁——化灵近千年，恪守"书不曾欺人"的旧训。\n\n【光环·讲学】周围9.9格内殖民者：研究速度+15%、学习+20%、心情+3\n【书灵之躯】不食不眠，以心念为生。死亡后化作书灵之书，可经劝学台召还。</description>
-		<comps>
-			<li Class="GoldenBooksMod.CompProperties_BookSpirit">
-				<auraHediff>GoldenBooks_LectureAura</auraHediff>
-				<waterHediff>GoldenBooks_SoakedBook</waterHediff>
-			</li>
-		</comps>
 	</ThingDef>
 
 	<!-- 书灵·颜知夏：天才少女 -->
@@ -91,11 +85,5 @@
 		<defName>GoldenBooks_BookSpirit_Zhixia</defName>
 		<label>书灵·颜知夏</label>
 		<description>颜执中的孙女颜知夏，乳名墨叽——偷学秘术的天才，永远十九岁。\n\n【光环·闹书房】周围9.9格内殖民者：心情+8、学习+10%、精神崩溃阈值-5%\n【书灵之躯】不食不眠，以心念为生。死亡后化作书灵之书，可经劝学台召还。</description>
-		<comps>
-			<li Class="GoldenBooksMod.CompProperties_BookSpirit">
-				<auraHediff>GoldenBooks_NoiseStudyAura</auraHediff>
-				<waterHediff>GoldenBooks_SoakedBook</waterHediff>
-			</li>
-		</comps>
 	</ThingDef>
 </Defs>

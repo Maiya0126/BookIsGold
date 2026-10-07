@@ -73,12 +73,6 @@
 			<ArmorRating_Heat>0.3</ArmorRating_Heat>
 			<PainShockThreshold>0.9</PainShockThreshold>
 		</statBases>
-		<comps>
-			<li Class="GoldenBooksMod.CompProperties_BookSpirit">
-				<auraHediff>GoldenBooks_LectureAura</auraHediff>
-				<waterHediff>GoldenBooks_SoakedBook</waterHediff>
-			</li>
-		</comps>
 	</ThingDef>
 
 	<PawnKindDef ParentName="Colonist">
