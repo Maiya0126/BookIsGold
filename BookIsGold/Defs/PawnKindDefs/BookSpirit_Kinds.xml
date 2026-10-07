@@ -7,6 +7,8 @@
 		<label>书灵·颜执中</label>
 		<race>Human</race>
 		<combatPower>80</combatPower>
+		<initialResistanceRange>18~35</initialResistanceRange>
+		<initialWillRange>4~9</initialWillRange>
 		<backstoryFilters>
 			<li>
 				<categories>
@@ -21,6 +23,8 @@
 		<label>书灵·颜知夏</label>
 		<race>Human</race>
 		<combatPower>60</combatPower>
+		<initialResistanceRange>15~30</initialResistanceRange>
+		<initialWillRange>4~9</initialWillRange>
 		<backstoryFilters>
 			<li>
 				<categories>
@@ -35,6 +39,8 @@
 		<label>殖民地书灵</label>
 		<race>Human</race>
 		<combatPower>70</combatPower>
+		<initialResistanceRange>15~30</initialResistanceRange>
+		<initialWillRange>4~9</initialWillRange>
 		<backstoryFilters>
 			<li>
 				<categories>

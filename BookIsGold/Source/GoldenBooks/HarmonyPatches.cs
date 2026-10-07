@@ -369,7 +369,7 @@ namespace GoldenBooksMod
             Gender gender = spiritType == "Mo" ? Gender.Female : Gender.Male;
 
             PawnGenerationRequest req = new PawnGenerationRequest(PawnKindDefOf.Colonist, Faction.OfPlayer,
-                forceGenerateNewPawn: true, forcedXenotype: isXeno ? xeno : null,
+                PawnGenerationContext.PlayerStarter, forceGenerateNewPawn: true, forcedXenotype: isXeno ? xeno : null,
                 fixedGender: gender, fixedBiologicalAge: fixedAge, fixedChronologicalAge: fixedAge);
             Pawn spirit = PawnGenerator.GeneratePawn(req);
 
