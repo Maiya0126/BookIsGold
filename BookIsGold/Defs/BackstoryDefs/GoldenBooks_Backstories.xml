@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<!-- 书灵物语：爷孙与如玉的专属背景故事（取材《劝学诗里的千年灵》人物设定） -->
+
+	<!-- ========== 颜执中 ========== -->
+	<BackstoryDef>
+		<defName>GoldenBooks_YanChildhood</defName>
+		<identifier>GoldenBooks.YanChildhood.1</identifier>
+		<slot>Childhood</slot>
+		<title>书院蒙童</title>
+		<titleShort>蒙童</titleShort>
+		<description>颜执中生在书堆里。开蒙那年，先生教的第一句话便是"富家不用买良田"。别的孩子背完就忘，他把整卷《劝学诗》抄了一百遍，抄到先生收他为关门弟子。同窗笑他痴，他只答："书不曾欺人。"</description>
+		<skillGains>
+			<Intellectual>6</Intellectual>
+			<Medicine>2</Medicine>
+		</skillGains>
+		<workDisables>None</workDisables>
+		<spawnCategories>
+			<li>Offworld</li>
+			<li>Outlander</li>
+		</spawnCategories>
+		<shuffleable>False</shuffleable>
+	</BackstoryDef>
+
+	<BackstoryDef>
+		<defName>GoldenBooks_YanAdulthood</defName>
+		<identifier>GoldenBooks.YanAdulthood.1</identifier>
+		<slot>Adulthood</slot>
+		<title>前朝书院山长</title>
+		<titleShort>山长</titleShort>
+		<description>颜执中执掌书院三十载，治学之严名动一方：学生抄书错一字，整页重来。御赐《劝学诗》至书院那夜，他发现了诗中藏着的引灵之纹。此后千年，他化灵守书，只认一条旧训——书不曾欺人。</description>
+		<skillGains>
+			<Intellectual>8</Intellectual>
+			<Social>5</Social>
+			<Artistic>4</Artistic>
+			<Medicine>3</Medicine>
+		</skillGains>
+		<workDisables>None</workDisables>
+		<forcedTraits>
+			<li>
+				<def>NightOwl</def>
+			</li>
+		</forcedTraits>
+		<spawnCategories>
+			<li>Offworld</li>
+			<li>Outlander</li>
+		</spawnCategories>
+		<shuffleable>False</shuffleable>
+	</BackstoryDef>
+
+	<!-- ========== 颜知夏 ========== -->
+	<BackstoryDef>
+		<defName>GoldenBooks_MoChildhood</defName>
+		<identifier>GoldenBooks.MoChildhood.1</identifier>
+		<slot>Childhood</slot>
+		<title>门缝里的小影子</title>
+		<titleShort>小影子</titleShort>
+		<description>颜知夏八岁那年，趴在爷爷书房门缝底下，把老人夜读《劝学诗》的每一个举动都记在心里。白天背经，夜里偷学秘术，她给书院的猫、树、师兄全都起了外号。母亲走后，她开始疯狂喜欢一切"新的东西"——新书、新词、新纸片，一样都不肯落下。</description>
+		<skillGains>
+			<Intellectual>5</Intellectual>
+			<Artistic>4</Artistic>
+			<Social>2</Social>
+		</skillGains>
+		<workDisables>None</workDisables>
+		<spawnCategories>
+			<li>Offworld</li>
+			<li>Outlander</li>
+		</spawnCategories>
+		<shuffleable>False</shuffleable>
+	</BackstoryDef>
+
+	<BackstoryDef>
+		<defName>GoldenBooks_MoAdulthood</defName>
+		<identifier>GoldenBooks.MoAdulthood.1</identifier>
+		<slot>Adulthood</slot>
+		<title>千年的更新者</title>
+		<titleShort>更新者</titleShort>
+		<description>焚院之夜，十九岁的颜知夏化作一册页角翘起的轻巧小书。千年里她负责"更新"——收集每个时代的新书、新词、新纸片，自称"永远十二岁半"。她嘴上叫爷爷"老古董"，实际上每一页新写法，爷爷都偷偷读了两遍。</description>
+		<skillGains>
+			<Artistic>6</Artistic>
+			<Intellectual>5</Intellectual>
+			<Crafting>3</Crafting>
+			<Social>3</Social>
+		</skillGains>
+		<workDisables>None</workDisables>
+		<spawnCategories>
+			<li>Offworld</li>
+			<li>Outlander</li>
+		</spawnCategories>
+		<shuffleable>False</shuffleable>
+	</BackstoryDef>
+
+	<!-- ========== 真·颜如玉 ========== -->
+	<BackstoryDef>
+		<defName>GoldenBooks_RuYuChildhood</defName>
+		<identifier>GoldenBooks.RuYuChildhood.1</identifier>
+		<slot>Childhood</slot>
+		<title>诗中初醒</title>
+		<titleShort>初醒</titleShort>
+		<description>一个雪夜，《劝学诗》的书页无风自动，"书中自有颜如玉"一句的墨迹亮起，她从诗里走了出来。醒来时什么都不记得，只有一句话浮在心头——"我从书里来。"颜家爷孙守在案前，像守着失而复得的什么人。</description>
+		<skillGains>
+			<Intellectual>4</Intellectual>
+			<Artistic>3</Artistic>
+		</skillGains>
+		<workDisables>None</workDisables>
+		<spawnCategories>
+			<li>Offworld</li>
+			<li>Outlander</li>
+		</spawnCategories>
+		<shuffleable>False</shuffleable>
+	</BackstoryDef>
+
+	<BackstoryDef>
+		<defName>GoldenBooks_RuYuAdulthood</defName>
+		<identifier>GoldenBooks.RuYuAdulthood.1</identifier>
+		<slot>Adulthood</slot>
+		<title>灯下侍读人</title>
+		<titleShort>侍读者</titleShort>
+		<description>千年长夜，她不眠不休，总在灯下侍读。别人问起身世，她轻声说"我从书里来"；被夸奖时只会困惑地问"是指哪里"。她爱引一句诗，又立刻用大白话解释。她不知道自己是谁——只知道夜里读书的人，不止一个，她想陪着每一个。</description>
+		<skillGains>
+			<Intellectual>6</Intellectual>
+			<Social>4</Social>
+			<Medicine>3</Medicine>
+			<Artistic>2</Artistic>
+		</skillGains>
+		<workDisables>None</workDisables>
+		<forcedTraits>
+			<li>
+				<def>Beauty</def>
+				<degree>2</degree>
+			</li>
+		</forcedTraits>
+		<spawnCategories>
+			<li>Offworld</li>
+			<li>Outlander</li>
+		</spawnCategories>
+		<shuffleable>False</shuffleable>
+	</BackstoryDef>
+</Defs>

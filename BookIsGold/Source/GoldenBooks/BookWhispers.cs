@@ -158,7 +158,6 @@ namespace GoldenBooksMod
                 : "GoldenBooks_WspLetterLabel_Mo".Translate(e.day);
             Find.LetterStack.ReceiveLetter(header, text, LetterDefOf.NeutralEvent);
             SpiritAnnouncer.Announce(isYan ? "Yan" : "Mo", text);
-            SpiritAnnouncer.Announce(isYan ? "Yan" : "Mo", text);
 
             stats = new WhisperStats();
         }
@@ -383,13 +382,16 @@ namespace GoldenBooksMod
                         {
                             if (p.health.hediffSet.HasHediff(HediffDef.Named("GoldenBooks_BookSpiritEssence")))
                                 InjectPersona(p, PersonaRuYu(), force: true);
+                            else if (p.health.hediffSet.HasHediff(HediffDef.Named("GoldenBooks_SpiritVitality")))
+                            {
+                                // 爷孙/殖民地书灵按名字注入专属人格
+                                string nick = p.Name?.ToStringShort ?? "";
+                                if (nick.Contains("颜执中")) InjectPersona(p, PersonaYan(), force: true);
+                                else if (nick.Contains("知夏") || nick.Contains("墨叽")) InjectPersona(p, PersonaMo(), force: true);
+                                else InjectPersona(p, WhisperPersonaHelper.PersonaColonist(nick), force: true);
+                            }
                             else if (p.Name != null && p.Name.ToStringShort.Contains("颜如玉"))
                                 InjectPersona(p, PersonaMortal(), force: true);
-                        }
-                        else if (!p.RaceProps.Humanlike && p.Faction == Faction.OfPlayer)
-                        {
-                            if (p.def.defName == "GoldenBooks_BookSpirit_Yanzhongzhong") InjectPersona(p, PersonaYan(), force: true);
-                            else if (p.def.defName == "GoldenBooks_BookSpirit_Zhixia") InjectPersona(p, PersonaMo(), force: true);
                         }
                     }
                     catch { }

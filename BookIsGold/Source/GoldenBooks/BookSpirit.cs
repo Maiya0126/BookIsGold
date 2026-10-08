@@ -32,7 +32,6 @@ namespace GoldenBooksMod
             ApplyAura(p);
             TryRegenerate(p);
             TryWaterFear(p);
-            SpawnSpiritParticles(p);
         }
 
         // 需求恒满
@@ -71,8 +70,9 @@ namespace GoldenBooksMod
 
         private string GetAuraDef()
         {
-            string kind = Pawn.kindDef?.defName ?? "";
-            if (kind.Contains("Zhixia")) return "GoldenBooks_NoiseStudyAura";
+            // 以名字判定（生成入口统一命名）：颜知夏 → 闹书房；其余书灵（颜执中/殖民地书灵）→ 讲学
+            string nick = Pawn.Name?.ToStringShort ?? "";
+            if (nick.Contains("颜知夏") || nick.Contains("知夏") || nick.Contains("墨叽")) return "GoldenBooks_NoiseStudyAura";
             return "GoldenBooks_LectureAura";
         }
 
@@ -91,18 +91,6 @@ namespace GoldenBooksMod
             }
         }
 
-        // 粒子（原版灵能旋涡 + 冥想图标）
-        private void SpawnSpiritParticles(Pawn p)
-        {
-            if (Rand.Chance(0.25f))
-            {
-                var off = new Vector3(Rand.Range(-0.4f, 0.4f), 0f, Rand.Range(-0.3f, 0.3f));
-                FleckMaker.Static(p.DrawPos + off, p.Map, FleckDefOf.PsycastAreaEffect, Rand.Range(0.3f, 0.6f));
-            }
-            if (Rand.Chance(0.1f))
-                FleckMaker.ThrowMetaIcon(p.Position, p.Map, FleckDefOf.Meditating);
-        }
-
         // 怕水
         private void TryWaterFear(Pawn p)
         {
@@ -118,7 +106,7 @@ namespace GoldenBooksMod
         }
     }
 
-    // --- 书灵之书数据 comp（保存名字+人格） ---
+    // --- 书灵之书数据 comp（保存名字+人格+年龄+背景，供召还还原） ---
     public class GoldenBooksCompProperties_SpiritBookData : CompProperties
     {
         public GoldenBooksCompProperties_SpiritBookData() { this.compClass = typeof(GoldenBooksComp_SpiritBookData); }
@@ -128,12 +116,20 @@ namespace GoldenBooksMod
     {
         public string spiritName = "";
         public string persona = "";
+        public float biologicalAge = -1f;
+        public string gender = "";
+        public string childhoodDef = "";
+        public string adulthoodDef = "";
 
         public override void PostExposeData()
         {
             base.PostExposeData();
             Scribe_Values.Look(ref spiritName, "spiritName", "");
             Scribe_Values.Look(ref persona, "persona", "");
+            Scribe_Values.Look(ref biologicalAge, "biologicalAge", -1f);
+            Scribe_Values.Look(ref gender, "gender", "");
+            Scribe_Values.Look(ref childhoodDef, "childhoodDef", "");
+            Scribe_Values.Look(ref adulthoodDef, "adulthoodDef", "");
         }
     }
 }

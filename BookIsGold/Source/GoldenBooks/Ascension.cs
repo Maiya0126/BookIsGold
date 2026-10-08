@@ -18,8 +18,10 @@ namespace GoldenBooksMod
         {
             int n = 0;
             if (Current.Game == null) return 0;
+            HediffDef vit = DefDatabase<HediffDef>.GetNamedSilentFail("GoldenBooks_SpiritVitality");
+            if (vit == null) return 0;
             foreach (Map m in Find.Maps)
-                n += m.mapPawns.AllPawnsSpawned.Count(p => p.kindDef.defName == "GB_Colonist_Spirit_Kind");
+                n += m.mapPawns.AllPawnsSpawned.Count(p => p.health?.hediffSet != null && p.health.hediffSet.HasHediff(vit));
             return n;
         }
 
@@ -84,6 +86,9 @@ namespace GoldenBooksMod
             string oldPersona = WhisperPersonaHelper.ExtractPersonaFrom(p);
             string oldShort = p.LabelShort;
             Name oldName = p.Name;
+            Gender oldGender = p.gender;
+            string oldChildhood = p.story?.Childhood?.defName ?? "";
+            string oldAdulthood = p.story?.Adulthood?.defName ?? "";
             // 化灵保留原角色年龄
             float ascendAge = p.ageTracker != null ? Mathf.Max(1f, p.ageTracker.AgeBiologicalYears) : 1f;
 
@@ -93,22 +98,21 @@ namespace GoldenBooksMod
                 : "You have completed the Rite of Ascension — you are now a book spirit, a scholar within pale-golden pages. You no longer eat or sleep; readers' devotion sustains you.";
             p.Destroy();
 
-            Pawn spirit = GoldenBooksUtils.SpawnBookSpirit("Colonist", null, ascendAge, null);
-            if (spirit == null)
-            {
-                if (map != null)
-                {
-                    PawnGenerationRequest genReq = new PawnGenerationRequest(
-                        DefDatabase<PawnKindDef>.GetNamedSilentFail("GB_Colonist_Spirit_Kind"),
-                        Faction.OfPlayer, PawnGenerationContext.PlayerStarter, forceGenerateNewPawn: true, fixedBiologicalAge: ascendAge, fixedChronologicalAge: ascendAge);
-                    Pawn gen = PawnGenerator.GeneratePawn(genReq);
-                    GenSpawn.Spawn(gen, pos.IsValid ? pos : DropCellFinder.TradeDropSpot(map), map);
-                    spirit = gen;
-                }
-            }
+            Pawn spirit = GoldenBooksUtils.SpawnBookSpirit(GoldenBooksUtils.SpiritColonist, null, ascendAge, null, null, oldGender);
             if (spirit == null) return;
 
             if (oldName != null) spirit.Name = oldName;
+            // 死亡后可召还：保留原背景
+            if (!string.IsNullOrEmpty(oldChildhood))
+            {
+                BackstoryDef c = DefDatabase<BackstoryDef>.GetNamedSilentFail(oldChildhood);
+                if (c != null) spirit.story.Childhood = c;
+            }
+            if (!string.IsNullOrEmpty(oldAdulthood))
+            {
+                BackstoryDef a = DefDatabase<BackstoryDef>.GetNamedSilentFail(oldAdulthood);
+                if (a != null) spirit.story.Adulthood = a;
+            }
             if (map != null && spirit.Spawned)
             {
                 IntVec3 near = CellFinder.RandomSpawnCellForPawnNear(pos.IsValid ? pos : spirit.Position, map, 3);
@@ -150,15 +154,12 @@ namespace GoldenBooksMod
                 if (__instance == null || !__instance.Spawned) return;
                 if (!__instance.RaceProps.Humanlike || __instance.Faction != Faction.OfPlayer) return;
                 if (__instance.IsPrisoner || __instance.IsSlave) return;
-                // 排除所有书灵（本体已是书灵，不能再化灵）
+                // 排除所有书灵（本体已是书灵，不能再化灵）——统一按 hediff 判定
                 if (__instance.health?.hediffSet != null)
                 {
                     if (__instance.health.hediffSet.HasHediff(HediffDef.Named("GoldenBooks_SpiritVitality"))) return;
                     if (__instance.health.hediffSet.HasHediff(HediffDef.Named("GoldenBooks_BookSpiritEssence"))) return;
                 }
-                if (__instance.kindDef.defName == "GB_Yan_Kind" ||
-                    __instance.kindDef.defName == "GB_Zhi_Kind" ||
-                    __instance.kindDef.defName == "GB_Colonist_Spirit_Kind") return;
 
                 var s = GoldenBooksMod.settings;
                 string reason = SpiritAscension.AscendBlockReason(__instance);

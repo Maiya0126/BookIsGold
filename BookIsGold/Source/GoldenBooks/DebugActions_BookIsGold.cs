@@ -21,7 +21,9 @@ namespace GoldenBooksMod
         private static void DebugKillSpiritTest()
         {
             Map map = Find.CurrentMap;
-            Pawn target = map.mapPawns.AllPawnsSpawned.FirstOrDefault(p => p.def.defName == "GoldenBooks_BookSpirit_Yanzhongzhong" || p.def.defName == "GoldenBooks_BookSpirit_Zhixia");
+            HediffDef vit = DefDatabase<HediffDef>.GetNamedSilentFail("GoldenBooks_SpiritVitality");
+            if (vit == null) { Log.Error("[GoldenBooks] 缺少 GoldenBooks_SpiritVitality"); return; }
+            Pawn target = map.mapPawns.AllPawnsSpawned.FirstOrDefault(p => p.health?.hediffSet != null && p.health.hediffSet.HasHediff(vit));
             if (target == null) { Messages.Message("地图上没有书灵（请先用调试按钮生成一个）。", MessageTypeDefOf.RejectInput); return; }
             target.Kill(null, null);
             Log.Message("[GoldenBooks] Debug: 已击杀书灵 " + target.LabelShort + "，验证化书流程");
@@ -31,43 +33,36 @@ namespace GoldenBooksMod
         private static void DebugSpawnColonistSpirit()
         {
             Map map = Find.CurrentMap;
-            PawnKindDef kind = DefDatabase<PawnKindDef>.GetNamedSilentFail("GB_Colonist_Spirit_Kind");
-            if (kind == null) { Log.Error("[GoldenBooks] 缺少 PawnKindDef"); return; }
-            Pawn spirit = PawnGenerator.GeneratePawn(new PawnGenerationRequest(kind, Faction.OfPlayer, PawnGenerationContext.PlayerStarter, forceGenerateNewPawn: true, fixedBiologicalAge: 1, fixedChronologicalAge: 1));
+            Pawn spirit = GoldenBooksUtils.SpawnBookSpirit(GoldenBooksUtils.SpiritColonist, null, 20f, null, "书灵·测试学者");
+            if (spirit == null) { Log.Error("[GoldenBooks] 殖民地书灵生成失败"); return; }
+            // 挪到鼠标处（统一入口默认落在地图空投点）
             IntVec3 cell = UI.MouseCell();
-            if (!cell.Standable(map)) cell = CellFinder.RandomSpawnCellForPawnNear(UI.MouseCell(), map, 5);
-            spirit.Name = new NameTriple("", "书灵·测试学者", "");
-            GenSpawn.Spawn(spirit, cell, map);
-            GameComponent_BookWhispers.TryInjectRimTalkPersonas();
-            Log.Message("[GoldenBooks] Debug: 已在鼠标处生成 殖民地书灵");
+            if (cell.Standable(map)) spirit.Position = cell;
+            Log.Message("[GoldenBooks] Debug: 已生成 殖民地书灵（种族同设置白名单）");
         }
 
         [DebugAction("书中自有黄金屋 (Golden Books)", "书灵·颜执中现身 (Spawn Yan Zhongzhong)", actionType = DebugActionType.Action, allowedGameStates = AllowedGameStates.PlayingOnMap)]
         private static void DebugSpawnExecutor()
         {
             Map map = Find.CurrentMap;
-            PawnKindDef kind = DefDatabase<PawnKindDef>.GetNamedSilentFail("GB_Yan_Kind");
-            if (kind == null) { Log.Error("[GoldenBooks] 缺少 PawnKindDef"); return; }
-            Pawn spirit = PawnGenerator.GeneratePawn(new PawnGenerationRequest(kind, Faction.OfPlayer, forceGenerateNewPawn: true));
+            Pawn pawn = Find.CurrentMap.mapPawns.FreeColonistsSpawned.FirstOrDefault();
+            Pawn spirit = GoldenBooksUtils.SpawnBookSpirit(GoldenBooksUtils.SpiritYan, pawn, 67f, GameComponent_BookWhispers.PersonaYan());
+            if (spirit == null) { Log.Error("[GoldenBooks] 颜执中生成失败"); return; }
             IntVec3 cell = UI.MouseCell();
-            if (!cell.Standable(map)) cell = CellFinder.RandomSpawnCellForPawnNear(UI.MouseCell(), map, 5);
-            GenSpawn.Spawn(spirit, cell, map);
-            GameComponent_BookWhispers.TryInjectRimTalkPersonas();
-            Log.Message("[GoldenBooks] Debug: 已在鼠标处生成 书灵·颜执中");
+            if (cell.Standable(map)) spirit.Position = cell;
+            Log.Message("[GoldenBooks] Debug: 已生成 书灵·颜执中（种族同设置白名单）");
         }
 
         [DebugAction("书中自有黄金屋 (Golden Books)", "书灵·颜知夏乱入 (Spawn Yan Zhixia)", actionType = DebugActionType.Action, allowedGameStates = AllowedGameStates.PlayingOnMap)]
         private static void DebugSpawnZhixia()
         {
             Map map = Find.CurrentMap;
-            PawnKindDef kind = DefDatabase<PawnKindDef>.GetNamedSilentFail("GB_Zhi_Kind");
-            if (kind == null) { Log.Error("[GoldenBooks] 缺少 PawnKindDef"); return; }
-            Pawn spirit = PawnGenerator.GeneratePawn(new PawnGenerationRequest(kind, Faction.OfPlayer, forceGenerateNewPawn: true));
+            Pawn pawn = Find.CurrentMap.mapPawns.FreeColonistsSpawned.FirstOrDefault();
+            Pawn spirit = GoldenBooksUtils.SpawnBookSpirit(GoldenBooksUtils.SpiritMo, pawn, 19f, GameComponent_BookWhispers.PersonaMo());
+            if (spirit == null) { Log.Error("[GoldenBooks] 颜知夏生成失败"); return; }
             IntVec3 cell = UI.MouseCell();
-            if (!cell.Standable(map)) cell = CellFinder.RandomSpawnCellForPawnNear(UI.MouseCell(), map, 5);
-            GenSpawn.Spawn(spirit, cell, map);
-            GameComponent_BookWhispers.TryInjectRimTalkPersonas();
-            Log.Message("[GoldenBooks] Debug: 已在鼠标处生成 书灵·颜知夏");
+            if (cell.Standable(map)) spirit.Position = cell;
+            Log.Message("[GoldenBooks] Debug: 已生成 书灵·颜知夏（种族同设置白名单）");
         }
 
         [DebugAction("书中自有黄金屋 (Golden Books)", "获得颜氏手札 (Get Handbook)", actionType = DebugActionType.Action, allowedGameStates = AllowedGameStates.PlayingOnMap)]

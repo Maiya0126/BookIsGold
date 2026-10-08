@@ -147,4 +147,11 @@
 	<GoldenBooks_WishUiTitle>书灵许愿</GoldenBooks_WishUiTitle>
 	<GoldenBooks_WishToggle>书灵许愿系统</GoldenBooks_WishToggle>
 	<GoldenBooks_WishToggleTip>关闭后「向书灵许愿」入口隐藏。</GoldenBooks_WishToggleTip>
-	<GoldenBooks_WishLimit>每日许愿次数上限</GoldenBooks_WishLimit></LanguageData>
+	<GoldenBooks_WishLimit>每日许愿次数上限</GoldenBooks_WishLimit>
+
+	<GoldenBooks_SummonFail>诵读未成——书页静默无光。请检查日志或稍后再试。</GoldenBooks_SummonFail>
+	<GoldenBooks_ReadBookGizmo>翻阅此书</GoldenBooks_ReadBookGizmo>
+	<GoldenBooks_ReadBookGizmoDesc>让书灵为你展开这册书的内页——由 AI 按书名即兴撰写，每本书只写一次，随存档保存。</GoldenBooks_ReadBookGizmoDesc>
+	<GoldenBooks_ReadBookSubtitle>——正在展卷——</GoldenBooks_ReadBookSubtitle>
+	<GoldenBooks_ReadBookLoading>正在读取该书本信息中……</GoldenBooks_ReadBookLoading>
+</LanguageData>

@@ -129,13 +129,11 @@ namespace GoldenBooksMod
 
             Map map = Find.AnyPlayerHomeMap;
             Thing zhixia = null;
-            PawnKindDef kind = DefDatabase<PawnKindDef>.GetNamedSilentFail("GB_Zhi_Kind");
-            if (kind != null && map != null)
+            if (map != null)
             {
-                Pawn spirit = PawnGenerator.GeneratePawn(new PawnGenerationRequest(kind, Faction.OfPlayer, forceGenerateNewPawn: true, fixedBiologicalAge: 67, fixedChronologicalAge: 67));
-                IntVec3 cell = DropCellFinder.TradeDropSpot(map);
-                GenSpawn.Spawn(spirit, cell, map);
-                zhixia = spirit;
+                // 统一入口：设置白名单种族 + 19 岁 + 专属背景/特性/着装 + 知夏人格
+                Pawn spirit = GoldenBooksUtils.SpawnBookSpirit(GoldenBooksUtils.SpiritMo, null, 19f, GameComponent_BookWhispers.PersonaMo());
+                if (spirit != null) zhixia = spirit;
             }
 
             string key = fallback ? "GoldenBooks_ZhixiaFallbackText" : "GoldenBooks_ZhixiaText";

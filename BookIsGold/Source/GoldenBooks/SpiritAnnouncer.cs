@@ -85,12 +85,13 @@ namespace GoldenBooksMod
 
         public static void AnnounceSpiritTurnedBook(Pawn spirit)
         {
-            Announce(spirit.kindDef.defName == "GoldenBooks_BookSpirit_Zhixia" ? "Mo" : "Yan",
+            bool isMo = IsMoNick(spirit);
+            Announce(isMo ? "Mo" : "Yan",
                 IsChinese
-                    ? (spirit.kindDef.defName == "GoldenBooks_BookSpirit_Zhixia"
+                    ? (isMo
                         ? "本姑娘先回书里避一避！等我回来接着闹！(๑•̀ㅂ•́)و✧"
                         : "化作书页，非是消散，是歇息。期日再召。")
-                    : (spirit.kindDef.defName == "GoldenBooks_BookSpirit_Zhixia"
+                    : (isMo
                         ? "Ducking back into the book for a bit! Wait for my comeback!"
                         : "To turn into a page is not to perish — it is to rest. Recall me when you will."),
                 spirit);
@@ -98,10 +99,15 @@ namespace GoldenBooksMod
 
         public static void AnnounceRecalled(Pawn spirit)
         {
-            Announce(spirit.kindDef.defName == "GoldenBooks_BookSpirit_Zhixia" ? "Mo" : "Yan",
+            Announce(IsMoNick(spirit) ? "Mo" : "Yan",
                 IsChinese ? "回来了。接下来的故事，继续一起写。" : "I am back. The rest of our story — we write it together.",
                 spirit);
         }
+
+        // 知夏昵称判定（墨叽/颜知夏）
+        private static bool IsMoNick(Pawn p) =>
+            p?.Name?.ToStringShort != null &&
+            (p.Name.ToStringShort.Contains("知夏") || p.Name.ToStringShort.Contains("墨叽"));
 
         public static void AnnounceAscended(string name, Pawn spirit)
         {

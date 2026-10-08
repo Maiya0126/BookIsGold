@@ -140,4 +140,11 @@
 	<GoldenBooks_WishUiTitle>Spirit Wishes</GoldenBooks_WishUiTitle>
 	<GoldenBooks_WishToggle>Spirit wish system</GoldenBooks_WishToggle>
 	<GoldenBooks_WishToggleTip>When disabled, the "Make a Wish" entry is hidden.</GoldenBooks_WishToggleTip>
-	<GoldenBooks_WishLimit>Daily wish limit</GoldenBooks_WishLimit></LanguageData>
+	<GoldenBooks_WishLimit>Daily wish limit</GoldenBooks_WishLimit>
+
+	<GoldenBooks_SummonFail>The recitation failed — the pages stayed silent. Check the log or try again later.</GoldenBooks_SummonFail>
+	<GoldenBooks_ReadBookGizmo>Read this book</GoldenBooks_ReadBookGizmo>
+	<GoldenBooks_ReadBookGizmoDesc>Have the book spirit unfold this book's pages — AI-written from its title, once per book, saved with your colony.</GoldenBooks_ReadBookGizmoDesc>
+	<GoldenBooks_ReadBookSubtitle>—— unfolding ——</GoldenBooks_ReadBookSubtitle>
+	<GoldenBooks_ReadBookLoading>Reading the book's information...</GoldenBooks_ReadBookLoading>
+</LanguageData>

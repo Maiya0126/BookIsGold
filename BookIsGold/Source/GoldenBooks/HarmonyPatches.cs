@@ -120,8 +120,7 @@ namespace GoldenBooksMod
                     if (owner.needs.mood != null) owner.needs.mood.CurLevelPercentage = 1.0f; // 心情也锁满
                 }
 
-                // 特效部分保持不变
-                if (Rand.Chance(0.15f)) MoteMaker.ThrowText(owner.DrawPos, owner.Map, "✨", Color.yellow);
+                // 特效已按需求移除（保留数值光环）
 
                 IReadOnlyList<Pawn> pawns = owner.Map.mapPawns.AllPawnsSpawned;
                 for (int i = 0; i < pawns.Count; i++)
@@ -132,8 +131,7 @@ namespace GoldenBooksMod
                     {
                         if (target.Position.InHorDistOf(owner.Position, Props.radius))
                         {
-                            bool applied = ApplyBuff(target);
-                            if (Rand.Chance(0.2f)) MoteMaker.ThrowText(target.DrawPos, target.Map, "❤", Color.red);
+                            ApplyBuff(target);
                         }
                     }
                 }
@@ -202,27 +200,13 @@ namespace GoldenBooksMod
     {
         public static Pawn GenerateYanRuYu(bool isTrueSpirit)
         {
-            List<string> allowed = GoldenBooksMod.settings.allowedDefNames;
-            if (allowed == null || allowed.Count == 0) allowed = new List<string> { XenotypeDefOf.Baseliner.defName };
-            string picked = allowed.RandomElement();
-            PawnKindDef kind = PawnKindDefOf.Colonist;
-            XenotypeDef xeno = XenotypeDefOf.Baseliner;
-            bool isXeno = false;
-            XenotypeDef xenoDef = DefDatabase<XenotypeDef>.GetNamedSilentFail(picked);
-            if (xenoDef != null) { xeno = xenoDef; isXeno = true; }
-            else
-            {
-                ThingDef race = DefDatabase<ThingDef>.GetNamedSilentFail(picked);
-                if (race != null)
-                {
-                    PawnKindDef foundKind = DefDatabase<PawnKindDef>.AllDefsListForReading.FirstOrDefault(k => k.race == race && !IsCreepJoiner(k) && (k.defName.Contains("Colonist") || k.defName.Contains("Villager") || k.defName.Contains("Tribesperson") || k.defName.Contains("Player")));
-                    if (foundKind == null) foundKind = DefDatabase<PawnKindDef>.AllDefsListForReading.FirstOrDefault(k => k.race == race && !IsCreepJoiner(k) && !k.defName.Contains("Ancient"));
-                    if (foundKind != null) kind = foundKind;
-                }
-            }
+            ResolveSpiritRace(out PawnKindDef kind, out XenotypeDef xeno, out bool isXeno);
             PawnGenerationRequest request = new PawnGenerationRequest(kind, Faction.OfPlayer, forceGenerateNewPawn: true, forcedXenotype: isXeno ? xeno : null, fixedGender: Gender.Female, fixedBiologicalAge: 20, fixedChronologicalAge: 20);
             Pawn pawn = PawnGenerator.GeneratePawn(request);
+            if (pawn == null) return null;
             PurifyTraits(pawn);
+            // 专属背景（如玉）
+            ApplySpiritBackstories(pawn, "RuYu");
             string baseName = "GoldenBooks_YanRuYuName".Translate();
             if (baseName.Contains("GoldenBooks_")) baseName = "Yan Ru Yu";
             string nickName = baseName;
@@ -355,33 +339,109 @@ namespace GoldenBooksMod
                 AddTrait(TraitDef.Named("NightOwl"));
             }
         }
-        // 召还书灵（爷孙）
-        // 召还/降临书灵（统一使用 settings 种族随机，同真·颜如玉）
-        public static Pawn SpawnBookSpirit(string spiritType, Pawn near, float fixedAge, string persona, string nameOverride = null)
+        // --- 书灵生成公共工具 ---
+
+        // 书灵类型常量
+        public const string SpiritYan = "Yan";
+        public const string SpiritMo = "Mo";
+        public const string SpiritColonist = "Colonist";
+
+        // 从设置白名单解析种族（异种或 HAR 种族 → PawnKindDef + XenotypeDef）
+        public static void ResolveSpiritRace(out PawnKindDef kind, out XenotypeDef xeno, out bool isXeno)
         {
+            kind = PawnKindDefOf.Colonist;
+            xeno = XenotypeDefOf.Baseliner;
+            isXeno = false;
             List<string> allowed = GoldenBooksMod.settings.allowedDefNames;
-            if (allowed == null || allowed.Count == 0) allowed = new List<string> { XenotypeDefOf.Baseliner.defName };
+            if (allowed == null || allowed.Count == 0) return;
             string picked = allowed.RandomElement();
-            XenotypeDef xeno = XenotypeDefOf.Baseliner;
-            bool isXeno = false;
             XenotypeDef xenoDef = DefDatabase<XenotypeDef>.GetNamedSilentFail(picked);
-            if (xenoDef != null) { xeno = xenoDef; isXeno = true; }
-            Gender gender = spiritType == "Mo" ? Gender.Female : Gender.Male;
+            if (xenoDef != null) { xeno = xenoDef; isXeno = true; return; }
+            ThingDef race = DefDatabase<ThingDef>.GetNamedSilentFail(picked);
+            if (race == null) return;
+            PawnKindDef foundKind = DefDatabase<PawnKindDef>.AllDefsListForReading.FirstOrDefault(k => k.race == race && !IsCreepJoiner(k) && (k.defName.Contains("Colonist") || k.defName.Contains("Villager") || k.defName.Contains("Tribesperson") || k.defName.Contains("Player")));
+            if (foundKind == null) foundKind = DefDatabase<PawnKindDef>.AllDefsListForReading.FirstOrDefault(k => k.race == race && !IsCreepJoiner(k) && !k.defName.Contains("Ancient"));
+            if (foundKind != null) kind = foundKind;
+        }
 
-            PawnGenerationRequest req = new PawnGenerationRequest(PawnKindDefOf.Colonist, Faction.OfPlayer,
+        // 书灵专属背景固化
+        public static void ApplySpiritBackstories(Pawn spirit, string spiritType)
+        {
+            if (spirit?.story == null) return;
+            string child, adult;
+            switch (spiritType)
+            {
+                case SpiritYan: child = "GoldenBooks_YanChildhood"; adult = "GoldenBooks_YanAdulthood"; break;
+                case SpiritMo: child = "GoldenBooks_MoChildhood"; adult = "GoldenBooks_MoAdulthood"; break;
+                default: child = "GoldenBooks_RuYuChildhood"; adult = "GoldenBooks_RuYuAdulthood"; break;
+            }
+            BackstoryDef c = DefDatabase<BackstoryDef>.GetNamedSilentFail(child);
+            BackstoryDef a = DefDatabase<BackstoryDef>.GetNamedSilentFail(adult);
+            if (c != null) spirit.story.Childhood = c;
+            if (a != null) spirit.story.Adulthood = a;
+        }
+
+        // 清空随机特性，只保留专属特性
+        public static void PurgeAllTraits(Pawn spirit)
+        {
+            if (spirit?.story?.traits == null) return;
+            for (int i = spirit.story.traits.allTraits.Count - 1; i >= 0; i--)
+                spirit.story.traits.RemoveTrait(spirit.story.traits.allTraits[i]);
+        }
+
+        // 书灵统一着装（Yan：素色长衫；Mo：亮色裙装；Colonist/RuYu：白衣）
+        public static void DressUpSpirit(Pawn spirit, string spiritType)
+        {
+            if (spirit == null || spirit.apparel == null) return;
+            if (spirit.def.defName != "Human")
+            {
+                foreach (var app in spirit.apparel.WornApparel)
+                {
+                    app.TryGetComp<CompQuality>()?.SetQuality(QualityCategory.Legendary, ArtGenerationContext.Outsider);
+                    app.HitPoints = app.MaxHitPoints;
+                }
+                return;
+            }
+            spirit.apparel.DestroyAll();
+            ThingDef fabric = DefDatabase<ThingDef>.GetNamedSilentFail("Hyperweave") ?? DefDatabase<ThingDef>.GetNamedSilentFail("DevilstrandCloth") ?? ThingDefOf.Gold;
+            string[] dressDefs = spiritType == SpiritYan
+                ? new[] { "Apparel_RobeRoyal", "Apparel_Duster", "Apparel_Dress" }
+                : new[] { "Apparel_Dress", "Apparel_Corset", "Apparel_RobeRoyal", "Apparel_Duster", "Apparel_TribalA" };
+            ThingDef chosen = null;
+            foreach (var defName in dressDefs) { chosen = DefDatabase<ThingDef>.GetNamedSilentFail(defName); if (chosen != null) break; }
+            if (chosen == null || fabric == null) return;
+            Apparel apparel = (Apparel)ThingMaker.MakeThing(chosen, fabric);
+            apparel.TryGetComp<CompQuality>()?.SetQuality(QualityCategory.Masterwork, ArtGenerationContext.Outsider);
+            apparel.DrawColor = spiritType == SpiritYan ? new Color(0.85f, 0.82f, 0.7f) : Color.white;
+            spirit.apparel.Wear(apparel);
+        }
+
+        // 召还/降临书灵（统一入口：种族同设置白名单、固定年龄、专属背景、专属特性、统一着装）
+        public static Pawn SpawnBookSpirit(string spiritType, Pawn near, float fixedAge, string persona, string nameOverride = null, Gender? fixedGender = null)
+        {
+            ResolveSpiritRace(out PawnKindDef kind, out XenotypeDef xeno, out bool isXeno);
+            Gender gender = fixedGender ?? (spiritType == SpiritMo ? Gender.Female : Gender.Male);
+            float age = fixedAge > 0f ? fixedAge : (spiritType == SpiritYan ? 67f : spiritType == SpiritMo ? 19f : 20f);
+
+            PawnGenerationRequest req = new PawnGenerationRequest(kind, Faction.OfPlayer,
                 PawnGenerationContext.PlayerStarter, forceGenerateNewPawn: true, forcedXenotype: isXeno ? xeno : null,
-                fixedGender: gender, fixedBiologicalAge: fixedAge, fixedChronologicalAge: fixedAge);
+                fixedGender: gender, fixedBiologicalAge: age, fixedChronologicalAge: age);
             Pawn spirit = PawnGenerator.GeneratePawn(req);
+            if (spirit == null) return null;
 
-            string title = spiritType == "Yan" ? "书灵·颜执中" : spiritType == "Mo" ? "书灵·颜知夏" : "书灵";
-            if (!string.IsNullOrEmpty(nameOverride)) spirit.Name = new NameTriple("颜", nameOverride, "颜");
-            else spirit.Name = new NameTriple("颜", title, "颜");
+            string title = spiritType == SpiritYan ? "书灵·颜执中" : spiritType == SpiritMo ? "书灵·颜知夏" : "书灵";
+            spirit.Name = new NameTriple("颜", !string.IsNullOrEmpty(nameOverride) ? nameOverride : title, "颜");
 
             HediffDef vit = DefDatabase<HediffDef>.GetNamedSilentFail("GoldenBooks_SpiritVitality");
             if (vit != null && spirit.health.hediffSet.GetFirstHediffOfDef(vit) == null)
                 spirit.health.AddHediff(vit);
 
+            // 背景固化 + 清随机特性 + 专属特性
+            ApplySpiritBackstories(spirit, spiritType);
+            PurgeAllTraits(spirit);
             InitializeSpiritSkillsAndTraits(spirit, spiritType);
+            // 统一着装
+            DressUpSpirit(spirit, spiritType);
             if (!string.IsNullOrEmpty(persona)) WhisperPersonaHelper.CopyPersonaToPawn(spirit, persona, force: true);
             GameComponent_BookWhispers.TryInjectRimTalkPersonas();
 
@@ -786,32 +846,38 @@ public override void WriteSettings()
             Widgets.DrawMenuSection(rect);
             Rect inner = rect.ContractedBy(10f);
 
-            // 按钮组 (全选/全不选/重置) - 固定在右上角
+            // 按钮组 (随机/智人/重置) - 单选语义
             float btnW = 60f;
             float btnH = 24f;
             float buttonsTotalWidth = btnW * 3 + 10f; // 按钮区总宽度
             float startBtnX = inner.x + inner.width - buttonsTotalWidth;
 
-            if (Widgets.ButtonText(new Rect(startBtnX, inner.y, btnW, btnH), "GoldenBooks_BtnAll".Translate()))
+            if (Widgets.ButtonText(new Rect(startBtnX, inner.y, btnW, btnH), "随机"))
             {
-                foreach (var c in cachedRaceCandidates) if (MatchesFilter(c) && !settings.allowedDefNames.Contains(c.DefName)) settings.allowedDefNames.Add(c.DefName);
+                var pool = cachedRaceCandidates.Where(MatchesFilter).ToList();
+                if (pool.Count > 0)
+                {
+                    settings.allowedDefNames.Clear();
+                    settings.allowedDefNames.Add(pool.RandomElement().DefName);
+                }
             }
-            if (Widgets.ButtonText(new Rect(startBtnX + btnW + 5f, inner.y, btnW, btnH), "GoldenBooks_BtnNone".Translate()))
+            if (Widgets.ButtonText(new Rect(startBtnX + btnW + 5f, inner.y, btnW, btnH), "智人"))
             {
-                foreach (var c in cachedRaceCandidates) if (MatchesFilter(c) && settings.allowedDefNames.Contains(c.DefName)) settings.allowedDefNames.Remove(c.DefName);
+                settings.allowedDefNames.Clear();
+                settings.allowedDefNames.Add(XenotypeDefOf.Baseliner.defName);
             }
-            // 重置按钮：恢复到 IsPrettyDefault 状态 (排除猪人等)
+            // 重置按钮：回落智人（默认形态）
             if (Widgets.ButtonText(new Rect(startBtnX + btnW * 2 + 10f, inner.y, btnW, btnH), "GoldenBooks_BtnReset".Translate()))
             {
                 settings.allowedDefNames.Clear();
-                settings.allowedDefNames.AddRange(cachedRaceCandidates.Where(c => c.IsPrettyDefault).Select(c => c.DefName));
+                settings.allowedDefNames.Add(XenotypeDefOf.Baseliner.defName);
             }
 
             // 标题 & 搜索 - 动态宽度，防止遮挡
             // 搜索框宽度 = 总宽 - 按钮区宽 - 间隙
             float searchBoxWidth = inner.width - buttonsTotalWidth - 10f;
             Rect header = new Rect(inner.x, inner.y, searchBoxWidth, 24f);
-            Widgets.Label(header, "颜如玉种族白名单:"); // 标题放上面一行
+            Widgets.Label(header, "书灵形态（爷孙与颜如玉共用，单选）:"); // 标题放上面一行
 
             Rect searchRect = new Rect(inner.x, inner.y + 26f, searchBoxWidth, 24f);
             searchText = Widgets.TextEntryLabeled(searchRect, "Search: ", searchText);
@@ -831,8 +897,14 @@ public override void WriteSettings()
                 l.CheckboxLabeled(c.Label, ref active);
                 if (active != oldActive)
                 {
-                    if (active) settings.allowedDefNames.Add(c.DefName);
-                    else if (settings.allowedDefNames.Count > 1) settings.allowedDefNames.Remove(c.DefName);
+                    if (active)
+                    {
+                        // 单选：勾选即唯一（爷孙与如玉共用同一形态）
+                        settings.allowedDefNames.Clear();
+                        settings.allowedDefNames.Add(c.DefName);
+                    }
+                    else if (settings.allowedDefNames.Count > 1)
+                        settings.allowedDefNames.Remove(c.DefName);
                 }
             }
             l.End();
@@ -931,7 +1003,15 @@ public override void WriteSettings()
             cachedRaceCandidates = cachedRaceCandidates.OrderBy(c => c.Label).ToList();
 
             if (settings.allowedDefNames == null) settings.allowedDefNames = new List<string>();
-            if (settings.allowedDefNames.Count == 0 && cachedRaceCandidates.Count > 0) settings.allowedDefNames.AddRange(cachedRaceCandidates.Where(c => c.IsPrettyDefault).Select(c => c.DefName));
+            // 单选语义：默认智人（旧存档若为多选，保留第一个）
+            if (settings.allowedDefNames.Count == 0)
+                settings.allowedDefNames.Add(XenotypeDefOf.Baseliner.defName);
+            else if (settings.allowedDefNames.Count > 1)
+            {
+                string first = settings.allowedDefNames[0];
+                settings.allowedDefNames.Clear();
+                settings.allowedDefNames.Add(first);
+            }
         }
 
         private void InitializeBookCandidates()
@@ -966,8 +1046,282 @@ public override void WriteSettings()
 
     // --- 6 & 7 保持不变 ---
     public class GoldenBooks_GameComponent : GameComponent { public bool hasGivenStartingBook = false; public GoldenBooks_GameComponent(Game game) { } override public void ExposeData() { Scribe_Values.Look(ref hasGivenStartingBook, "hasGivenStartingBook", false); } override public void FinalizeInit() { base.FinalizeInit(); if (!hasGivenStartingBook && Find.AnyPlayerHomeMap != null) { GiveTheBook(); hasGivenStartingBook = true; } } private void GiveTheBook() { Map map = Find.AnyPlayerHomeMap; if (map == null) return; IntVec3 dropSpot = DropCellFinder.TradeDropSpot(map); List<Thing> giftList = new List<Thing>(); Thing book = ThingMaker.MakeThing(ThingDef.Named("GoldenBooks_QuanXueShi")); if (book.TryGetComp<CompQuality>() != null) book.TryGetComp<CompQuality>().SetQuality(QualityCategory.Legendary, ArtGenerationContext.Outsider); giftList.Add(book); Thing gold = ThingMaker.MakeThing(ThingDefOf.Gold); gold.stackCount = 2; giftList.Add(gold); Thing wood = ThingMaker.MakeThing(ThingDefOf.WoodLog); wood.stackCount = 40; giftList.Add(wood); Thing jade = ThingMaker.MakeThing(ThingDefOf.Jade); jade.stackCount = 20; giftList.Add(jade); DropPodUtility.DropThingsNear(dropSpot, map, giftList); Find.LetterStack.ReceiveLetter("GoldenBooks_GiftLabel".Translate(), "GoldenBooks_GiftText".Translate(), LetterDefOf.PositiveEvent, new TargetInfo(dropSpot, map)); } }
-    [HarmonyPatch(typeof(Pawn), "Kill")] public static class Patch_PawnKill { static void Postfix(Pawn __instance) { try { if (__instance != null && __instance.RaceProps.Humanlike && __instance.Faction == Faction.OfPlayer && !__instance.RaceProps.IsMechanoid) { GameComponent_BookWhispers.Get?.RecordDeath(__instance); SpiritAnnouncer.AnnounceDeath(__instance); } } catch { } string spiritDefName = __instance.kindDef != null ? __instance.kindDef.defName : null; if (spiritDefName == "GB_Yan_Kind" || spiritDefName == "GB_Zhi_Kind") { Map map2 = __instance.MapHeld; IntVec3 pos2 = __instance.PositionHeld; string bookDef = spiritDefName == "GB_Yan_Kind" ? "GoldenBooks_SpiritBook_Yanzhongzhong" : spiritDefName == "GB_Zhi_Kind" ? "GoldenBooks_SpiritBook_Zhixia" : "GoldenBooks_SpiritBook_Colonist"; if (map2 != null) { Thing bk = ThingMaker.MakeThing(ThingDef.Named(bookDef)); bk.stackCount = 1; if (spiritDefName == "GoldenBooks_BookSpirit_Colonist") { var data = bk.TryGetComp<GoldenBooksComp_SpiritBookData>(); if (data != null) { data.spiritName = __instance.LabelShort; data.persona = WhisperPersonaHelper.ExtractPersonaFrom(__instance); } } GenSpawn.Spawn(bk, pos2, map2); } Find.LetterStack.ReceiveLetter("GoldenBooks_SpiritBookLetterLabel".Translate(), "GoldenBooks_SpiritBookLetterText".Translate(__instance.LabelShort), LetterDefOf.NeutralEvent, map2 != null ? new TargetInfo(pos2, map2) : LookTargets.Invalid); SpiritAnnouncer.AnnounceSpiritTurnedBook(__instance); } else if (__instance.RaceProps.Humanlike && __instance.Faction == Faction.OfPlayer && __instance.Name != null && __instance.Name.ToStringShort.Contains("颜如玉") && !__instance.health.hediffSet.HasHediff(HediffDef.Named("GoldenBooks_BookSpiritEssence"))) { Map map3 = __instance.MapHeld; IntVec3 pos3 = __instance.PositionHeld; if (map3 != null) { Thing frag = ThingMaker.MakeThing(ThingDef.Named("GoldenBooks_BookFragment")); frag.stackCount = 3; GenSpawn.Spawn(frag, pos3, map3); } Find.LetterStack.ReceiveLetter("GoldenBooks_MortalCondolenceLabel".Translate(), "GoldenBooks_MortalCondolenceText".Translate(__instance.LabelShort), LetterDefOf.NeutralEvent, map3 != null ? new TargetInfo(pos3, map3) : LookTargets.Invalid); } if (__instance.health != null && __instance.health.hediffSet.HasHediff(HediffDef.Named("GoldenBooks_BookSpiritEssence"))) { Map map = __instance.MapHeld; IntVec3 pos = __instance.PositionHeld; StoryChain_GameComponent.Get?.OnYanRuYuDeath(__instance); if (map != null) { Thing book = ThingMaker.MakeThing(ThingDef.Named("GoldenBooks_QuanXueShi")); GenSpawn.Spawn(book, pos, map); MoteMaker.ThrowText(pos.ToVector3(), map, "书灵归位", Color.yellow); if (__instance.Corpse != null) __instance.Corpse.Destroy(); else if (!__instance.Destroyed) __instance.Destroy(); Messages.Message("颜如玉已化作书本回归。", new TargetInfo(pos, map), MessageTypeDefOf.PositiveEvent); } } } }
-    [HarmonyPatch(typeof(GenRecipe), "MakeRecipeProducts")] public static class Patch_MakeRecipeProducts { private const string Recipe_Wealth = "Extract_Knowledge_To_Wealth"; private const string Recipe_Food = "GoldenBooks_Extract_Food"; private const string Recipe_Speed = "GoldenBooks_Extract_Speed"; private const string Recipe_Bind = "GoldenBooks_Bind_FiveClassics"; private const string Recipe_Summon = "GoldenBooks_Summon_YanRuYu"; private const string Recipe_Recall = "GoldenBooks_Recall_Spirit"; static IEnumerable<Thing> Postfix(IEnumerable<Thing> values, RecipeDef recipeDef, Pawn worker, List<Thing> ingredients) { float totalBookValue = 0f; if (ingredients != null) foreach (var item in ingredients) totalBookValue += item.MarketValue * item.stackCount; float multiplier = GoldenBooksMod.settings.resourceYieldPct; float successChance = Mathf.Clamp01(totalBookValue / 400.0f); bool isSuccess = Rand.Chance(successChance); if (recipeDef.defName == Recipe_Food || recipeDef.defName == Recipe_Speed || recipeDef.defName == Recipe_Wealth) { StoryChain_GameComponent.Get?.RegisterDismantle(); GameComponent_Kewei.Get?.RecordBookRead(); } if (recipeDef.defName == Recipe_Food) { if (isSuccess) { int count = Mathf.Max(1, (int)(totalBookValue / 5f * multiplier)); Thing millet = ThingMaker.MakeThing(ThingDef.Named("GoldenBooks_GoldenMillet")); millet.stackCount = count; GameComponent_Kewei.Get?.RecordMillet(count); yield return millet; } else { Thing frag = ThingMaker.MakeThing(ThingDef.Named("GoldenBooks_BookFragment")); frag.stackCount = 1; yield return frag; GoldenBooksUtils.TrySpawnBookworm(worker); } yield break; } if (recipeDef.defName == Recipe_Speed) { if (isSuccess) { int count = (int)(totalBookValue / 100f * multiplier); if (count < 1) { Thing millet = ThingMaker.MakeThing(ThingDef.Named("GoldenBooks_GoldenMillet")); millet.stackCount = 5; yield return millet; } else { Thing talisman = ThingMaker.MakeThing(ThingDef.Named("GoldenBooks_GodSpeedTalisman")); talisman.stackCount = count; yield return talisman; } } else { Thing frag = ThingMaker.MakeThing(ThingDef.Named("GoldenBooks_BookFragment")); frag.stackCount = 1; yield return frag; GoldenBooksUtils.TrySpawnBookworm(worker); } yield break; } if (recipeDef.defName == Recipe_Wealth) { if (isSuccess) { int baseCount = (int)(totalBookValue / 10f * multiplier); Thing gold = ThingMaker.MakeThing(ThingDefOf.Gold); gold.stackCount = Mathf.Max(1, baseCount); yield return gold; Thing jade = ThingMaker.MakeThing(ThingDefOf.Jade); jade.stackCount = Mathf.Max(1, baseCount); GameComponent_Kewei.Get?.RecordWealth(); yield return jade; if (Rand.Chance(GoldenBooksMod.settings.yanRuYuChance)) { Pawn mortalYanRuYu = GoldenBooksUtils.GenerateYanRuYu(false); if (mortalYanRuYu != null) { GoldenBooksUtils.DressUpYanRuYu(mortalYanRuYu); GoldenBooksUtils.EnsureBeautifulHair(mortalYanRuYu); string raceLabel = mortalYanRuYu.def.LabelCap; if (mortalYanRuYu.genes != null && mortalYanRuYu.genes.Xenotype != XenotypeDefOf.Baseliner) raceLabel = mortalYanRuYu.genes.Xenotype.LabelCap; Find.LetterStack.ReceiveLetter("GoldenBooks_LetterLabel".Translate(), "GoldenBooks_LetterText".Translate(mortalYanRuYu.Name.ToStringShort, raceLabel), LetterDefOf.PositiveEvent, mortalYanRuYu); GameComponent_Kewei.Get?.RecordMortal(); yield return mortalYanRuYu; } } } else { Thing frag = ThingMaker.MakeThing(ThingDef.Named("GoldenBooks_BookFragment")); frag.stackCount = 1; yield return frag; GoldenBooksUtils.TrySpawnBookworm(worker); } yield break; } if (recipeDef.defName == Recipe_Bind) { Thing classic = ThingMaker.MakeThing(ThingDef.Named("GoldenBooks_FiveClassics")); classic.stackCount = 1; GameComponent_Kewei.Get?.RecordClassic(); yield return classic; yield break; } if (recipeDef.defName == Recipe_Summon) { Pawn trueSpirit = GoldenBooksUtils.SummonTrueSpirit(); if (trueSpirit != null) { yield return trueSpirit; } yield break; } if (recipeDef.defName == Recipe_Recall) { Thing spiritBook = ingredients?.FirstOrDefault(t => t != null && (t.def.defName == "GoldenBooks_SpiritBook_Yanzhongzhong" || t.def.defName == "GoldenBooks_SpiritBook_Zhixia" || t.def.defName == "GoldenBooks_QuanXueShi")); if (spiritBook != null) { Pawn spirit = null; if (spiritBook.def.defName == "GoldenBooks_SpiritBook_Yanzhongzhong") spirit = GoldenBooksUtils.SpawnBookSpirit("Yan", worker, 1f, GameComponent_BookWhispers.PersonaYan()); else if (spiritBook.def.defName == "GoldenBooks_SpiritBook_Zhixia") spirit = GoldenBooksUtils.SpawnBookSpirit("Mo", worker, 1f, GameComponent_BookWhispers.PersonaMo()); else if (spiritBook.def.defName == "GoldenBooks_SpiritBook_Colonist") spirit = GoldenBooksUtils.SpawnBookSpirit("Colonist", worker, 1f, null); else spirit = GoldenBooksUtils.SummonTrueSpirit(); if (spirit != null) { if (spiritBook.def.defName == "GoldenBooks_SpiritBook_Colonist") { var data = spiritBook.TryGetComp<GoldenBooksComp_SpiritBookData>(); if (data != null && !string.IsNullOrEmpty(data.spiritName)) spirit.Name = new NameTriple("", data.spiritName, ""); if (data != null && !string.IsNullOrEmpty(data.persona)) WhisperPersonaHelper.CopyPersonaToPawn(spirit, data.persona, force: true); } Find.LetterStack.ReceiveLetter("GoldenBooks_RecallLetterLabel".Translate(), "GoldenBooks_RecallLetterText".Translate(spirit.LabelShort), LetterDefOf.PositiveEvent, spirit); SpiritAnnouncer.AnnounceRecalled(spirit); yield return spirit; } } yield break; } foreach (var t in values) yield return t; } }
+    [HarmonyPatch(typeof(Pawn), "Kill")]
+    public static class Patch_PawnKill
+    {
+        static void Postfix(Pawn __instance)
+        {
+            try
+            {
+                if (__instance == null) return;
+                // 1) 死亡记录 + 播报（玩家阵营类人；书灵走化书播报，跳过 AnnounceDeath）
+                bool isSpirit = __instance.health?.hediffSet != null &&
+                    __instance.health.hediffSet.HasHediff(HediffDef.Named("GoldenBooks_SpiritVitality"));
+                if (__instance.RaceProps.Humanlike && __instance.Faction == Faction.OfPlayer && !__instance.RaceProps.IsMechanoid)
+                {
+                    GameComponent_BookWhispers.Get?.RecordDeath(__instance);
+                    if (!isSpirit) SpiritAnnouncer.AnnounceDeath(__instance);
+                }
+
+                Map map2 = __instance.MapHeld;
+                IntVec3 pos2 = __instance.PositionHeld;
+
+                // 2) 书灵（爷孙/殖民地书灵）死亡 → 化书（存名字/人格/年龄/性别/背景）
+                if (isSpirit)
+                {
+                    string nick = __instance.Name?.ToStringShort ?? "";
+                    bool isZhi = nick.Contains("知夏") || nick.Contains("墨叽");
+                    string bookDef = isZhi ? "GoldenBooks_SpiritBook_Zhixia" : "GoldenBooks_SpiritBook_Colonist";
+                    if (nick.Contains("颜执中")) bookDef = "GoldenBooks_SpiritBook_Yanzhongzhong";
+                    if (map2 != null)
+                    {
+                        ThingDef bd = DefDatabase<ThingDef>.GetNamedSilentFail(bookDef);
+                        if (bd != null)
+                        {
+                            Thing bk = ThingMaker.MakeThing(bd);
+                            bk.stackCount = 1;
+                            var data = bk.TryGetComp<GoldenBooksComp_SpiritBookData>();
+                            if (data != null)
+                            {
+                                data.spiritName = __instance.LabelShort;
+                                data.persona = WhisperPersonaHelper.ExtractPersonaFrom(__instance);
+                                data.biologicalAge = __instance.ageTracker?.AgeBiologicalYearsFloat ?? -1f;
+                                data.gender = __instance.gender.ToString();
+                                data.childhoodDef = __instance.story?.Childhood?.defName ?? "";
+                                data.adulthoodDef = __instance.story?.Adulthood?.defName ?? "";
+                            }
+                            GenSpawn.Spawn(bk, pos2, map2);
+                        }
+                    }
+                    Find.LetterStack.ReceiveLetter("GoldenBooks_SpiritBookLetterLabel".Translate(),
+                        "GoldenBooks_SpiritBookLetterText".Translate(__instance.LabelShort), LetterDefOf.NeutralEvent,
+                        map2 != null ? new TargetInfo(pos2, map2) : LookTargets.Invalid);
+                    SpiritAnnouncer.AnnounceSpiritTurnedBook(__instance);
+                    return;
+                }
+
+                // 3) 凡人·颜如玉死亡 → 残卷慰问
+                if (__instance.RaceProps.Humanlike && __instance.Faction == Faction.OfPlayer &&
+                    __instance.Name != null && __instance.Name.ToStringShort.Contains("颜如玉") &&
+                    __instance.health.hediffSet != null &&
+                    !__instance.health.hediffSet.HasHediff(HediffDef.Named("GoldenBooks_BookSpiritEssence")))
+                {
+                    if (map2 != null)
+                    {
+                        Thing frag = ThingMaker.MakeThing(ThingDef.Named("GoldenBooks_BookFragment"));
+                        frag.stackCount = 3;
+                        GenSpawn.Spawn(frag, pos2, map2);
+                    }
+                    Find.LetterStack.ReceiveLetter("GoldenBooks_MortalCondolenceLabel".Translate(),
+                        "GoldenBooks_MortalCondolenceText".Translate(__instance.LabelShort), LetterDefOf.NeutralEvent,
+                        map2 != null ? new TargetInfo(pos2, map2) : LookTargets.Invalid);
+                }
+
+                // 4) 真·颜如玉死亡 → 化回《劝学诗》
+                if (__instance.health != null && __instance.health.hediffSet.HasHediff(HediffDef.Named("GoldenBooks_BookSpiritEssence")))
+                {
+                    StoryChain_GameComponent.Get?.OnYanRuYuDeath(__instance);
+                    if (map2 != null)
+                    {
+                        Thing book = ThingMaker.MakeThing(ThingDef.Named("GoldenBooks_QuanXueShi"));
+                        GenSpawn.Spawn(book, pos2, map2);
+                        if (__instance.Corpse != null) __instance.Corpse.Destroy();
+                        else if (!__instance.Destroyed) __instance.Destroy();
+                        Messages.Message("颜如玉已化作书本回归。", new TargetInfo(pos2, map2), MessageTypeDefOf.PositiveEvent);
+                    }
+                }
+            }
+            catch (Exception ex) { Log.Warning("[GoldenBooks] PawnKill postfix error: " + ex); }
+        }
+    }
+    [HarmonyPatch(typeof(GenRecipe), "MakeRecipeProducts")]
+    public static class Patch_MakeRecipeProducts
+    {
+        private const string Recipe_Wealth = "Extract_Knowledge_To_Wealth";
+        private const string Recipe_Food = "GoldenBooks_Extract_Food";
+        private const string Recipe_Speed = "GoldenBooks_Extract_Speed";
+        private const string Recipe_Bind = "GoldenBooks_Bind_FiveClassics";
+        private const string Recipe_Summon = "GoldenBooks_Summon_YanRuYu";
+        private const string Recipe_Recall = "GoldenBooks_Recall_Spirit";
+
+        static IEnumerable<Thing> Postfix(IEnumerable<Thing> values, RecipeDef recipeDef, Pawn worker, List<Thing> ingredients)
+        {
+            float totalBookValue = 0f;
+            if (ingredients != null)
+                foreach (var item in ingredients)
+                    totalBookValue += item.MarketValue * item.stackCount;
+            float multiplier = GoldenBooksMod.settings.resourceYieldPct;
+            float successChance = Mathf.Clamp01(totalBookValue / 400.0f);
+            bool isSuccess = Rand.Chance(successChance);
+
+            if (recipeDef.defName == Recipe_Food || recipeDef.defName == Recipe_Speed || recipeDef.defName == Recipe_Wealth)
+            {
+                StoryChain_GameComponent.Get?.RegisterDismantle();
+                GameComponent_Kewei.Get?.RecordBookRead();
+            }
+
+            if (recipeDef.defName == Recipe_Food)
+            {
+                if (isSuccess)
+                {
+                    int count = Mathf.Max(1, (int)(totalBookValue / 5f * multiplier));
+                    Thing millet = ThingMaker.MakeThing(ThingDef.Named("GoldenBooks_GoldenMillet"));
+                    millet.stackCount = count;
+                    GameComponent_Kewei.Get?.RecordMillet(count);
+                    yield return millet;
+                }
+                else
+                {
+                    Thing frag = ThingMaker.MakeThing(ThingDef.Named("GoldenBooks_BookFragment"));
+                    frag.stackCount = 1;
+                    yield return frag;
+                    GoldenBooksUtils.TrySpawnBookworm(worker);
+                }
+                yield break;
+            }
+
+            if (recipeDef.defName == Recipe_Speed)
+            {
+                if (isSuccess)
+                {
+                    int count = (int)(totalBookValue / 100f * multiplier);
+                    if (count < 1)
+                    {
+                        Thing millet = ThingMaker.MakeThing(ThingDef.Named("GoldenBooks_GoldenMillet"));
+                        millet.stackCount = 5;
+                        yield return millet;
+                    }
+                    else
+                    {
+                        Thing talisman = ThingMaker.MakeThing(ThingDef.Named("GoldenBooks_GodSpeedTalisman"));
+                        talisman.stackCount = count;
+                        yield return talisman;
+                    }
+                }
+                else
+                {
+                    Thing frag = ThingMaker.MakeThing(ThingDef.Named("GoldenBooks_BookFragment"));
+                    frag.stackCount = 1;
+                    yield return frag;
+                    GoldenBooksUtils.TrySpawnBookworm(worker);
+                }
+                yield break;
+            }
+
+            if (recipeDef.defName == Recipe_Wealth)
+            {
+                if (isSuccess)
+                {
+                    int baseCount = (int)(totalBookValue / 10f * multiplier);
+                    Thing gold = ThingMaker.MakeThing(ThingDefOf.Gold);
+                    gold.stackCount = Mathf.Max(1, baseCount);
+                    yield return gold;
+                    Thing jade = ThingMaker.MakeThing(ThingDefOf.Jade);
+                    jade.stackCount = Mathf.Max(1, baseCount);
+                    GameComponent_Kewei.Get?.RecordWealth();
+                    yield return jade;
+                    if (Rand.Chance(GoldenBooksMod.settings.yanRuYuChance))
+                    {
+                        Pawn mortalYanRuYu = GoldenBooksUtils.GenerateYanRuYu(false);
+                        if (mortalYanRuYu != null)
+                        {
+                            GoldenBooksUtils.DressUpYanRuYu(mortalYanRuYu);
+                            GoldenBooksUtils.EnsureBeautifulHair(mortalYanRuYu);
+                            string raceLabel = mortalYanRuYu.def.LabelCap;
+                            if (mortalYanRuYu.genes != null && mortalYanRuYu.genes.Xenotype != XenotypeDefOf.Baseliner)
+                                raceLabel = mortalYanRuYu.genes.Xenotype.LabelCap;
+                            Find.LetterStack.ReceiveLetter("GoldenBooks_LetterLabel".Translate(),
+                                "GoldenBooks_LetterText".Translate(mortalYanRuYu.Name.ToStringShort, raceLabel),
+                                LetterDefOf.PositiveEvent, mortalYanRuYu);
+                            GameComponent_Kewei.Get?.RecordMortal();
+                            yield return mortalYanRuYu;
+                        }
+                    }
+                }
+                else
+                {
+                    Thing frag = ThingMaker.MakeThing(ThingDef.Named("GoldenBooks_BookFragment"));
+                    frag.stackCount = 1;
+                    yield return frag;
+                    GoldenBooksUtils.TrySpawnBookworm(worker);
+                }
+                yield break;
+            }
+
+            if (recipeDef.defName == Recipe_Bind)
+            {
+                Thing classic = ThingMaker.MakeThing(ThingDef.Named("GoldenBooks_FiveClassics"));
+                classic.stackCount = 1;
+                GameComponent_Kewei.Get?.RecordClassic();
+                yield return classic;
+                yield break;
+            }
+
+            if (recipeDef.defName == Recipe_Summon)
+            {
+                Pawn trueSpirit = GoldenBooksUtils.SummonTrueSpirit();
+                if (trueSpirit != null)
+                    yield return trueSpirit;
+                else
+                    Messages.Message("GoldenBooks_SummonFail".Translate(), MessageTypeDefOf.RejectInput);
+                yield break;
+            }
+
+            if (recipeDef.defName == Recipe_Recall)
+            {
+                Thing spiritBook = ingredients?.FirstOrDefault(t => t != null && (
+                    t.def.defName == "GoldenBooks_SpiritBook_Yanzhongzhong" ||
+                    t.def.defName == "GoldenBooks_SpiritBook_Zhixia" ||
+                    t.def.defName == "GoldenBooks_SpiritBook_Colonist" ||
+                    t.def.defName == "GoldenBooks_QuanXueShi"));
+                if (spiritBook != null)
+                {
+                    var data = spiritBook.TryGetComp<GoldenBooksComp_SpiritBookData>();
+                    Pawn spirit = null;
+                    Gender? gender = null;
+                    float age = 0f;
+                    string nameRestore = null, childRestore = null, adultRestore = null;
+                    if (data != null)
+                    {
+                        nameRestore = data.spiritName;
+                        if (!string.IsNullOrEmpty(data.gender) && System.Enum.TryParse(data.gender, out Gender g)) gender = g;
+                        if (data.biologicalAge > 0f) age = data.biologicalAge;
+                        childRestore = data.childhoodDef;
+                        adultRestore = data.adulthoodDef;
+                    }
+                    if (spiritBook.def.defName == "GoldenBooks_SpiritBook_Yanzhongzhong")
+                        spirit = GoldenBooksUtils.SpawnBookSpirit(GoldenBooksUtils.SpiritYan, worker, age <= 0f ? 67f : age, GameComponent_BookWhispers.PersonaYan(), nameRestore, gender);
+                    else if (spiritBook.def.defName == "GoldenBooks_SpiritBook_Zhixia")
+                        spirit = GoldenBooksUtils.SpawnBookSpirit(GoldenBooksUtils.SpiritMo, worker, age <= 0f ? 19f : age, GameComponent_BookWhispers.PersonaMo(), nameRestore, gender);
+                    else if (spiritBook.def.defName == "GoldenBooks_SpiritBook_Colonist")
+                        spirit = GoldenBooksUtils.SpawnBookSpirit(GoldenBooksUtils.SpiritColonist, worker, age <= 0f ? 20f : age, null, nameRestore, gender);
+                    else
+                        spirit = GoldenBooksUtils.SummonTrueSpirit();
+
+                    if (spirit != null)
+                    {
+                        // 死亡前背景还原（优先于默认专属背景）
+                        if (!string.IsNullOrEmpty(childRestore) || !string.IsNullOrEmpty(adultRestore))
+                        {
+                            BackstoryDef c = string.IsNullOrEmpty(childRestore) ? null : DefDatabase<BackstoryDef>.GetNamedSilentFail(childRestore);
+                            BackstoryDef a = string.IsNullOrEmpty(adultRestore) ? null : DefDatabase<BackstoryDef>.GetNamedSilentFail(adultRestore);
+                            if (c != null) spirit.story.Childhood = c;
+                            if (a != null) spirit.story.Adulthood = a;
+                        }
+                        if (data != null && !string.IsNullOrEmpty(data.persona))
+                            WhisperPersonaHelper.CopyPersonaToPawn(spirit, data.persona, force: true);
+                        Find.LetterStack.ReceiveLetter("GoldenBooks_RecallLetterLabel".Translate(),
+                            "GoldenBooks_RecallLetterText".Translate(spirit.LabelShort), LetterDefOf.PositiveEvent, spirit);
+                        SpiritAnnouncer.AnnounceRecalled(spirit);
+                        yield return spirit;
+                    }
+                }
+                yield break;
+            }
+
+            foreach (var t in values) yield return t;
+        }
+    }
 
     // --- 8. 剧情事件链补丁（书灵物语）---
     [HarmonyPatch(typeof(Game), "InitNewGame")]

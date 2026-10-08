@@ -82,10 +82,12 @@
     <Compile Include="Source\GoldenBooks\SpiritAnnouncer.cs" />
     <Compile Include="Source\GoldenBooks\SpiritWish.cs" />
     <Compile Include="Source\GoldenBooks\SpiritWishWindow.cs" />
+    <Compile Include="Source\GoldenBooks\BookReading.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="About\Preview.png" />
     <Content Include="About\About.xml" />
+    <Content Include="Defs\BackstoryDefs\GoldenBooks_Backstories.xml" />
     <Content Include="Defs\ThingDefs_Buildings\Buildings_ArcaneLectern.xml" />
     <Content Include="Defs\ThingDefs_Misc\Books_Special.xml" />
     <Content Include="Defs\ThingDefs_Misc\GoldenBooks_NewFeatures.xml" />
@@ -122,7 +124,7 @@ copy /Y "$(TargetDir)$(TargetName).dll" "%25MOD_DIR%25\Assemblies\"
 xcopy "%25SOURCE_ROOT%25Defs" "%25MOD_DIR%25\Defs" /S /E /Y /I
 xcopy "%25SOURCE_ROOT%25Patches" "%25MOD_DIR%25\Patches" /S /E /Y /I
 xcopy "%25SOURCE_ROOT%25Languages" "%25MOD_DIR%25\Languages" /S /E /Y /I
-xcopy "%25SOURCE_ROOT%25..\Story" "%25MOD_DIR%25\Story" /S /E /Y /I
+xcopy "%25SOURCE_ROOT%25..\Story" "%25MOD_DIR%25\Story" /S /E /Y /I /EXCLUDE:$(ProjectDir)story_exclude.txt
 echo [MaiyaMod] Sync done.</PostBuildEvent>
   </PropertyGroup>
 </Project>
