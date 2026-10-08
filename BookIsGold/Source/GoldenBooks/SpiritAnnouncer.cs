@@ -162,7 +162,7 @@ namespace GoldenBooksMod
             forcePause = false;
             absorbInputAroundWindow = false;
             draggable = true;
-            resizeable = false;
+            resizeable = true;
             closeOnAccept = false;
             closeOnCancel = false;
             focusWhenOpened = false;
